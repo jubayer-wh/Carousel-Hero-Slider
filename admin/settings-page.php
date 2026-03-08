@@ -438,31 +438,36 @@ function cs_render_settings_page() {
 
     ?>
     <div class="wrap cs-admin-wrap">
-        <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-        <p><?php esc_html_e( 'Manage global slider behavior, animation style, timer, and content visibility.', 'carousel-hero-slider' ); ?></p>
+        <div class="cs-admin-panel">
+            <div class="cs-admin-hero">
+                <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
+                <p><?php esc_html_e( 'Manage global slider behavior, animation style, timer, and content visibility.', 'carousel-hero-slider' ); ?></p>
+                <div class="cs-admin-actions">
+                    <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
+                        <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
+                    </a>
+                    <a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=cs_hero_slide' ) ); ?>">
+                        <?php esc_html_e( 'Manage Slides', 'carousel-hero-slider' ); ?>
+                    </a>
+                </div>
+            </div>
 
-        <p>
-            <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
-                <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
-            </a>
-            <a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=cs_hero_slide' ) ); ?>">
-                <?php esc_html_e( 'Manage Slides', 'carousel-hero-slider' ); ?>
-            </a>
-        </p>
+            <div class="cs-admin-card">
+                <form method="post" action="options.php">
+                    <?php
+                    settings_fields( 'cs_wbk_hero_slider_group' );
+                    do_settings_sections( 'carousel-hero-slider' );
+                    submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button' );
+                    ?>
+                </form>
+            </div>
 
-        <form method="post" action="options.php">
-            <?php
-            settings_fields( 'cs_wbk_hero_slider_group' );
-            do_settings_sections( 'carousel-hero-slider' );
-            submit_button();
-            ?>
-        </form>
-
-        <hr />
-
-        <h2><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></h2>
-        <p><code>[wbk_hero_slider]</code></p>
-        <p><?php esc_html_e( 'Optional overrides:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
+            <div class="cs-admin-card cs-admin-shortcode">
+                <h2><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></h2>
+                <p><code>[wbk_hero_slider]</code></p>
+                <p><?php esc_html_e( 'Optional overrides:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
+            </div>
+        </div>
     </div>
     <?php
 }
