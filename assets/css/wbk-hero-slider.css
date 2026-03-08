@@ -84,6 +84,82 @@
   }
 }
 
+
+.cs-wbk-hero-slider-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.cs-wbk-hero-slider-arrow {
+  position: absolute;
+  pointer-events: auto;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(11, 19, 36, 0.58);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.cs-wbk-hero-slider-arrow:hover,
+.cs-wbk-hero-slider-arrow:focus-visible {
+  background: rgba(11, 19, 36, 0.82);
+  transform: translateY(-1px);
+}
+
+.cs-nav-style-side .cs-wbk-hero-slider-arrow-prev {
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+}
+
+.cs-nav-style-side .cs-wbk-hero-slider-arrow-next {
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+}
+
+.cs-nav-style-side .cs-wbk-hero-slider-arrow:hover,
+.cs-nav-style-side .cs-wbk-hero-slider-arrow:focus-visible {
+  transform: translateY(calc(-50% - 1px));
+}
+
+.cs-nav-style-bottom_right .cs-wbk-hero-slider-arrow-prev {
+  right: 70px;
+  bottom: 16px;
+}
+
+.cs-nav-style-bottom_right .cs-wbk-hero-slider-arrow-next {
+  right: 16px;
+  bottom: 16px;
+}
+
+.cs-nav-style-bottom_rounded .cs-wbk-hero-slider-arrow {
+  bottom: 14px;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cs-nav-style-bottom_rounded .cs-wbk-hero-slider-arrow-prev {
+  left: calc(50% - 46px);
+}
+
+.cs-nav-style-bottom_rounded .cs-wbk-hero-slider-arrow-next {
+  left: calc(50% + 8px);
+}
+
 .cs-wbk-hero-slide-bg {
   width: 100%;
   height: var(--cs-slider-height);
@@ -166,5 +242,33 @@
     max-width: 100%;
     padding: 9px 14px;
     font-size: 0.92rem;
+  }
+
+  .cs-wbk-hero-slider-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+
+  .cs-nav-style-side .cs-wbk-hero-slider-arrow-prev {
+    left: 10px;
+  }
+
+  .cs-nav-style-side .cs-wbk-hero-slider-arrow-next {
+    right: 10px;
+  }
+
+  .cs-nav-style-bottom_right .cs-wbk-hero-slider-arrow-prev {
+    right: 54px;
+    bottom: 10px;
+  }
+
+  .cs-nav-style-bottom_right .cs-wbk-hero-slider-arrow-next {
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .cs-nav-style-bottom_rounded .cs-wbk-hero-slider-arrow {
+    bottom: 10px;
   }
 }

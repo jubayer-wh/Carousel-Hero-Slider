@@ -77,6 +77,13 @@ function cs_register_settings() {
         'carousel-hero-slider'
     );
 
+    add_settings_section(
+        'cs_wbk_hero_slider_navigation',
+        __( 'Navigation Arrows', 'carousel-hero-slider' ),
+        'cs_render_navigation_section_text',
+        'carousel-hero-slider'
+    );
+
     $display_fields = [
         'height' => __( 'Slider Height (px)', 'carousel-hero-slider' ),
         'timer'  => __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
@@ -121,6 +128,25 @@ function cs_register_settings() {
             ]
         );
     }
+
+    add_settings_field(
+        'cs_enable_arrows',
+        __( 'Show Navigation Arrows', 'carousel-hero-slider' ),
+        'cs_render_toggle_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_navigation',
+        [
+            'key' => 'enable_arrows',
+        ]
+    );
+
+    add_settings_field(
+        'cs_arrow_style',
+        __( 'Arrow Style', 'carousel-hero-slider' ),
+        'cs_render_arrow_style_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_navigation'
+    );
 }
 add_action( 'admin_init', 'cs_register_settings' );
 
@@ -136,6 +162,13 @@ function cs_render_animation_section_text() {
  */
 function cs_render_visibility_section_text() {
     echo '<p>' . esc_html__( 'Enable or disable slide title, caption, and button output on the frontend.', 'carousel-hero-slider' ) . '</p>';
+}
+
+/**
+ * Render helper text for navigation section.
+ */
+function cs_render_navigation_section_text() {
+    echo '<p>' . esc_html__( 'Enable overlay arrows and choose one style for slider navigation.', 'carousel-hero-slider' ) . '</p>';
 }
 
 /**
@@ -333,6 +366,12 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         $animation_style = 'default';
     }
 
+    $arrow_style = isset( $input['arrow_style'] ) ? sanitize_key( $input['arrow_style'] ) : $defaults['arrow_style'];
+
+    if ( ! in_array( $arrow_style, [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ) {
+        $arrow_style = 'side';
+    }
+
     return [
         'height'          => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
         'timer'           => max( 2000, absint( $input['timer'] ?? $defaults['timer'] ) ),
@@ -340,6 +379,8 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         'show_title'      => empty( $input['show_title'] ) ? 0 : 1,
         'show_caption'    => empty( $input['show_caption'] ) ? 0 : 1,
         'show_button'     => empty( $input['show_button'] ) ? 0 : 1,
+        'enable_arrows'   => empty( $input['enable_arrows'] ) ? 0 : 1,
+        'arrow_style'     => $arrow_style,
     ];
 }
 
@@ -395,6 +436,46 @@ function cs_render_animation_style_field() {
             <input
                 type="radio"
                 name="cs_wbk_hero_slider_settings[animation_style]"
+                value="<?php echo esc_attr( $value ); ?>"
+                <?php checked( $current_style, $value ); ?>
+            />
+            <span class="cs-animation-choice__content">
+                <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
+                <span class="description"><?php echo esc_html( $option['description'] ); ?></span>
+            </span>
+        </label>
+        <?php
+    }
+}
+
+
+/**
+ * Render arrow style selection radios.
+ */
+function cs_render_arrow_style_field() {
+    $settings      = cs_get_wbk_hero_slider_settings();
+    $current_style = isset( $settings['arrow_style'] ) ? $settings['arrow_style'] : 'side';
+    $options       = [
+        'side'           => [
+            'label'       => __( 'Side Arrows', 'carousel-hero-slider' ),
+            'description' => __( 'Left and right arrows on both sides of the slider image.', 'carousel-hero-slider' ),
+        ],
+        'bottom_right'   => [
+            'label'       => __( 'Bottom Right Arrows', 'carousel-hero-slider' ),
+            'description' => __( 'A compact arrow pair pinned to the slider\'s bottom-right corner.', 'carousel-hero-slider' ),
+        ],
+        'bottom_rounded' => [
+            'label'       => __( 'Bottom Rounded Arrows', 'carousel-hero-slider' ),
+            'description' => __( 'Small rounded arrows centered along the bottom of the slider.', 'carousel-hero-slider' ),
+        ],
+    ];
+
+    foreach ( $options as $value => $option ) {
+        ?>
+        <label class="cs-animation-choice">
+            <input
+                type="radio"
+                name="cs_wbk_hero_slider_settings[arrow_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />

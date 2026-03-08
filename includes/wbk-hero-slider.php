@@ -70,11 +70,13 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $timer_value = '' !== $atts['timer'] ? $atts['timer'] : $atts['speed'];
     $timer       = max( 2000, absint( $timer_value ) );
 
-    $show_title   = ! empty( $defaults['show_title'] );
-    $show_caption = ! empty( $defaults['show_caption'] );
-    $show_button  = ! empty( $defaults['show_button'] );
-    $animation    = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2', 'animation_3' ], true ) ? $defaults['animation_style'] : 'default';
-    $slides       = cs_get_hero_slides();
+    $show_title    = ! empty( $defaults['show_title'] );
+    $show_caption  = ! empty( $defaults['show_caption'] );
+    $show_button   = ! empty( $defaults['show_button'] );
+    $enable_arrows = ! empty( $defaults['enable_arrows'] );
+    $animation     = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2', 'animation_3' ], true ) ? $defaults['animation_style'] : 'default';
+    $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'side';
+    $slides        = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {
         return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
@@ -85,7 +87,17 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
+    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
+        <?php if ( $enable_arrows && count( $slides ) > 1 ) : ?>
+            <div class="cs-wbk-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'carousel-hero-slider' ); ?>">
+                <button type="button" class="cs-wbk-hero-slider-arrow cs-wbk-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'carousel-hero-slider' ); ?>">
+                    <span aria-hidden="true">&#10094;</span>
+                </button>
+                <button type="button" class="cs-wbk-hero-slider-arrow cs-wbk-hero-slider-arrow-next" data-direction="next" aria-label="<?php esc_attr_e( 'Next slide', 'carousel-hero-slider' ); ?>">
+                    <span aria-hidden="true">&#10095;</span>
+                </button>
+            </div>
+        <?php endif; ?>
         <?php foreach ( $slides as $index => $slide ) : ?>
             <article class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
                 <div class="cs-wbk-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
@@ -171,6 +183,8 @@ function cs_get_wbk_hero_slider_settings() {
         'show_title'      => 1,
         'show_caption'    => 1,
         'show_button'     => 1,
+        'enable_arrows'   => 1,
+        'arrow_style'     => 'side',
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );
