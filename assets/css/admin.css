@@ -3,40 +3,48 @@
   --cs-neon-2: #8f64ff;
   --cs-neon-3: #27f7c4;
   --cs-bg-main: #0b1020;
-  --cs-bg-card: rgba(11, 16, 32, 0.86);
+  --cs-bg-card: rgba(11, 16, 32, 0.88);
   --cs-text-main: #e8f2ff;
   --cs-text-muted: #a9bfd9;
 }
 
 .cs-admin-wrap .cs-admin-panel {
-  max-width: 1040px;
-  border-radius: 18px;
+  max-width: 1080px;
+  border-radius: 16px;
   background:
-    radial-gradient(circle at 0% 0%, rgba(66, 245, 255, 0.22), transparent 42%),
-    radial-gradient(circle at 100% 0%, rgba(143, 100, 255, 0.24), transparent 40%),
-    linear-gradient(135deg, rgba(14, 21, 42, 0.96), rgba(8, 12, 24, 0.96));
-  padding: 18px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    radial-gradient(circle at 0% 0%, rgba(66, 245, 255, 0.2), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(143, 100, 255, 0.2), transparent 44%),
+    linear-gradient(145deg, rgba(14, 21, 42, 0.96), rgba(8, 12, 24, 0.96));
+  padding: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+}
+
+.cs-admin-wrap .cs-admin-hero,
+.cs-admin-wrap .cs-admin-card {
+  border-radius: 12px;
+  border: 1px solid rgba(66, 245, 255, 0.2);
 }
 
 .cs-admin-wrap .cs-admin-hero {
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 14px;
+  padding: 16px;
+  margin-bottom: 10px;
   background: linear-gradient(130deg, rgba(66, 245, 255, 0.1), rgba(143, 100, 255, 0.12));
-  border: 1px solid rgba(66, 245, 255, 0.35);
+}
+
+.cs-admin-wrap .cs-admin-card {
+  margin-bottom: 10px;
+  padding: 12px;
+  background: var(--cs-bg-card);
 }
 
 .cs-admin-wrap h1,
 .cs-admin-wrap h2,
-.cs-admin-wrap h3,
 .cs-admin-wrap label,
 .cs-admin-wrap th,
 .cs-admin-wrap td {
   color: var(--cs-text-main);
 }
 
-.cs-admin-wrap .cs-admin-hero p,
 .cs-admin-wrap .description,
 .cs-admin-wrap p {
   color: var(--cs-text-muted);
@@ -46,84 +54,108 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
-.cs-admin-wrap .cs-admin-card {
-  border-radius: 14px;
-  margin-bottom: 12px;
-  padding: 14px;
-  background: var(--cs-bg-card);
-  border: 1px solid rgba(143, 100, 255, 0.26);
-  box-shadow: inset 0 0 0 1px rgba(66, 245, 255, 0.08);
+.cs-admin-wrap .cs-settings-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: start;
 }
 
-.cs-admin-wrap .cs-settings-form .form-table {
-  margin: 0;
-  border-collapse: separate;
-  border-spacing: 0 12px;
+.cs-admin-wrap .cs-settings-nav {
+  display: grid;
+  gap: 8px;
+  position: sticky;
+  top: 38px;
 }
 
-.cs-admin-wrap .cs-settings-form .form-table tr {
+.cs-admin-wrap .cs-settings-nav__button {
+  text-align: left;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(143, 100, 255, 0.22);
+  color: var(--cs-text-main);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-admin-wrap .cs-settings-nav__button:hover,
+.cs-admin-wrap .cs-settings-nav__button:focus-visible,
+.cs-admin-wrap .cs-settings-nav__button.is-active {
+  background: linear-gradient(90deg, rgba(66, 245, 255, 0.2), rgba(143, 100, 255, 0.22));
+  border-color: rgba(66, 245, 255, 0.45);
+  transform: translateX(2px);
+}
+
+.cs-admin-wrap .cs-settings-content {
+  position: relative;
+  min-height: 320px;
+}
+
+.cs-admin-wrap .cs-settings-panel {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(66, 245, 255, 0.12);
+  border-radius: 12px;
+  padding: 12px;
+  animation: cs-panel-in 220ms ease;
 }
 
-.cs-admin-wrap .cs-settings-form .form-table th,
-.cs-admin-wrap .cs-settings-form .form-table td {
-  padding: 14px 16px;
-  vertical-align: middle;
+.cs-admin-wrap .cs-settings-panel h2 {
+  margin: 0 0 4px;
 }
 
-.cs-admin-wrap .cs-settings-form .form-table th {
-  width: 250px;
-  border-radius: 10px 0 0 10px;
-}
-
-.cs-admin-wrap .cs-settings-form .form-table td {
-  border-radius: 0 10px 10px 0;
-}
-
-.cs-admin-wrap .cs-settings-form h2 {
-  margin-top: 18px;
-  margin-bottom: 6px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(143, 100, 255, 0.24);
-}
-
-.cs-admin-wrap .cs-settings-form h2:first-of-type {
+.cs-admin-wrap .cs-settings-panel .description {
   margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
+  margin-bottom: 8px;
+}
+
+.cs-admin-wrap .cs-settings-panel .form-table {
+  margin: 0;
+}
+
+.cs-admin-wrap .cs-settings-panel .form-table th,
+.cs-admin-wrap .cs-settings-panel .form-table td {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.cs-admin-wrap .cs-settings-panel .form-table th {
+  width: 240px;
+}
+
+@keyframes cs-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .cs-admin-wrap input[type='number'],
 .cs-admin-wrap input[type='url'],
 .cs-admin-wrap input[type='text'],
 .cs-admin-wrap textarea {
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(66, 245, 255, 0.35);
   background: rgba(7, 11, 23, 0.88);
   color: #e8f2ff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-}
-
-.cs-admin-wrap input[type='number']:focus,
-.cs-admin-wrap input[type='url']:focus,
-.cs-admin-wrap input[type='text']:focus,
-.cs-admin-wrap textarea:focus {
-  border-color: var(--cs-neon-1);
-  box-shadow: 0 0 0 1px var(--cs-neon-1), 0 0 18px rgba(66, 245, 255, 0.16);
-  transform: translateY(-1px);
 }
 
 .cs-admin-wrap .cs-setting-input {
   display: grid;
-  gap: 5px;
-  max-width: 320px;
+  gap: 4px;
+  max-width: 280px;
 }
 
-.cs-admin-wrap .cs-setting-input__hint {
+.cs-admin-wrap .cs-setting-input__hint,
+.cs-admin-wrap .cs-switch__label {
   font-size: 12px;
   color: var(--cs-text-muted);
 }
@@ -131,19 +163,17 @@
 .cs-admin-wrap .cs-switch {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .cs-admin-wrap .cs-switch input[type='checkbox'] {
   position: absolute;
   opacity: 0;
-  width: 1px;
-  height: 1px;
 }
 
 .cs-admin-wrap .cs-switch__track {
-  width: 44px;
-  height: 24px;
+  width: 40px;
+  height: 22px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.2);
   position: relative;
@@ -155,8 +185,8 @@
   position: absolute;
   top: 3px;
   left: 3px;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 999px;
   background: #fff;
   transition: transform 0.2s ease;
@@ -167,18 +197,23 @@
 }
 
 .cs-admin-wrap .cs-switch input[type='checkbox']:checked + .cs-switch__track::after {
-  transform: translateX(20px);
+  transform: translateX(18px);
 }
 
-.cs-admin-wrap .cs-switch__label {
-  font-size: 13px;
-  color: var(--cs-text-muted);
+.cs-admin-wrap .cs-animation-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(66, 245, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .cs-admin-wrap .button {
   margin-right: 0;
   border-radius: 999px;
-  border-color: rgba(66, 245, 255, 0.55);
 }
 
 .cs-admin-wrap .button-primary,
@@ -187,42 +222,6 @@
   border: none;
   color: #081021;
   font-weight: 600;
-  box-shadow: 0 6px 18px rgba(66, 245, 255, 0.28);
-}
-
-.cs-admin-wrap .button:hover,
-.cs-admin-wrap .button:focus {
-  transform: translateY(-1px);
-  transition: all 0.18s ease;
-}
-
-.cs-admin-wrap code {
-  font-size: 12px;
-  color: #dff8ff;
-  background: rgba(20, 32, 52, 0.92);
-  border: 1px solid rgba(66, 245, 255, 0.24);
-  border-radius: 8px;
-  padding: 2px 6px;
-}
-
-.cs-admin-wrap .cs-animation-choice {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 8px;
-  padding: 10px 12px;
-  border: 1px solid rgba(66, 245, 255, 0.2);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.cs-admin-wrap .cs-animation-choice input[type='radio'] {
-  margin-top: 2px;
-}
-
-.cs-admin-wrap .cs-animation-choice .description {
-  display: inline-block;
-  margin-top: 3px;
 }
 
 .post-type-cs_hero_slide #postexcerpt,
@@ -235,20 +234,31 @@
   display: none;
 }
 
+@media (max-width: 900px) {
+  .cs-admin-wrap .cs-settings-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cs-admin-wrap .cs-settings-nav {
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 782px) {
   .cs-admin-wrap .cs-admin-panel {
-    padding: 12px;
+    padding: 10px;
   }
 
-  .cs-admin-wrap .cs-admin-hero,
-  .cs-admin-wrap .cs-admin-card {
-    padding: 12px;
+  .cs-admin-wrap .cs-settings-nav {
+    grid-template-columns: 1fr;
   }
 
-  .cs-admin-wrap .cs-settings-form .form-table th,
-  .cs-admin-wrap .cs-settings-form .form-table td {
+  .cs-admin-wrap .cs-settings-panel .form-table th,
+  .cs-admin-wrap .cs-settings-panel .form-table td {
     display: block;
     width: 100%;
-    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }

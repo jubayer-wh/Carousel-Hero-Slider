@@ -39,6 +39,10 @@ function cs_enqueue_admin_assets( $hook_suffix ) {
     if ( 'toplevel_page_carousel-hero-slider' === $hook_suffix || ( $screen && 'cs_hero_slide' === $screen->post_type ) ) {
         wp_enqueue_style( 'cs-admin-css', CS_URL . 'assets/css/admin.css', [], CS_VER );
     }
+
+    if ( 'toplevel_page_carousel-hero-slider' === $hook_suffix ) {
+        wp_enqueue_script( 'cs-admin-settings-js', CS_URL . 'assets/js/admin-settings.js', [], CS_VER, true );
+    }
 }
 add_action( 'admin_enqueue_scripts', 'cs_enqueue_admin_assets' );
 
@@ -546,12 +550,35 @@ function cs_render_settings_page() {
         return;
     }
 
+    $sections = [
+        'cs_wbk_hero_slider_main'       => [
+            'title'       => __( 'Layout & Display', 'carousel-hero-slider' ),
+            'description' => __( 'Set the slider height and overall display layout.', 'carousel-hero-slider' ),
+        ],
+        'cs_wbk_hero_slider_timing'     => [
+            'title'       => __( 'Timing Controls', 'carousel-hero-slider' ),
+            'description' => __( 'Set how fast the slider rotates through slides.', 'carousel-hero-slider' ),
+        ],
+        'cs_wbk_hero_slider_animation'  => [
+            'title'       => __( 'Animation Settings', 'carousel-hero-slider' ),
+            'description' => __( 'Choose one animation style and control how slide content enters.', 'carousel-hero-slider' ),
+        ],
+        'cs_wbk_hero_slider_navigation' => [
+            'title'       => __( 'Navigation Arrows', 'carousel-hero-slider' ),
+            'description' => __( 'Enable overlay arrows and choose one style for slider navigation.', 'carousel-hero-slider' ),
+        ],
+        'cs_wbk_hero_slider_visibility' => [
+            'title'       => __( 'Content Visibility', 'carousel-hero-slider' ),
+            'description' => __( 'Enable or disable title, caption, and button output on the frontend.', 'carousel-hero-slider' ),
+        ],
+    ];
+
     ?>
     <div class="wrap cs-admin-wrap">
         <div class="cs-admin-panel">
             <div class="cs-admin-hero">
                 <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-                <p><?php esc_html_e( 'Organize display, timing, animation, navigation, and visibility settings in one clean workspace.', 'carousel-hero-slider' ); ?></p>
+                <p><?php esc_html_e( 'Compact, organized controls for display, timing, animation, navigation, and visibility.', 'carousel-hero-slider' ); ?></p>
                 <div class="cs-admin-actions">
                     <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
                         <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
@@ -564,11 +591,52 @@ function cs_render_settings_page() {
 
             <div class="cs-admin-card">
                 <form method="post" action="options.php" class="cs-settings-form">
-                    <?php
-                    settings_fields( 'cs_wbk_hero_slider_group' );
-                    do_settings_sections( 'carousel-hero-slider' );
-                    submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button' );
-                    ?>
+                    <?php settings_fields( 'cs_wbk_hero_slider_group' ); ?>
+
+                    <div class="cs-settings-layout" data-cs-settings-layout>
+                        <div class="cs-settings-nav" role="tablist" aria-label="<?php esc_attr_e( 'Settings categories', 'carousel-hero-slider' ); ?>">
+                            <?php $index = 0; ?>
+                            <?php foreach ( $sections as $section_id => $section ) : ?>
+                                <button
+                                    type="button"
+                                    class="cs-settings-nav__button<?php echo 0 === $index ? ' is-active' : ''; ?>"
+                                    role="tab"
+                                    id="<?php echo esc_attr( $section_id . '-tab' ); ?>"
+                                    aria-controls="<?php echo esc_attr( $section_id . '-panel' ); ?>"
+                                    aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"
+                                    data-panel-target="<?php echo esc_attr( $section_id ); ?>"
+                                >
+                                    <?php echo esc_html( $section['title'] ); ?>
+                                </button>
+                                <?php $index++; ?>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div class="cs-settings-content">
+                            <?php $index = 0; ?>
+                            <?php foreach ( $sections as $section_id => $section ) : ?>
+                                <section
+                                    class="cs-settings-panel<?php echo 0 === $index ? ' is-active' : ''; ?>"
+                                    id="<?php echo esc_attr( $section_id . '-panel' ); ?>"
+                                    role="tabpanel"
+                                    tabindex="0"
+                                    aria-labelledby="<?php echo esc_attr( $section_id . '-tab' ); ?>"
+                                    <?php echo 0 === $index ? '' : 'hidden'; ?>
+                                >
+                                    <h2><?php echo esc_html( $section['title'] ); ?></h2>
+                                    <p class="description"><?php echo esc_html( $section['description'] ); ?></p>
+                                    <table class="form-table" role="presentation">
+                                        <tbody>
+                                        <?php do_settings_fields( 'carousel-hero-slider', $section_id ); ?>
+                                        </tbody>
+                                    </table>
+                                </section>
+                                <?php $index++; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                    <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button' ); ?>
                 </form>
             </div>
 
@@ -581,3 +649,4 @@ function cs_render_settings_page() {
     </div>
     <?php
 }
+
