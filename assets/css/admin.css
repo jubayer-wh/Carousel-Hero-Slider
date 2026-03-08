@@ -9,26 +9,27 @@
 }
 
 .cs-admin-wrap .cs-admin-panel {
-  max-width: 980px;
+  max-width: 1040px;
   border-radius: 18px;
   background:
     radial-gradient(circle at 0% 0%, rgba(66, 245, 255, 0.22), transparent 42%),
     radial-gradient(circle at 100% 0%, rgba(143, 100, 255, 0.24), transparent 40%),
     linear-gradient(135deg, rgba(14, 21, 42, 0.96), rgba(8, 12, 24, 0.96));
-  padding: 16px;
+  padding: 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .cs-admin-wrap .cs-admin-hero {
   border-radius: 14px;
-  padding: 16px 18px;
-  margin-bottom: 12px;
+  padding: 20px;
+  margin-bottom: 14px;
   background: linear-gradient(130deg, rgba(66, 245, 255, 0.1), rgba(143, 100, 255, 0.12));
   border: 1px solid rgba(66, 245, 255, 0.35);
 }
 
 .cs-admin-wrap h1,
 .cs-admin-wrap h2,
+.cs-admin-wrap h3,
 .cs-admin-wrap label,
 .cs-admin-wrap th,
 .cs-admin-wrap td {
@@ -45,26 +46,55 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .cs-admin-wrap .cs-admin-card {
   border-radius: 14px;
   margin-bottom: 12px;
-  padding: 12px 14px;
+  padding: 14px;
   background: var(--cs-bg-card);
   border: 1px solid rgba(143, 100, 255, 0.26);
   box-shadow: inset 0 0 0 1px rgba(66, 245, 255, 0.08);
 }
 
-.cs-admin-wrap .form-table {
-  margin-top: 8px;
+.cs-admin-wrap .cs-settings-form .form-table {
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0 12px;
 }
 
-.cs-admin-wrap .form-table th,
-.cs-admin-wrap .form-table td {
+.cs-admin-wrap .cs-settings-form .form-table tr {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(66, 245, 255, 0.12);
+}
+
+.cs-admin-wrap .cs-settings-form .form-table th,
+.cs-admin-wrap .cs-settings-form .form-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+.cs-admin-wrap .cs-settings-form .form-table th {
+  width: 250px;
+  border-radius: 10px 0 0 10px;
+}
+
+.cs-admin-wrap .cs-settings-form .form-table td {
+  border-radius: 0 10px 10px 0;
+}
+
+.cs-admin-wrap .cs-settings-form h2 {
+  margin-top: 18px;
+  margin-bottom: 6px;
   padding-top: 10px;
-  padding-bottom: 10px;
+  border-top: 1px solid rgba(143, 100, 255, 0.24);
+}
+
+.cs-admin-wrap .cs-settings-form h2:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .cs-admin-wrap input[type='number'],
@@ -85,6 +115,64 @@
   border-color: var(--cs-neon-1);
   box-shadow: 0 0 0 1px var(--cs-neon-1), 0 0 18px rgba(66, 245, 255, 0.16);
   transform: translateY(-1px);
+}
+
+.cs-admin-wrap .cs-setting-input {
+  display: grid;
+  gap: 5px;
+  max-width: 320px;
+}
+
+.cs-admin-wrap .cs-setting-input__hint {
+  font-size: 12px;
+  color: var(--cs-text-muted);
+}
+
+.cs-admin-wrap .cs-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cs-admin-wrap .cs-switch input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.cs-admin-wrap .cs-switch__track {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.cs-admin-wrap .cs-switch__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.cs-admin-wrap .cs-switch input[type='checkbox']:checked + .cs-switch__track {
+  background: linear-gradient(90deg, var(--cs-neon-3), var(--cs-neon-1));
+}
+
+.cs-admin-wrap .cs-switch input[type='checkbox']:checked + .cs-switch__track::after {
+  transform: translateX(20px);
+}
+
+.cs-admin-wrap .cs-switch__label {
+  font-size: 13px;
+  color: var(--cs-text-muted);
 }
 
 .cs-admin-wrap .button {
@@ -117,6 +205,26 @@
   padding: 2px 6px;
 }
 
+.cs-admin-wrap .cs-animation-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border: 1px solid rgba(66, 245, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cs-admin-wrap .cs-animation-choice input[type='radio'] {
+  margin-top: 2px;
+}
+
+.cs-admin-wrap .cs-animation-choice .description {
+  display: inline-block;
+  margin-top: 3px;
+}
+
 .post-type-cs_hero_slide #postexcerpt,
 .post-type-cs_hero_slide #slugdiv,
 .post-type-cs_hero_slide #commentstatusdiv,
@@ -136,24 +244,11 @@
   .cs-admin-wrap .cs-admin-card {
     padding: 12px;
   }
-}
 
-.cs-admin-wrap .cs-animation-choice {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 10px;
-  padding: 10px 12px;
-  border: 1px solid rgba(66, 245, 255, 0.2);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.cs-admin-wrap .cs-animation-choice input[type='radio'] {
-  margin-top: 2px;
-}
-
-.cs-admin-wrap .cs-animation-choice .description {
-  display: inline-block;
-  margin-top: 3px;
+  .cs-admin-wrap .cs-settings-form .form-table th,
+  .cs-admin-wrap .cs-settings-form .form-table td {
+    display: block;
+    width: 100%;
+    border-radius: 0;
+  }
 }

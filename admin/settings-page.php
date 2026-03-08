@@ -58,8 +58,15 @@ function cs_register_settings() {
 
     add_settings_section(
         'cs_wbk_hero_slider_main',
-        __( 'Display Settings', 'carousel-hero-slider' ),
+        __( 'Layout & Display', 'carousel-hero-slider' ),
         '__return_false',
+        'carousel-hero-slider'
+    );
+
+    add_settings_section(
+        'cs_wbk_hero_slider_timing',
+        __( 'Timing Controls', 'carousel-hero-slider' ),
+        'cs_render_timing_section_text',
         'carousel-hero-slider'
     );
 
@@ -84,23 +91,27 @@ function cs_register_settings() {
         'carousel-hero-slider'
     );
 
-    $display_fields = [
-        'height' => __( 'Slider Height (px)', 'carousel-hero-slider' ),
-        'timer'  => __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
-    ];
+    add_settings_field(
+        'cs_height',
+        __( 'Slider Height (px)', 'carousel-hero-slider' ),
+        'cs_render_number_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_main',
+        [
+            'key' => 'height',
+        ]
+    );
 
-    foreach ( $display_fields as $key => $label ) {
-        add_settings_field(
-            'cs_' . $key,
-            $label,
-            'cs_render_number_field',
-            'carousel-hero-slider',
-            'cs_wbk_hero_slider_main',
-            [
-                'key' => $key,
-            ]
-        );
-    }
+    add_settings_field(
+        'cs_timer',
+        __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
+        'cs_render_number_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_timing',
+        [
+            'key' => 'timer',
+        ]
+    );
 
     add_settings_field(
         'cs_animation_style',
@@ -151,10 +162,17 @@ function cs_register_settings() {
 add_action( 'admin_init', 'cs_register_settings' );
 
 /**
+ * Render helper text for timing section.
+ */
+function cs_render_timing_section_text() {
+    echo '<p>' . esc_html__( 'Set how fast the slider rotates through slides.', 'carousel-hero-slider' ) . '</p>';
+}
+
+/**
  * Render helper text for animation section.
  */
 function cs_render_animation_section_text() {
-    echo '<p>' . esc_html__( 'Choose one animation style and control how frequently slides change automatically.', 'carousel-hero-slider' ) . '</p>';
+    echo '<p>' . esc_html__( 'Choose one animation style and control how slide content enters.', 'carousel-hero-slider' ) . '</p>';
 }
 
 /**
@@ -394,14 +412,22 @@ function cs_render_number_field( $args ) {
     $key      = $args['key'];
     $value    = $settings[ $key ] ?? '';
     ?>
-    <input
-        type="number"
-        class="regular-text"
-        name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
-        value="<?php echo esc_attr( (string) $value ); ?>"
-        min="1"
-        step="1"
-    />
+    <div class="cs-setting-input">
+        <input
+            type="number"
+            class="regular-text"
+            name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            value="<?php echo esc_attr( (string) $value ); ?>"
+            min="1"
+            step="1"
+        />
+        <?php if ( 'height' === $key ) : ?>
+            <span class="cs-setting-input__hint"><?php esc_html_e( 'Recommended: 380–560 px', 'carousel-hero-slider' ); ?></span>
+        <?php endif; ?>
+        <?php if ( 'timer' === $key ) : ?>
+            <span class="cs-setting-input__hint"><?php esc_html_e( 'Minimum: 2000 ms', 'carousel-hero-slider' ); ?></span>
+        <?php endif; ?>
+    </div>
     <?php
 }
 
@@ -498,7 +524,7 @@ function cs_render_toggle_field( $args ) {
     $key      = $args['key'];
     $checked  = ! empty( $settings[ $key ] );
     ?>
-    <label for="cs-<?php echo esc_attr( $key ); ?>">
+    <label class="cs-switch" for="cs-<?php echo esc_attr( $key ); ?>">
         <input
             id="cs-<?php echo esc_attr( $key ); ?>"
             type="checkbox"
@@ -506,7 +532,8 @@ function cs_render_toggle_field( $args ) {
             value="1"
             <?php checked( $checked ); ?>
         />
-        <?php esc_html_e( 'Enable', 'carousel-hero-slider' ); ?>
+        <span class="cs-switch__track" aria-hidden="true"></span>
+        <span class="cs-switch__label"><?php esc_html_e( 'Enable setting', 'carousel-hero-slider' ); ?></span>
     </label>
     <?php
 }
@@ -524,7 +551,7 @@ function cs_render_settings_page() {
         <div class="cs-admin-panel">
             <div class="cs-admin-hero">
                 <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-                <p><?php esc_html_e( 'Manage global slider behavior, animation style, timer, and content visibility.', 'carousel-hero-slider' ); ?></p>
+                <p><?php esc_html_e( 'Organize display, timing, animation, navigation, and visibility settings in one clean workspace.', 'carousel-hero-slider' ); ?></p>
                 <div class="cs-admin-actions">
                     <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
                         <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
@@ -536,7 +563,7 @@ function cs_render_settings_page() {
             </div>
 
             <div class="cs-admin-card">
-                <form method="post" action="options.php">
+                <form method="post" action="options.php" class="cs-settings-form">
                     <?php
                     settings_fields( 'cs_wbk_hero_slider_group' );
                     do_settings_sections( 'carousel-hero-slider' );
