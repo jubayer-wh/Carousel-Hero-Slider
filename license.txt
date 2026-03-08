@@ -1,0 +1,4 @@
+WEBKIH Site Builder Kit is licensed under the GNU General Public License v2 or later (GPL-2.0-or-later).
+You may use, modify, and redistribute this software under the terms of the GPL license.
+
+License: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
