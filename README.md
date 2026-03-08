@@ -1,18 +1,36 @@
 # Carousel Hero Slider
 
-A lightweight, SEO-friendly WordPress plugin that provides one focused module: **`wbk_hero_slider`**.
+Carousel Hero Slider is a lightweight WordPress plugin for adding a clean, responsive hero carousel to pages and posts using a single shortcode.
 
-## Features
-- Single module only: hero carousel slider
+## Overview
+This plugin is intentionally focused on one purpose: rendering a configurable hero slider (`wbk_hero_slider`) with simple admin controls for common display options.
+
+### Core capabilities
+- Single module architecture for easier maintenance
 - Shortcode support:
   - `[wbk_hero_slider]`
-- Admin settings for default images, height, and autoplay speed
-- Minimal file structure and scoped assets for faster loading
+- Admin settings for:
+  - Default/fallback images
+  - Slider height
+  - Autoplay speed
+- Scoped front-end and admin assets to keep load overhead low
 
-## Use cases
-- Hero banner slider for homepage
-- Carousel slider for landing pages
-- Responsive image rotation block
+## Typical use cases
+- Homepage hero banner rotation
+- Landing page visual carousel
+- Responsive featured image slider block
+
+## WordPress tag count guidance
+If you are preparing a `readme.txt` for WordPress plugin distribution, keep the **Tags** field concise.
+
+- Recommended: only highly relevant tags
+- Platform limit to follow: **maximum 5 tags**
+
+Example:
+`Tags: slider, hero-slider, carousel, responsive, shortcode`
+
+## Branding and naming note
+This README intentionally uses only project-generic naming and does not include confidential business identifiers or unrelated third-party trademark branding.
 
 ## Files included
 - `carousel-hero-slider.php`
