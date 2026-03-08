@@ -137,3 +137,23 @@
     padding: 12px;
   }
 }
+
+.cs-admin-wrap .cs-animation-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(66, 245, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cs-admin-wrap .cs-animation-choice input[type='radio'] {
+  margin-top: 2px;
+}
+
+.cs-admin-wrap .cs-animation-choice .description {
+  display: inline-block;
+  margin-top: 3px;
+}

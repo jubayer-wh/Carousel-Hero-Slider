@@ -329,7 +329,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
 
     $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
 
-    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2', 'animation_3', 'animation_4' ], true ) ) {
+    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2', 'animation_3' ], true ) ) {
         $animation_style = 'default';
     }
 
@@ -391,15 +391,17 @@ function cs_render_animation_style_field() {
 
     foreach ( $options as $value => $option ) {
         ?>
-        <label style="display:block;margin-bottom:10px;">
+        <label class="cs-animation-choice">
             <input
                 type="radio"
                 name="cs_wbk_hero_slider_settings[animation_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
-            <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
-            <span class="description"><?php echo esc_html( $option['description'] ); ?></span>
+            <span class="cs-animation-choice__content">
+                <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
+                <span class="description"><?php echo esc_html( $option['description'] ); ?></span>
+            </span>
         </label>
         <?php
     }
