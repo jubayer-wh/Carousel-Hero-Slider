@@ -329,7 +329,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
 
     $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
 
-    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2' ], true ) ) {
+    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2', 'animation_3', 'animation_4' ], true ) ) {
         $animation_style = 'default';
     }
 
@@ -371,21 +371,35 @@ function cs_render_animation_style_field() {
     $settings      = cs_get_wbk_hero_slider_settings();
     $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'default';
     $options       = [
-        'default'     => __( 'Default', 'carousel-hero-slider' ),
-        'animation_1' => __( 'Animation 1', 'carousel-hero-slider' ),
-        'animation_2' => __( 'Animation 2', 'carousel-hero-slider' ),
+        'default'     => [
+            'label'       => __( 'Default', 'carousel-hero-slider' ),
+            'description' => __( 'Standard smooth slide transition.', 'carousel-hero-slider' ),
+        ],
+        'animation_1' => [
+            'label'       => __( 'Animation 1 (Bounce)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide content appears with a light bouncing motion.', 'carousel-hero-slider' ),
+        ],
+        'animation_2' => [
+            'label'       => __( 'Animation 2 (Extend)', 'carousel-hero-slider' ),
+            'description' => __( 'Elements smoothly expand or stretch into view.', 'carousel-hero-slider' ),
+        ],
+        'animation_3' => [
+            'label'       => __( 'Animation 3 (Fade)', 'carousel-hero-slider' ),
+            'description' => __( 'Content gently fades in for a clean and elegant effect.', 'carousel-hero-slider' ),
+        ],
     ];
 
-    foreach ( $options as $value => $label ) {
+    foreach ( $options as $value => $option ) {
         ?>
-        <label style="display:block;margin-bottom:6px;">
+        <label style="display:block;margin-bottom:10px;">
             <input
                 type="radio"
                 name="cs_wbk_hero_slider_settings[animation_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
-            <?php echo esc_html( $label ); ?>
+            <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
+            <span class="description"><?php echo esc_html( $option['description'] ); ?></span>
         </label>
         <?php
     }

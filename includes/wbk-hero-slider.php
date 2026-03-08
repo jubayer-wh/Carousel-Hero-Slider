@@ -73,7 +73,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $show_title   = ! empty( $defaults['show_title'] );
     $show_caption = ! empty( $defaults['show_caption'] );
     $show_button  = ! empty( $defaults['show_button'] );
-    $animation    = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2' ], true ) ? $defaults['animation_style'] : 'default';
+    $animation    = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2', 'animation_3', 'animation_4' ], true ) ? $defaults['animation_style'] : 'default';
     $slides       = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {
