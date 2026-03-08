@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Register admin menu.
+ * Register admin menu and settings submenu.
  */
 function cs_register_admin_menu() {
     add_menu_page(
@@ -15,6 +15,15 @@ function cs_register_admin_menu() {
         'cs_render_settings_page',
         'dashicons-images-alt2',
         25
+    );
+
+    add_submenu_page(
+        'carousel-hero-slider',
+        __( 'Slider Settings', 'carousel-hero-slider' ),
+        __( 'Settings', 'carousel-hero-slider' ),
+        'manage_options',
+        'carousel-hero-slider',
+        'cs_render_settings_page'
     );
 }
 add_action( 'admin_menu', 'cs_register_admin_menu' );
@@ -54,12 +63,19 @@ function cs_register_settings() {
         'carousel-hero-slider'
     );
 
-    $fields = [
+    add_settings_section(
+        'cs_wbk_hero_slider_visibility',
+        __( 'Content Visibility', 'carousel-hero-slider' ),
+        'cs_render_visibility_section_text',
+        'carousel-hero-slider'
+    );
+
+    $display_fields = [
         'height' => __( 'Slider Height (px)', 'carousel-hero-slider' ),
         'speed'  => __( 'Auto Slide Speed (ms)', 'carousel-hero-slider' ),
     ];
 
-    foreach ( $fields as $key => $label ) {
+    foreach ( $display_fields as $key => $label ) {
         add_settings_field(
             'cs_' . $key,
             $label,
@@ -71,8 +87,35 @@ function cs_register_settings() {
             ]
         );
     }
+
+    $visibility_fields = [
+        'show_title'   => __( 'Show Slide Title', 'carousel-hero-slider' ),
+        'show_caption' => __( 'Show Caption Text', 'carousel-hero-slider' ),
+        'show_button'  => __( 'Show Slide Button', 'carousel-hero-slider' ),
+    ];
+
+    foreach ( $visibility_fields as $key => $label ) {
+        add_settings_field(
+            'cs_' . $key,
+            $label,
+            'cs_render_toggle_field',
+            'carousel-hero-slider',
+            'cs_wbk_hero_slider_visibility',
+            [
+                'key' => $key,
+                'label' => $label,
+            ]
+        );
+    }
 }
 add_action( 'admin_init', 'cs_register_settings' );
+
+/**
+ * Render helper text for visibility section.
+ */
+function cs_render_visibility_section_text() {
+    echo '<p>' . esc_html__( 'Enable or disable slide title, caption, and button output on the frontend.', 'carousel-hero-slider' ) . '</p>';
+}
 
 /**
  * Add metaboxes for slide fields.
@@ -232,7 +275,7 @@ function cs_handle_duplicate_slide_action() {
     wp_safe_redirect(
         add_query_arg(
             [
-                'post_type' => 'cs_hero_slide',
+                'post_type'  => 'cs_hero_slide',
                 'duplicated' => 1,
             ],
             admin_url( 'edit.php' )
@@ -264,13 +307,16 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
     $defaults = cs_get_wbk_hero_slider_settings();
 
     return [
-        'height' => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
-        'speed'  => max( 2000, absint( $input['speed'] ?? $defaults['speed'] ) ),
+        'height'       => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
+        'speed'        => max( 2000, absint( $input['speed'] ?? $defaults['speed'] ) ),
+        'show_title'   => empty( $input['show_title'] ) ? 0 : 1,
+        'show_caption' => empty( $input['show_caption'] ) ? 0 : 1,
+        'show_button'  => empty( $input['show_button'] ) ? 0 : 1,
     ];
 }
 
 /**
- * Render one settings field.
+ * Render one numeric settings field.
  *
  * @param array<string, string> $args Field args.
  */
@@ -291,6 +337,29 @@ function cs_render_field( $args ) {
 }
 
 /**
+ * Render one visibility toggle field.
+ *
+ * @param array<string, string> $args Field args.
+ */
+function cs_render_toggle_field( $args ) {
+    $settings = cs_get_wbk_hero_slider_settings();
+    $key      = $args['key'];
+    $checked  = ! empty( $settings[ $key ] );
+    ?>
+    <label for="cs-<?php echo esc_attr( $key ); ?>">
+        <input
+            id="cs-<?php echo esc_attr( $key ); ?>"
+            type="checkbox"
+            name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            value="1"
+            <?php checked( $checked ); ?>
+        />
+        <?php esc_html_e( 'Enable', 'carousel-hero-slider' ); ?>
+    </label>
+    <?php
+}
+
+/**
  * Render settings page.
  */
 function cs_render_settings_page() {
@@ -300,8 +369,8 @@ function cs_render_settings_page() {
 
     ?>
     <div class="wrap cs-admin-wrap">
-        <h1><?php esc_html_e( 'Carousel Hero Slider', 'carousel-hero-slider' ); ?></h1>
-        <p><?php esc_html_e( 'Create unlimited slides from Hero Slides and render them with one shortcode.', 'carousel-hero-slider' ); ?></p>
+        <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
+        <p><?php esc_html_e( 'Manage global slider behavior and control the visibility of title, caption, and button content.', 'carousel-hero-slider' ); ?></p>
 
         <p>
             <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">

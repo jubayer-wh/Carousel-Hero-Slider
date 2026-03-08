@@ -65,9 +65,12 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
         'wbk_hero_slider'
     );
 
-    $height = max( 220, absint( $atts['height'] ) );
-    $speed  = max( 2000, absint( $atts['speed'] ) );
-    $slides = cs_get_hero_slides();
+    $height        = max( 220, absint( $atts['height'] ) );
+    $speed         = max( 2000, absint( $atts['speed'] ) );
+    $show_title    = ! empty( $defaults['show_title'] );
+    $show_caption  = ! empty( $defaults['show_caption'] );
+    $show_button   = ! empty( $defaults['show_button'] );
+    $slides        = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {
         return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
@@ -83,11 +86,15 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
             <article class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
                 <div class="cs-wbk-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
                 <div class="cs-wbk-hero-slide-overlay">
-                    <h2 class="cs-wbk-hero-slide-title"><?php echo esc_html( $slide['title'] ); ?></h2>
-                    <?php if ( ! empty( $slide['caption'] ) ) : ?>
+                    <?php if ( $show_title && ! empty( $slide['title'] ) ) : ?>
+                        <h2 class="cs-wbk-hero-slide-title"><?php echo esc_html( $slide['title'] ); ?></h2>
+                    <?php endif; ?>
+
+                    <?php if ( $show_caption && ! empty( $slide['caption'] ) ) : ?>
                         <p class="cs-wbk-hero-slide-caption"><?php echo esc_html( $slide['caption'] ); ?></p>
                     <?php endif; ?>
-                    <?php if ( ! empty( $slide['button_label'] ) && ! empty( $slide['button_link'] ) ) : ?>
+
+                    <?php if ( $show_button && ! empty( $slide['button_label'] ) && ! empty( $slide['button_link'] ) ) : ?>
                         <a class="cs-wbk-hero-slide-button" href="<?php echo esc_url( $slide['button_link'] ); ?>">
                             <?php echo esc_html( $slide['button_label'] ); ?>
                         </a>
@@ -154,8 +161,11 @@ function cs_get_hero_slides() {
  */
 function cs_get_wbk_hero_slider_settings() {
     $defaults = [
-        'height' => 460,
-        'speed'  => 4500,
+        'height'       => 460,
+        'speed'        => 4500,
+        'show_title'   => 1,
+        'show_caption' => 1,
+        'show_button'  => 1,
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );
