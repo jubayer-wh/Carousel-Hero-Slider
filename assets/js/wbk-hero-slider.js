@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    var speed = parseInt(slider.getAttribute('data-speed') || '4500', 10);
+    var timer = parseInt(slider.getAttribute('data-timer') || '4500', 10);
     var current = 0;
 
     slides.forEach(function (slide, index) {
@@ -23,6 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
       slides[next].setAttribute('aria-hidden', 'false');
 
       current = next;
-    }, Math.max(speed, 2000));
+    }, Math.max(timer, 2000));
   });
 });

@@ -59,18 +59,22 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $atts = shortcode_atts(
         [
             'height' => (string) $defaults['height'],
-            'speed'  => (string) $defaults['speed'],
+            'timer'  => (string) $defaults['timer'],
+            'speed'  => '',
         ],
         $atts,
         'wbk_hero_slider'
     );
 
-    $height        = max( 220, absint( $atts['height'] ) );
-    $speed         = max( 2000, absint( $atts['speed'] ) );
-    $show_title    = ! empty( $defaults['show_title'] );
-    $show_caption  = ! empty( $defaults['show_caption'] );
-    $show_button   = ! empty( $defaults['show_button'] );
-    $slides        = cs_get_hero_slides();
+    $height      = max( 220, absint( $atts['height'] ) );
+    $timer_value = '' !== $atts['timer'] ? $atts['timer'] : $atts['speed'];
+    $timer       = max( 2000, absint( $timer_value ) );
+
+    $show_title   = ! empty( $defaults['show_title'] );
+    $show_caption = ! empty( $defaults['show_caption'] );
+    $show_button  = ! empty( $defaults['show_button'] );
+    $animation    = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2' ], true ) ? $defaults['animation_style'] : 'default';
+    $slides       = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {
         return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
@@ -81,7 +85,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cs-wbk-hero-slider" data-speed="<?php echo esc_attr( $speed ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
+    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
         <?php foreach ( $slides as $index => $slide ) : ?>
             <article class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
                 <div class="cs-wbk-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
@@ -161,11 +165,12 @@ function cs_get_hero_slides() {
  */
 function cs_get_wbk_hero_slider_settings() {
     $defaults = [
-        'height'       => 460,
-        'speed'        => 4500,
-        'show_title'   => 1,
-        'show_caption' => 1,
-        'show_button'  => 1,
+        'height'          => 460,
+        'timer'           => 4500,
+        'animation_style' => 'default',
+        'show_title'      => 1,
+        'show_caption'    => 1,
+        'show_button'     => 1,
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );
@@ -174,5 +179,11 @@ function cs_get_wbk_hero_slider_settings() {
         return $defaults;
     }
 
-    return wp_parse_args( $settings, $defaults );
+    $settings = wp_parse_args( $settings, $defaults );
+
+    if ( empty( $settings['timer'] ) && ! empty( $settings['speed'] ) ) {
+        $settings['timer'] = absint( $settings['speed'] );
+    }
+
+    return $settings;
 }

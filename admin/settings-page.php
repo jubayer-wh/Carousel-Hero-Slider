@@ -64,6 +64,13 @@ function cs_register_settings() {
     );
 
     add_settings_section(
+        'cs_wbk_hero_slider_animation',
+        __( 'Animation Settings', 'carousel-hero-slider' ),
+        'cs_render_animation_section_text',
+        'carousel-hero-slider'
+    );
+
+    add_settings_section(
         'cs_wbk_hero_slider_visibility',
         __( 'Content Visibility', 'carousel-hero-slider' ),
         'cs_render_visibility_section_text',
@@ -72,14 +79,14 @@ function cs_register_settings() {
 
     $display_fields = [
         'height' => __( 'Slider Height (px)', 'carousel-hero-slider' ),
-        'speed'  => __( 'Auto Slide Speed (ms)', 'carousel-hero-slider' ),
+        'timer'  => __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
     ];
 
     foreach ( $display_fields as $key => $label ) {
         add_settings_field(
             'cs_' . $key,
             $label,
-            'cs_render_field',
+            'cs_render_number_field',
             'carousel-hero-slider',
             'cs_wbk_hero_slider_main',
             [
@@ -87,6 +94,14 @@ function cs_register_settings() {
             ]
         );
     }
+
+    add_settings_field(
+        'cs_animation_style',
+        __( 'Animation Style', 'carousel-hero-slider' ),
+        'cs_render_animation_style_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_animation'
+    );
 
     $visibility_fields = [
         'show_title'   => __( 'Show Slide Title', 'carousel-hero-slider' ),
@@ -103,12 +118,18 @@ function cs_register_settings() {
             'cs_wbk_hero_slider_visibility',
             [
                 'key' => $key,
-                'label' => $label,
             ]
         );
     }
 }
 add_action( 'admin_init', 'cs_register_settings' );
+
+/**
+ * Render helper text for animation section.
+ */
+function cs_render_animation_section_text() {
+    echo '<p>' . esc_html__( 'Choose one animation style and control how frequently slides change automatically.', 'carousel-hero-slider' ) . '</p>';
+}
 
 /**
  * Render helper text for visibility section.
@@ -306,12 +327,19 @@ add_action( 'admin_notices', 'cs_duplicate_slide_notice' );
 function cs_sanitize_wbk_hero_slider_settings( $input ) {
     $defaults = cs_get_wbk_hero_slider_settings();
 
+    $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
+
+    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2' ], true ) ) {
+        $animation_style = 'default';
+    }
+
     return [
-        'height'       => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
-        'speed'        => max( 2000, absint( $input['speed'] ?? $defaults['speed'] ) ),
-        'show_title'   => empty( $input['show_title'] ) ? 0 : 1,
-        'show_caption' => empty( $input['show_caption'] ) ? 0 : 1,
-        'show_button'  => empty( $input['show_button'] ) ? 0 : 1,
+        'height'          => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
+        'timer'           => max( 2000, absint( $input['timer'] ?? $defaults['timer'] ) ),
+        'animation_style' => $animation_style,
+        'show_title'      => empty( $input['show_title'] ) ? 0 : 1,
+        'show_caption'    => empty( $input['show_caption'] ) ? 0 : 1,
+        'show_button'     => empty( $input['show_button'] ) ? 0 : 1,
     ];
 }
 
@@ -320,7 +348,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
  *
  * @param array<string, string> $args Field args.
  */
-function cs_render_field( $args ) {
+function cs_render_number_field( $args ) {
     $settings = cs_get_wbk_hero_slider_settings();
     $key      = $args['key'];
     $value    = $settings[ $key ] ?? '';
@@ -334,6 +362,33 @@ function cs_render_field( $args ) {
         step="1"
     />
     <?php
+}
+
+/**
+ * Render animation style selection radios.
+ */
+function cs_render_animation_style_field() {
+    $settings      = cs_get_wbk_hero_slider_settings();
+    $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'default';
+    $options       = [
+        'default'     => __( 'Default', 'carousel-hero-slider' ),
+        'animation_1' => __( 'Animation 1', 'carousel-hero-slider' ),
+        'animation_2' => __( 'Animation 2', 'carousel-hero-slider' ),
+    ];
+
+    foreach ( $options as $value => $label ) {
+        ?>
+        <label style="display:block;margin-bottom:6px;">
+            <input
+                type="radio"
+                name="cs_wbk_hero_slider_settings[animation_style]"
+                value="<?php echo esc_attr( $value ); ?>"
+                <?php checked( $current_style, $value ); ?>
+            />
+            <?php echo esc_html( $label ); ?>
+        </label>
+        <?php
+    }
 }
 
 /**
@@ -370,7 +425,7 @@ function cs_render_settings_page() {
     ?>
     <div class="wrap cs-admin-wrap">
         <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-        <p><?php esc_html_e( 'Manage global slider behavior and control the visibility of title, caption, and button content.', 'carousel-hero-slider' ); ?></p>
+        <p><?php esc_html_e( 'Manage global slider behavior, animation style, timer, and content visibility.', 'carousel-hero-slider' ); ?></p>
 
         <p>
             <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
@@ -393,7 +448,7 @@ function cs_render_settings_page() {
 
         <h2><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></h2>
         <p><code>[wbk_hero_slider]</code></p>
-        <p><?php esc_html_e( 'Optional overrides:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" speed="4500"]</code></p>
+        <p><?php esc_html_e( 'Optional overrides:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
     </div>
     <?php
 }
