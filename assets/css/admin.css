@@ -1,3 +1,139 @@
+.cs-admin-wrap {
+  --cs-neon-1: #42f5ff;
+  --cs-neon-2: #8f64ff;
+  --cs-neon-3: #27f7c4;
+  --cs-bg-main: #0b1020;
+  --cs-bg-card: rgba(11, 16, 32, 0.86);
+  --cs-text-main: #e8f2ff;
+  --cs-text-muted: #a9bfd9;
+}
+
+.cs-admin-wrap .cs-admin-panel {
+  max-width: 980px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(66, 245, 255, 0.22), transparent 42%),
+    radial-gradient(circle at 100% 0%, rgba(143, 100, 255, 0.24), transparent 40%),
+    linear-gradient(135deg, rgba(14, 21, 42, 0.96), rgba(8, 12, 24, 0.96));
+  padding: 16px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.cs-admin-wrap .cs-admin-hero {
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  background: linear-gradient(130deg, rgba(66, 245, 255, 0.1), rgba(143, 100, 255, 0.12));
+  border: 1px solid rgba(66, 245, 255, 0.35);
+}
+
+.cs-admin-wrap h1,
+.cs-admin-wrap h2,
+.cs-admin-wrap label,
+.cs-admin-wrap th,
+.cs-admin-wrap td {
+  color: var(--cs-text-main);
+}
+
+.cs-admin-wrap .cs-admin-hero p,
+.cs-admin-wrap .description,
+.cs-admin-wrap p {
+  color: var(--cs-text-muted);
+}
+
+.cs-admin-wrap .cs-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cs-admin-wrap .cs-admin-card {
+  border-radius: 14px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: var(--cs-bg-card);
+  border: 1px solid rgba(143, 100, 255, 0.26);
+  box-shadow: inset 0 0 0 1px rgba(66, 245, 255, 0.08);
+}
+
+.cs-admin-wrap .form-table {
+  margin-top: 8px;
+}
+
+.cs-admin-wrap .form-table th,
+.cs-admin-wrap .form-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.cs-admin-wrap input[type='number'],
+.cs-admin-wrap input[type='url'],
+.cs-admin-wrap input[type='text'],
+.cs-admin-wrap textarea {
+  border-radius: 10px;
+  border: 1px solid rgba(66, 245, 255, 0.35);
+  background: rgba(7, 11, 23, 0.88);
+  color: #e8f2ff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.cs-admin-wrap input[type='number']:focus,
+.cs-admin-wrap input[type='url']:focus,
+.cs-admin-wrap input[type='text']:focus,
+.cs-admin-wrap textarea:focus {
+  border-color: var(--cs-neon-1);
+  box-shadow: 0 0 0 1px var(--cs-neon-1), 0 0 18px rgba(66, 245, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+.cs-admin-wrap .button {
+  margin-right: 0;
+  border-radius: 999px;
+  border-color: rgba(66, 245, 255, 0.55);
+}
+
+.cs-admin-wrap .button-primary,
+.cs-admin-wrap .cs-save-button {
+  background: linear-gradient(90deg, var(--cs-neon-1), var(--cs-neon-2));
+  border: none;
+  color: #081021;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(66, 245, 255, 0.28);
+}
+
+.cs-admin-wrap .button:hover,
+.cs-admin-wrap .button:focus {
+  transform: translateY(-1px);
+  transition: all 0.18s ease;
+}
+
 .cs-admin-wrap code {
-  font-size: 13px;
+  font-size: 12px;
+  color: #dff8ff;
+  background: rgba(20, 32, 52, 0.92);
+  border: 1px solid rgba(66, 245, 255, 0.24);
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+.post-type-cs_hero_slide #postexcerpt,
+.post-type-cs_hero_slide #slugdiv,
+.post-type-cs_hero_slide #commentstatusdiv,
+.post-type-cs_hero_slide #commentsdiv,
+.post-type-cs_hero_slide #trackbacksdiv,
+.post-type-cs_hero_slide #authordiv,
+.post-type-cs_hero_slide #revisionsdiv {
+  display: none;
+}
+
+@media (max-width: 782px) {
+  .cs-admin-wrap .cs-admin-panel {
+    padding: 12px;
+  }
+
+  .cs-admin-wrap .cs-admin-hero,
+  .cs-admin-wrap .cs-admin-card {
+    padding: 12px;
+  }
 }

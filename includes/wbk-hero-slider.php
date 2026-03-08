@@ -4,6 +4,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Register Hero Slide custom post type.
+ */
+function cs_register_hero_slide_post_type() {
+    $labels = [
+        'name'               => __( 'Hero Slides', 'carousel-hero-slider' ),
+        'singular_name'      => __( 'Hero Slide', 'carousel-hero-slider' ),
+        'add_new'            => __( 'Add New Slide', 'carousel-hero-slider' ),
+        'add_new_item'       => __( 'Add New Hero Slide', 'carousel-hero-slider' ),
+        'edit_item'          => __( 'Edit Hero Slide', 'carousel-hero-slider' ),
+        'new_item'           => __( 'New Hero Slide', 'carousel-hero-slider' ),
+        'view_item'          => __( 'View Hero Slide', 'carousel-hero-slider' ),
+        'search_items'       => __( 'Search Hero Slides', 'carousel-hero-slider' ),
+        'not_found'          => __( 'No hero slides found.', 'carousel-hero-slider' ),
+        'not_found_in_trash' => __( 'No hero slides found in Trash.', 'carousel-hero-slider' ),
+        'menu_name'          => __( 'Hero Slides', 'carousel-hero-slider' ),
+    ];
+
+    register_post_type(
+        'cs_hero_slide',
+        [
+            'labels'              => $labels,
+            'public'              => false,
+            'show_ui'             => true,
+            'show_in_menu'        => 'carousel-hero-slider',
+            'menu_position'       => null,
+            'supports'            => [ 'title', 'thumbnail', 'page-attributes' ],
+            'capability_type'     => 'post',
+            'hierarchical'        => false,
+            'exclude_from_search' => true,
+            'rewrite'             => false,
+            'query_var'           => false,
+        ]
+    );
+}
+add_action( 'init', 'cs_register_hero_slide_post_type' );
+
+/**
  * Register hero slider shortcode.
  */
 function cs_register_wbk_hero_slider_shortcode() {
@@ -21,30 +58,26 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
 
     $atts = shortcode_atts(
         [
-            'img1'   => $defaults['img1'],
-            'img2'   => $defaults['img2'],
-            'img3'   => $defaults['img3'],
             'height' => (string) $defaults['height'],
-            'speed'  => (string) $defaults['speed'],
+            'timer'  => (string) $defaults['timer'],
+            'speed'  => '',
         ],
         $atts,
         'wbk_hero_slider'
     );
 
-    $height = max( 200, absint( $atts['height'] ) );
-    $speed  = max( 1500, absint( $atts['speed'] ) );
-    $images = array_values(
-        array_filter(
-            [
-                esc_url_raw( $atts['img1'] ),
-                esc_url_raw( $atts['img2'] ),
-                esc_url_raw( $atts['img3'] ),
-            ]
-        )
-    );
+    $height      = max( 220, absint( $atts['height'] ) );
+    $timer_value = '' !== $atts['timer'] ? $atts['timer'] : $atts['speed'];
+    $timer       = max( 2000, absint( $timer_value ) );
 
-    if ( empty( $images ) ) {
-        return '<p><strong>Carousel Slider:</strong> Add at least one image URL in shortcode or plugin settings.</p>';
+    $show_title   = ! empty( $defaults['show_title'] );
+    $show_caption = ! empty( $defaults['show_caption'] );
+    $show_button  = ! empty( $defaults['show_button'] );
+    $animation    = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2', 'animation_3', 'animation_4' ], true ) ? $defaults['animation_style'] : 'default';
+    $slides       = cs_get_hero_slides();
+
+    if ( empty( $slides ) ) {
+        return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
     }
 
     wp_enqueue_style( 'cs-wbk-hero-slider-css', CS_URL . 'assets/css/wbk-hero-slider.css', [], CS_VER );
@@ -52,16 +85,77 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cs-wbk-hero-slider" data-speed="<?php echo esc_attr( $speed ); ?>">
-        <?php foreach ( $images as $index => $image ) : ?>
-            <div class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>">
-                <div class="cs-wbk-hero-slide-bg" style="height:<?php echo esc_attr( $height ); ?>px;background-image:url('<?php echo esc_url( $image ); ?>');"></div>
-            </div>
+    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
+        <?php foreach ( $slides as $index => $slide ) : ?>
+            <article class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
+                <div class="cs-wbk-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
+                <div class="cs-wbk-hero-slide-overlay">
+                    <?php if ( $show_title && ! empty( $slide['title'] ) ) : ?>
+                        <h2 class="cs-wbk-hero-slide-title"><?php echo esc_html( $slide['title'] ); ?></h2>
+                    <?php endif; ?>
+
+                    <?php if ( $show_caption && ! empty( $slide['caption'] ) ) : ?>
+                        <p class="cs-wbk-hero-slide-caption"><?php echo esc_html( $slide['caption'] ); ?></p>
+                    <?php endif; ?>
+
+                    <?php if ( $show_button && ! empty( $slide['button_label'] ) && ! empty( $slide['button_link'] ) ) : ?>
+                        <a class="cs-wbk-hero-slide-button" href="<?php echo esc_url( $slide['button_link'] ); ?>">
+                            <?php echo esc_html( $slide['button_label'] ); ?>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </article>
         <?php endforeach; ?>
     </div>
     <?php
 
     return ob_get_clean();
+}
+
+/**
+ * Query slide data from custom post type.
+ *
+ * @return array<int, array<string, string>>
+ */
+function cs_get_hero_slides() {
+    $query = new WP_Query(
+        [
+            'post_type'      => 'cs_hero_slide',
+            'posts_per_page' => -1,
+            'orderby'        => [
+                'menu_order' => 'ASC',
+                'date'       => 'DESC',
+            ],
+            'post_status'    => 'publish',
+            'no_found_rows'  => true,
+        ]
+    );
+
+    if ( ! $query->have_posts() ) {
+        return [];
+    }
+
+    $slides = [];
+
+    foreach ( $query->posts as $post ) {
+        $image = get_the_post_thumbnail_url( $post->ID, 'full' );
+
+        if ( empty( $image ) ) {
+            continue;
+        }
+
+        $slides[] = [
+            'title'        => get_the_title( $post->ID ),
+            'caption'      => (string) get_post_meta( $post->ID, '_cs_slide_caption', true ),
+            'button_label' => (string) get_post_meta( $post->ID, '_cs_slide_button_label', true ),
+            'button_link'  => (string) get_post_meta( $post->ID, '_cs_slide_button_link', true ),
+            'image'        => $image,
+        ];
+    }
+
+    wp_reset_postdata();
+
+    return $slides;
 }
 
 /**
@@ -71,11 +165,12 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
  */
 function cs_get_wbk_hero_slider_settings() {
     $defaults = [
-        'img1'   => '',
-        'img2'   => '',
-        'img3'   => '',
-        'height' => 360,
-        'speed'  => 3500,
+        'height'          => 460,
+        'timer'           => 4500,
+        'animation_style' => 'default',
+        'show_title'      => 1,
+        'show_caption'    => 1,
+        'show_button'     => 1,
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );
@@ -84,5 +179,11 @@ function cs_get_wbk_hero_slider_settings() {
         return $defaults;
     }
 
-    return wp_parse_args( $settings, $defaults );
+    $settings = wp_parse_args( $settings, $defaults );
+
+    if ( empty( $settings['timer'] ) && ! empty( $settings['speed'] ) ) {
+        $settings['timer'] = absint( $settings['speed'] );
+    }
+
+    return $settings;
 }

@@ -1,21 +1,21 @@
 === Carousel Hero Slider ===
 Contributors: jubayer1
-Tags: carousel slider, hero slider, wordpress slider, image carousel, hero block slider, responsive slider, shortcode slider
+Tags: carousel, hero-slider, wordpress, responsive, shortcode
 Requires at least: 6.0
-Tested up to: 6.6
+Tested up to: 6.9
 Stable tag: 1.0.0
 License: GPLv2 or later
 
-An SEO-friendly WordPress carousel and hero slider plugin with shortcode support to create fast, responsive hero block sliders.
+A lightweight WordPress hero carousel plugin with shortcode support for fast, responsive slider sections.
 
 == Description ==
-Carousel Hero Slider helps you create modern **hero sliders** and **image carousel sections** in WordPress using a lightweight shortcode-driven workflow.
+Carousel Hero Slider helps you create modern hero sliders and image carousel sections in WordPress using a focused shortcode-driven workflow.
 
 Best for:
 - homepage hero sliders
 - landing page banner sliders
 - rotating image carousels
-- responsive hero block showcase sections
+- responsive hero section showcases
 
 Features:
 - Single-purpose `wbk_hero_slider` module for better performance.
