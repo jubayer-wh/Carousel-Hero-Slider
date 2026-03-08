@@ -1,3 +1,17 @@
 .cs-admin-wrap code {
   font-size: 13px;
 }
+
+.cs-admin-wrap .button {
+  margin-right: 8px;
+}
+
+.post-type-cs_hero_slide #postexcerpt,
+.post-type-cs_hero_slide #slugdiv,
+.post-type-cs_hero_slide #commentstatusdiv,
+.post-type-cs_hero_slide #commentsdiv,
+.post-type-cs_hero_slide #trackbacksdiv,
+.post-type-cs_hero_slide #authordiv,
+.post-type-cs_hero_slide #revisionsdiv {
+  display: none;
+}
