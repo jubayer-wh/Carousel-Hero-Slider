@@ -177,6 +177,18 @@ function cs_get_wbk_hero_slider_animation_styles() {
             'label'       => __( 'Animation 10 (Blur Focus)', 'carousel-hero-slider' ),
             'description' => __( 'Content fades in from a soft blur and becomes sharp as it settles into position.', 'carousel-hero-slider' ),
         ],
+        'animation_11' => [
+            'label'       => __( 'Animation 11 (Flip Enter)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide content rotates subtly in 3D before smoothly settling.', 'carousel-hero-slider' ),
+        ],
+        'animation_12' => [
+            'label'       => __( 'Animation 12 (Curtain Reveal)', 'carousel-hero-slider' ),
+            'description' => __( 'A smooth sliding overlay reveals the slide content underneath.', 'carousel-hero-slider' ),
+        ],
+        'animation_13' => [
+            'label'       => __( 'Animation 13 (Elastic Rise)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide content rises with a subtle spring motion before settling.', 'carousel-hero-slider' ),
+        ],
     ];
 
     /**
