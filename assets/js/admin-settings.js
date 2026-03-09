@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-cs-shortcode-copy]').forEach(function (copyWrap) {
     var copyButton = copyWrap.querySelector('[data-cs-shortcode-button]');
     var shortcodeEl = copyWrap.querySelector('[data-cs-shortcode-text]');
+    var tooltipEl = copyWrap.querySelector('[data-cs-shortcode-tooltip]');
 
     if (!copyButton || !shortcodeEl) {
       return;
@@ -61,25 +62,33 @@ document.addEventListener('DOMContentLoaded', function () {
     var defaultLabel = copyButton.getAttribute('data-copy-label') || 'Copy';
     var copiedLabel = copyButton.getAttribute('data-copied-label') || 'Copied!';
 
+    var showCopiedState = function () {
+      copyWrap.classList.remove('is-copied');
+      void copyWrap.offsetWidth;
+      copyWrap.classList.add('is-copied');
+
+      copyButton.textContent = copiedLabel;
+
+      if (tooltipEl) {
+        tooltipEl.setAttribute('aria-hidden', 'false');
+      }
+
+      window.setTimeout(function () {
+        copyButton.textContent = defaultLabel;
+        copyWrap.classList.remove('is-copied');
+
+        if (tooltipEl) {
+          tooltipEl.setAttribute('aria-hidden', 'true');
+        }
+      }, 1200);
+    };
+
     copyButton.addEventListener('click', function () {
       var shortcode = shortcodeEl.textContent || '';
 
       if (!shortcode) {
         return;
       }
-
-      var showCopiedState = function () {
-        copyWrap.classList.remove('is-copied');
-        void copyWrap.offsetWidth;
-        copyWrap.classList.add('is-copied');
-
-        copyButton.textContent = copiedLabel;
-
-        window.setTimeout(function () {
-          copyButton.textContent = defaultLabel;
-          copyWrap.classList.remove('is-copied');
-        }, 1200);
-      };
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(shortcode).then(showCopiedState).catch(function () {

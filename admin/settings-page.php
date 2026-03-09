@@ -562,9 +562,12 @@ function cs_render_settings_page() {
     <div class="wrap cs-admin-wrap">
         <div class="cs-admin-panel">
             <div class="cs-admin-hero">
-                <div class="cs-admin-hero__main">
-                    <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-                    <p><?php esc_html_e( 'Compact, organized controls for display, timing, animation, navigation, and visibility.', 'carousel-hero-slider' ); ?></p>
+                <div class="cs-admin-hero__row cs-admin-hero__row--top">
+                    <div class="cs-admin-hero__title-group">
+                        <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
+                        <p><?php esc_html_e( 'Controls for display, timing, animation, navigation, and visibility.', 'carousel-hero-slider' ); ?></p>
+                    </div>
+
                     <div class="cs-admin-actions">
                         <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
                             <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
@@ -575,14 +578,16 @@ function cs_render_settings_page() {
                     </div>
                 </div>
 
-                <aside class="cs-admin-hero__shortcode" aria-label="<?php esc_attr_e( 'Shortcode helper', 'carousel-hero-slider' ); ?>">
+                <div class="cs-admin-hero__row cs-admin-hero__row--bottom" aria-label="<?php esc_attr_e( 'Shortcode helper', 'carousel-hero-slider' ); ?>">
                     <p class="cs-admin-hero__shortcode-label"><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></p>
-                    <div class="cs-shortcode-copy" data-cs-shortcode-copy>
+                    <div class="cs-admin-hero__shortcode-tools" data-cs-shortcode-copy>
                         <code class="cs-shortcode-copy__value" data-cs-shortcode-text>[wbk_hero_slider]</code>
                         <button type="button" class="button cs-shortcode-copy__button" data-cs-shortcode-button data-copy-label="<?php esc_attr_e( 'Copy', 'carousel-hero-slider' ); ?>" data-copied-label="<?php esc_attr_e( 'Copied!', 'carousel-hero-slider' ); ?>"><?php esc_html_e( 'Copy', 'carousel-hero-slider' ); ?></button>
+                        <span class="cs-shortcode-copy__tooltip" data-cs-shortcode-tooltip role="status" aria-live="polite" aria-hidden="true"><?php esc_html_e( 'Copied!', 'carousel-hero-slider' ); ?></span>
                     </div>
-                    <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
-                </aside>
+                </div>
+
+                <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
             </div>
 
             <div class="cs-admin-card">

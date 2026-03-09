@@ -1,121 +1,143 @@
 .cs-admin-wrap {
-  --cs-neon-1: #42f5ff;
-  --cs-neon-2: #8f64ff;
-  --cs-neon-3: #27f7c4;
-  --cs-bg-main: #0b1020;
-  --cs-bg-card: rgba(11, 16, 32, 0.88);
-  --cs-text-main: #e8f2ff;
-  --cs-text-muted: #a9bfd9;
+  --cs-accent: #4f7cff;
+  --cs-accent-strong: #3158d8;
+  --cs-accent-soft: rgba(79, 124, 255, 0.14);
+  --cs-border: #d7dfed;
+  --cs-border-strong: #bec9dd;
+  --cs-text-main: #1f2937;
+  --cs-text-muted: #5f6e84;
+  --cs-surface: #ffffff;
+  --cs-surface-soft: #f7f9fc;
+  --cs-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --cs-shadow-md: 0 8px 20px rgba(15, 23, 42, 0.08);
 }
 
 .cs-admin-wrap .cs-admin-panel {
   max-width: 1080px;
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(66, 245, 255, 0.2), transparent 40%),
-    radial-gradient(circle at 100% 0%, rgba(143, 100, 255, 0.2), transparent 44%),
-    linear-gradient(145deg, rgba(14, 21, 42, 0.96), rgba(8, 12, 24, 0.96));
-  padding: 14px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
 }
 
 .cs-admin-wrap .cs-admin-hero,
 .cs-admin-wrap .cs-admin-card {
   border-radius: 12px;
-  border: 1px solid rgba(66, 245, 255, 0.2);
+  border: 1px solid var(--cs-border);
+  background: var(--cs-surface);
+  box-shadow: var(--cs-shadow-sm);
 }
 
 .cs-admin-wrap .cs-admin-hero {
-  padding: 12px 14px;
   margin-bottom: 10px;
-  background: linear-gradient(130deg, rgba(66, 245, 255, 0.1), rgba(143, 100, 255, 0.12));
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: start;
-}
-
-.cs-admin-wrap .cs-admin-hero h1 {
-  margin: 0 0 4px;
-  font-size: 1.4rem;
-}
-
-.cs-admin-wrap .cs-admin-hero p {
-  margin: 0;
-}
-
-.cs-admin-wrap .cs-admin-hero__main {
+  padding: 12px 14px;
   display: grid;
   gap: 8px;
 }
 
-.cs-admin-wrap .cs-admin-hero__shortcode {
-  min-width: 290px;
+.cs-admin-wrap .cs-admin-hero__row {
   display: grid;
-  gap: 6px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(66, 245, 255, 0.26);
-  background: rgba(5, 10, 22, 0.45);
+  align-items: center;
+  gap: 10px;
+}
+
+.cs-admin-wrap .cs-admin-hero__row--top {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.cs-admin-wrap .cs-admin-hero__row--bottom {
+  grid-template-columns: auto minmax(0, 1fr);
+  border-top: 1px solid var(--cs-border);
+  padding-top: 8px;
+}
+
+.cs-admin-wrap .cs-admin-hero h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  color: var(--cs-text-main);
+}
+
+.cs-admin-wrap .cs-admin-hero p {
+  margin: 0;
+  color: var(--cs-text-muted);
+}
+
+.cs-admin-wrap .cs-admin-hero__title-group {
+  display: grid;
+  gap: 2px;
 }
 
 .cs-admin-wrap .cs-admin-hero__shortcode-label {
   margin: 0;
   font-size: 12px;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  color: var(--cs-text-main);
   text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.cs-admin-wrap .cs-admin-hero__shortcode-tools {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  position: relative;
 }
 
 .cs-admin-wrap .cs-admin-hero__shortcode-hint {
-  margin: 0;
   font-size: 12px;
-}
-
-.cs-admin-wrap .cs-shortcode-copy {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px;
-  align-items: center;
+  color: var(--cs-text-muted);
 }
 
 .cs-admin-wrap .cs-shortcode-copy__value {
-  display: block;
-  overflow-x: auto;
-  padding: 8px 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  background: #111827;
+  border: 1px solid #2d3c57;
+  color: #f3f6ff;
   border-radius: 8px;
-  border: 1px solid rgba(143, 100, 255, 0.3);
-  background: rgba(0, 0, 0, 0.28);
-  color: #fff;
+  padding: 7px 10px;
   white-space: nowrap;
 }
 
 .cs-admin-wrap .cs-shortcode-copy__button {
-  min-width: 84px;
+  min-width: 78px;
 }
 
-.cs-admin-wrap .cs-shortcode-copy.is-copied .cs-shortcode-copy__button {
+.cs-admin-wrap .cs-shortcode-copy__tooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 999px;
+  color: #fff;
+  background: #111827;
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.cs-admin-wrap .cs-admin-hero__shortcode-tools.is-copied .cs-shortcode-copy__tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cs-admin-wrap .cs-admin-hero__shortcode-tools.is-copied .cs-shortcode-copy__button {
   animation: cs-copy-bounce 280ms ease;
+  box-shadow: 0 0 0 3px rgba(79, 124, 255, 0.18);
 }
 
 @keyframes cs-copy-bounce {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  45% {
-    transform: translateY(-3px) scale(1.04);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
+  0% { transform: translateY(0); }
+  45% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
 }
 
 .cs-admin-wrap .cs-admin-card {
   margin-bottom: 10px;
   padding: 12px;
-  background: var(--cs-bg-card);
 }
 
-.cs-admin-wrap h1,
 .cs-admin-wrap h2,
 .cs-admin-wrap label,
 .cs-admin-wrap th,
@@ -131,14 +153,14 @@
 .cs-admin-wrap .cs-admin-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
-  margin-top: 10px;
 }
 
 .cs-admin-wrap .cs-settings-layout {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 12px;
+  grid-template-columns: 228px 1fr;
+  gap: 14px;
   align-items: start;
 }
 
@@ -146,49 +168,55 @@
   display: grid;
   gap: 8px;
   position: sticky;
-  top: 38px;
+  top: 24px;
 }
 
 .cs-admin-wrap .cs-settings-nav__button {
   text-align: left;
   width: 100%;
   padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(143, 100, 255, 0.22);
+  border-radius: 8px;
+  border: 1px solid var(--cs-border);
+  border-left: 3px solid transparent;
   color: var(--cs-text-main);
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--cs-surface-soft);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cs-admin-wrap .cs-settings-nav__button:hover,
-.cs-admin-wrap .cs-settings-nav__button:focus-visible,
+.cs-admin-wrap .cs-settings-nav__button:focus-visible {
+  background: #eef3ff;
+  border-color: var(--cs-border-strong);
+}
+
 .cs-admin-wrap .cs-settings-nav__button.is-active {
-  background: linear-gradient(90deg, rgba(66, 245, 255, 0.2), rgba(143, 100, 255, 0.22));
-  border-color: rgba(66, 245, 255, 0.45);
-  transform: translateX(2px);
+  background: #eaf0ff;
+  border-color: #b8c9ff;
+  border-left-color: var(--cs-accent);
+  box-shadow: inset 0 0 0 1px rgba(79, 124, 255, 0.12);
 }
 
 .cs-admin-wrap .cs-settings-content {
   position: relative;
-  min-height: 320px;
 }
 
 .cs-admin-wrap .cs-settings-panel {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(66, 245, 255, 0.12);
-  border-radius: 12px;
+  background: #fbfcff;
+  border: 1px solid var(--cs-border);
+  border-radius: 10px;
   padding: 12px;
-  animation: cs-panel-in 220ms ease;
+  animation: cs-panel-in 180ms ease;
 }
 
 .cs-admin-wrap .cs-settings-panel h2 {
   margin: 0 0 4px;
+  font-size: 1.05rem;
 }
 
 .cs-admin-wrap .cs-settings-panel .description {
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .cs-admin-wrap .cs-settings-panel .form-table {
@@ -197,18 +225,25 @@
 
 .cs-admin-wrap .cs-settings-panel .form-table th,
 .cs-admin-wrap .cs-settings-panel .form-table td {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e6ecf7;
+  vertical-align: middle;
+}
+
+.cs-admin-wrap .cs-settings-panel .form-table tr:last-child th,
+.cs-admin-wrap .cs-settings-panel .form-table tr:last-child td {
+  border-bottom: 0;
 }
 
 .cs-admin-wrap .cs-settings-panel .form-table th {
-  width: 240px;
+  width: 260px;
 }
 
 @keyframes cs-panel-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -221,9 +256,9 @@
 .cs-admin-wrap input[type='text'],
 .cs-admin-wrap textarea {
   border-radius: 8px;
-  border: 1px solid rgba(66, 245, 255, 0.35);
-  background: rgba(7, 11, 23, 0.88);
-  color: #e8f2ff;
+  border: 1px solid var(--cs-border-strong);
+  background: #fff;
+  color: var(--cs-text-main);
 }
 
 .cs-admin-wrap .cs-setting-input {
@@ -241,7 +276,9 @@
 .cs-admin-wrap .cs-switch {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  width: min(320px, 100%);
+  gap: 10px;
 }
 
 .cs-admin-wrap .cs-switch input[type='checkbox'] {
@@ -253,9 +290,11 @@
   width: 40px;
   height: 22px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: #ced7e8;
   position: relative;
   transition: background 0.2s ease;
+  order: 2;
+  flex-shrink: 0;
 }
 
 .cs-admin-wrap .cs-switch__track::after {
@@ -270,8 +309,13 @@
   transition: transform 0.2s ease;
 }
 
+.cs-admin-wrap .cs-switch__label {
+  order: 1;
+  margin-left: auto;
+}
+
 .cs-admin-wrap .cs-switch input[type='checkbox']:checked + .cs-switch__track {
-  background: linear-gradient(90deg, var(--cs-neon-3), var(--cs-neon-1));
+  background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-strong));
 }
 
 .cs-admin-wrap .cs-switch input[type='checkbox']:checked + .cs-switch__track::after {
@@ -284,22 +328,41 @@
   gap: 8px;
   margin-bottom: 8px;
   padding: 8px 10px;
-  border: 1px solid rgba(66, 245, 255, 0.2);
+  border: 1px solid var(--cs-border);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.02);
+  background: #fff;
 }
 
 .cs-admin-wrap .button {
   margin-right: 0;
-  border-radius: 999px;
+  border-radius: 8px;
 }
 
 .cs-admin-wrap .button-primary,
 .cs-admin-wrap .cs-save-button {
-  background: linear-gradient(90deg, var(--cs-neon-1), var(--cs-neon-2));
+  background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-strong));
   border: none;
-  color: #081021;
+  color: #fff;
   font-weight: 600;
+  box-shadow: 0 6px 16px rgba(49, 88, 216, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-admin-wrap .button-primary:hover,
+.cs-admin-wrap .cs-save-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(49, 88, 216, 0.28);
+}
+
+.cs-admin-wrap .cs-settings-form .submit {
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-top: 1px solid var(--cs-border);
+  margin: 14px -12px -12px;
+  padding: 10px 12px;
+  text-align: center;
 }
 
 .post-type-cs_hero_slide #postexcerpt,
@@ -313,12 +376,14 @@
 }
 
 @media (max-width: 900px) {
-  .cs-admin-wrap .cs-admin-hero {
+  .cs-admin-wrap .cs-admin-hero__row--top,
+  .cs-admin-wrap .cs-admin-hero__row--bottom {
     grid-template-columns: 1fr;
   }
 
-  .cs-admin-wrap .cs-admin-hero__shortcode {
-    min-width: 0;
+  .cs-admin-wrap .cs-admin-actions,
+  .cs-admin-wrap .cs-admin-hero__shortcode-tools {
+    justify-content: flex-start;
   }
 
   .cs-admin-wrap .cs-settings-layout {
@@ -333,7 +398,7 @@
 
 @media (max-width: 782px) {
   .cs-admin-wrap .cs-admin-panel {
-    padding: 10px;
+    padding: 0;
   }
 
   .cs-admin-wrap .cs-settings-nav {
@@ -346,5 +411,15 @@
     width: 100%;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .cs-admin-wrap .cs-switch {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .cs-admin-wrap .cs-switch__label {
+    margin-left: 0;
+    margin-right: auto;
   }
 }
