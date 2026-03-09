@@ -839,6 +839,20 @@
 }
 
 @media (max-width: 767px) {
+
+  .cs-wbk-hero-slider.cs-mobile-image-contain .cs-wbk-hero-slide-bg {
+    background-size: contain;
+  }
+
+  .cs-wbk-hero-slider.cs-mobile-image-no_repeat .cs-wbk-hero-slide-bg {
+    background-size: auto;
+    background-repeat: no-repeat;
+  }
+
+  .cs-wbk-hero-slider.cs-mobile-image-cover .cs-wbk-hero-slide-bg {
+    background-size: cover;
+  }
+
   .cs-wbk-hero-slider {
     border-radius: 10px;
     margin: 16px auto;

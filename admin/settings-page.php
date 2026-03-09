@@ -118,6 +118,14 @@ function cs_register_settings() {
     );
 
     add_settings_field(
+        'cs_mobile_image_behavior',
+        __( 'Mobile Image Behavior', 'carousel-hero-slider' ),
+        'cs_render_mobile_image_behavior_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_main'
+    );
+
+    add_settings_field(
         'cs_animation_style',
         __( 'Animation Style', 'carousel-hero-slider' ),
         'cs_render_animation_style_field',
@@ -419,6 +427,12 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         $arrow_style = 'bottom_rounded';
     }
 
+    $mobile_image_behavior = isset( $input['mobile_image_behavior'] ) ? sanitize_key( $input['mobile_image_behavior'] ) : $defaults['mobile_image_behavior'];
+
+    if ( ! in_array( $mobile_image_behavior, [ 'cover', 'contain', 'no_repeat' ], true ) ) {
+        $mobile_image_behavior = 'cover';
+    }
+
     return [
         'height'          => max( 220, absint( $input['height'] ?? $defaults['height'] ) ),
         'timer'           => max( 2000, absint( $input['timer'] ?? $defaults['timer'] ) ),
@@ -429,6 +443,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         'center_content'  => empty( $input['center_content'] ) ? 0 : 1,
         'enable_arrows'   => empty( $input['enable_arrows'] ) ? 0 : 1,
         'arrow_style'     => $arrow_style,
+        'mobile_image_behavior' => $mobile_image_behavior,
         'text_color'      => cs_sanitize_color_value( $input['text_color'] ?? $defaults['text_color'], $defaults['text_color'] ),
         'button_bg_color' => cs_sanitize_color_value( $input['button_bg_color'] ?? $defaults['button_bg_color'], $defaults['button_bg_color'] ),
     ];
@@ -509,6 +524,45 @@ function cs_render_animation_style_field() {
                 name="cs_wbk_hero_slider_settings[animation_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
+            />
+            <span class="cs-animation-choice__content">
+                <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
+                <span class="description"><?php echo esc_html( $option['description'] ); ?></span>
+            </span>
+        </label>
+        <?php
+    }
+}
+
+/**
+ * Render mobile image behavior selection radios.
+ */
+function cs_render_mobile_image_behavior_field() {
+    $settings         = cs_get_wbk_hero_slider_settings();
+    $current_behavior = isset( $settings['mobile_image_behavior'] ) ? $settings['mobile_image_behavior'] : 'cover';
+    $options          = [
+        'cover'     => [
+            'label'       => __( 'Cover', 'carousel-hero-slider' ),
+            'description' => __( 'Fill the slide area by cropping as needed (current behavior).', 'carousel-hero-slider' ),
+        ],
+        'contain'   => [
+            'label'       => __( 'Contain', 'carousel-hero-slider' ),
+            'description' => __( 'Show the full image on mobile while keeping it inside the slide area.', 'carousel-hero-slider' ),
+        ],
+        'no_repeat' => [
+            'label'       => __( 'No Repeat', 'carousel-hero-slider' ),
+            'description' => __( 'Keep the image at its original size and prevent tiling on mobile.', 'carousel-hero-slider' ),
+        ],
+    ];
+
+    foreach ( $options as $value => $option ) {
+        ?>
+        <label class="cs-animation-choice">
+            <input
+                type="radio"
+                name="cs_wbk_hero_slider_settings[mobile_image_behavior]"
+                value="<?php echo esc_attr( $value ); ?>"
+                <?php checked( $current_behavior, $value ); ?>
             />
             <span class="cs-animation-choice__content">
                 <strong><?php echo esc_html( $option['label'] ); ?></strong><br />
@@ -719,4 +773,3 @@ function cs_render_settings_page() {
     </div>
     <?php
 }
-
