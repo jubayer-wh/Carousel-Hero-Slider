@@ -1,5 +1,7 @@
 .cs-wbk-hero-slider {
   --cs-slider-height: 460px;
+  --cs-slider-text-color: #ffffff;
+  --cs-slider-button-bg: #ffffff;
   max-width: 1200px;
   margin: 24px auto;
   border-radius: 16px;
@@ -788,7 +790,7 @@
   align-items: flex-start;
   gap: 12px;
   padding: clamp(20px, 5vw, 56px);
-  color: #fff;
+  color: var(--cs-slider-text-color);
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.05) 100%);
 }
 
@@ -823,7 +825,7 @@
   justify-content: center;
   padding: 10px 18px;
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--cs-slider-button-bg);
   color: #111;
   text-decoration: none;
   font-weight: 600;

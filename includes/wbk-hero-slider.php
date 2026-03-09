@@ -76,7 +76,17 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $show_button    = ! empty( $defaults['show_button'] );
     $center_content = ! empty( $defaults['center_content'] );
     $enable_arrows  = ! empty( $defaults['enable_arrows'] );
-    $animation     = isset( $animation_styles[ $defaults['animation_style'] ] ) ? $defaults['animation_style'] : 'default';
+    $text_color     = sanitize_hex_color( (string) ( $defaults['text_color'] ?? '' ) );
+    $button_bg_color = sanitize_hex_color( (string) ( $defaults['button_bg_color'] ?? '' ) );
+
+    if ( ! $text_color ) {
+        $text_color = '#ffffff';
+    }
+
+    if ( ! $button_bg_color ) {
+        $button_bg_color = '#ffffff';
+    }
+    $animation     = isset( $animation_styles[ $defaults['animation_style'] ] ) ? $defaults['animation_style'] : 'animation_12';
     $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'bottom_rounded';
     $slides        = cs_get_hero_slides();
 
@@ -89,7 +99,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
 
     ob_start();
     ?>
-    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?><?php echo $center_content ? ' cs-content-align-center' : ''; ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;">
+    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?><?php echo $center_content ? ' cs-content-align-center' : ''; ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;--cs-slider-text-color:<?php echo esc_attr( $text_color ); ?>;--cs-slider-button-bg:<?php echo esc_attr( $button_bg_color ); ?>;">
         <?php if ( $enable_arrows && count( $slides ) > 1 ) : ?>
             <div class="cs-wbk-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'carousel-hero-slider' ); ?>">
                 <button type="button" class="cs-wbk-hero-slider-arrow cs-wbk-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'carousel-hero-slider' ); ?>">
@@ -254,13 +264,15 @@ function cs_get_wbk_hero_slider_settings() {
     $defaults = [
         'height'          => 460,
         'timer'           => 4500,
-        'animation_style' => 'default',
+        'animation_style' => 'animation_12',
         'show_title'      => 1,
         'show_caption'    => 1,
         'show_button'     => 1,
         'center_content'  => 0,
         'enable_arrows'   => 1,
         'arrow_style'     => 'bottom_rounded',
+        'text_color'      => '#ffffff',
+        'button_bg_color' => '#ffffff',
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );

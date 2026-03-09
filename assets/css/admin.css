@@ -450,3 +450,23 @@
     margin-right: auto;
   }
 }
+
+
+.cs-admin-wrap .cs-admin-support {
+  text-align: center;
+}
+
+.cs-admin-wrap .cs-admin-support h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.cs-admin-wrap input[type='color'] {
+  width: 64px;
+  height: 36px;
+  padding: 2px;
+  border-radius: 8px;
+  border: 1px solid var(--cs-border-strong);
+  background: #fff;
+}
+

@@ -125,6 +125,28 @@ function cs_register_settings() {
         'cs_wbk_hero_slider_animation'
     );
 
+    add_settings_field(
+        'cs_text_color',
+        __( 'Text Color', 'carousel-hero-slider' ),
+        'cs_render_color_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_main',
+        [
+            'key' => 'text_color',
+        ]
+    );
+
+    add_settings_field(
+        'cs_button_bg_color',
+        __( 'Button Background Color', 'carousel-hero-slider' ),
+        'cs_render_color_field',
+        'carousel-hero-slider',
+        'cs_wbk_hero_slider_main',
+        [
+            'key' => 'button_bg_color',
+        ]
+    );
+
     $visibility_fields = [
         'show_title'     => __( 'Show Slide Title', 'carousel-hero-slider' ),
         'show_caption'   => __( 'Show Caption Text', 'carousel-hero-slider' ),
@@ -388,7 +410,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
     $animation_styles = cs_get_wbk_hero_slider_animation_styles();
 
     if ( ! isset( $animation_styles[ $animation_style ] ) ) {
-        $animation_style = 'default';
+        $animation_style = 'animation_12';
     }
 
     $arrow_style = isset( $input['arrow_style'] ) ? sanitize_key( $input['arrow_style'] ) : $defaults['arrow_style'];
@@ -407,6 +429,8 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         'center_content'  => empty( $input['center_content'] ) ? 0 : 1,
         'enable_arrows'   => empty( $input['enable_arrows'] ) ? 0 : 1,
         'arrow_style'     => $arrow_style,
+        'text_color'      => cs_sanitize_color_value( $input['text_color'] ?? $defaults['text_color'], $defaults['text_color'] ),
+        'button_bg_color' => cs_sanitize_color_value( $input['button_bg_color'] ?? $defaults['button_bg_color'], $defaults['button_bg_color'] ),
     ];
 }
 
@@ -440,11 +464,41 @@ function cs_render_number_field( $args ) {
 }
 
 /**
+ * Sanitize color value with fallback.
+ *
+ * @param mixed  $value Raw color value.
+ * @param string $fallback Fallback color.
+ */
+function cs_sanitize_color_value( $value, $fallback ) {
+    $color = is_string( $value ) ? sanitize_hex_color( $value ) : null;
+
+    return $color ? $color : $fallback;
+}
+
+/**
+ * Render one color settings field.
+ *
+ * @param array<string, string> $args Field args.
+ */
+function cs_render_color_field( $args ) {
+    $settings = cs_get_wbk_hero_slider_settings();
+    $key      = $args['key'];
+    $value    = isset( $settings[ $key ] ) ? (string) $settings[ $key ] : '';
+    ?>
+    <input
+        type="color"
+        name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+        value="<?php echo esc_attr( $value ); ?>"
+    />
+    <?php
+}
+
+/**
  * Render animation style selection radios.
  */
 function cs_render_animation_style_field() {
     $settings      = cs_get_wbk_hero_slider_settings();
-    $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'default';
+    $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'animation_12';
     $options       = cs_get_wbk_hero_slider_animation_styles();
 
     foreach ( $options as $value => $option ) {
@@ -649,6 +703,16 @@ function cs_render_settings_page() {
                     </div>
 
                 </form>
+            </div>
+
+
+            <div class="cs-admin-card cs-admin-support">
+                <h3><?php esc_html_e( 'Support the Plugin', 'carousel-hero-slider' ); ?></h3>
+                <p>
+                    <a class="button" href="<?php echo esc_url( 'https://www.paypal.com/paypalme/jubayerhossin.wh@gmail.com' ); ?>" target="_blank" rel="noopener noreferrer">
+                        <?php esc_html_e( 'Buy Me a Coffee', 'carousel-hero-slider' ); ?>
+                    </a>
+                </p>
             </div>
 
         </div>
