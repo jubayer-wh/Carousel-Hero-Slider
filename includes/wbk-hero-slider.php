@@ -55,6 +55,7 @@ add_action( 'init', 'cs_register_wbk_hero_slider_shortcode' );
  */
 function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $defaults = cs_get_wbk_hero_slider_settings();
+    $animation_styles = cs_get_wbk_hero_slider_animation_styles();
 
     $atts = shortcode_atts(
         [
@@ -74,7 +75,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $show_caption  = ! empty( $defaults['show_caption'] );
     $show_button   = ! empty( $defaults['show_button'] );
     $enable_arrows = ! empty( $defaults['enable_arrows'] );
-    $animation     = in_array( $defaults['animation_style'], [ 'default', 'animation_1', 'animation_2', 'animation_3' ], true ) ? $defaults['animation_style'] : 'default';
+    $animation     = isset( $animation_styles[ $defaults['animation_style'] ] ) ? $defaults['animation_style'] : 'default';
     $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'side';
     $slides        = cs_get_hero_slides();
 
@@ -122,6 +123,43 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     <?php
 
     return ob_get_clean();
+}
+
+/**
+ * Get available animation styles.
+ *
+ * @return array<string, array<string, string>>
+ */
+function cs_get_wbk_hero_slider_animation_styles() {
+    $styles = [
+        'default'     => [
+            'label'       => __( 'Default', 'carousel-hero-slider' ),
+            'description' => __( 'Standard smooth slide transition.', 'carousel-hero-slider' ),
+        ],
+        'animation_1' => [
+            'label'       => __( 'Animation 1 (Bounce)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide content appears with a light bouncing motion.', 'carousel-hero-slider' ),
+        ],
+        'animation_2' => [
+            'label'       => __( 'Animation 2 (Extend)', 'carousel-hero-slider' ),
+            'description' => __( 'Elements smoothly expand or stretch into view.', 'carousel-hero-slider' ),
+        ],
+        'animation_3' => [
+            'label'       => __( 'Animation 3 (Fade)', 'carousel-hero-slider' ),
+            'description' => __( 'Content gently fades in for a clean and elegant effect.', 'carousel-hero-slider' ),
+        ],
+        'animation_4' => [
+            'label'       => __( 'Animation 4 (Split Enter)', 'carousel-hero-slider' ),
+            'description' => __( 'Text slides in from the left while the image moves in from the right.', 'carousel-hero-slider' ),
+        ],
+    ];
+
+    /**
+     * Filter animation style options.
+     *
+     * @param array<string, array<string, string>> $styles Animation style definitions.
+     */
+    return apply_filters( 'cs_wbk_hero_slider_animation_styles', $styles );
 }
 
 /**

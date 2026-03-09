@@ -384,7 +384,9 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
 
     $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
 
-    if ( ! in_array( $animation_style, [ 'default', 'animation_1', 'animation_2', 'animation_3' ], true ) ) {
+    $animation_styles = cs_get_wbk_hero_slider_animation_styles();
+
+    if ( ! isset( $animation_styles[ $animation_style ] ) ) {
         $animation_style = 'default';
     }
 
@@ -441,24 +443,7 @@ function cs_render_number_field( $args ) {
 function cs_render_animation_style_field() {
     $settings      = cs_get_wbk_hero_slider_settings();
     $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'default';
-    $options       = [
-        'default'     => [
-            'label'       => __( 'Default', 'carousel-hero-slider' ),
-            'description' => __( 'Standard smooth slide transition.', 'carousel-hero-slider' ),
-        ],
-        'animation_1' => [
-            'label'       => __( 'Animation 1 (Bounce)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide content appears with a light bouncing motion.', 'carousel-hero-slider' ),
-        ],
-        'animation_2' => [
-            'label'       => __( 'Animation 2 (Extend)', 'carousel-hero-slider' ),
-            'description' => __( 'Elements smoothly expand or stretch into view.', 'carousel-hero-slider' ),
-        ],
-        'animation_3' => [
-            'label'       => __( 'Animation 3 (Fade)', 'carousel-hero-slider' ),
-            'description' => __( 'Content gently fades in for a clean and elegant effect.', 'carousel-hero-slider' ),
-        ],
-    ];
+    $options       = cs_get_wbk_hero_slider_animation_styles();
 
     foreach ( $options as $value => $option ) {
         ?>
