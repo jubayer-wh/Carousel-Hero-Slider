@@ -135,6 +135,171 @@
   opacity: 1;
 }
 
+
+/* Animation timing tokens keep advanced styles consistent and extensible. */
+.cs-wbk-hero-slider {
+  --cs-anim-advanced-duration: 860ms;
+  --cs-anim-advanced-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 420ms ease;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide-bg {
+  transform: scale(1.05);
+  opacity: 0;
+  transition: transform var(--cs-anim-advanced-duration) var(--cs-anim-advanced-ease), opacity var(--cs-anim-advanced-duration) var(--cs-anim-advanced-ease);
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide-overlay {
+  overflow: hidden;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(10, 15, 25, 0.72) 0%, rgba(10, 15, 25, 0.38) 52%, rgba(10, 15, 25, 0.08) 100%);
+  transform: translateX(0%);
+  transition: transform 820ms var(--cs-anim-advanced-ease);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide-overlay > * {
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: transform 760ms var(--cs-anim-advanced-ease), opacity 760ms var(--cs-anim-advanced-ease);
+  position: relative;
+  z-index: 3;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-overlay::before {
+  transform: translateX(102%);
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-title {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 90ms;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-caption {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 180ms;
+}
+
+.cs-animation-animation_6 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-button {
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 270ms;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 380ms ease;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-bg {
+  transform: scale(1.1) translateX(16px);
+  opacity: 0;
+  transition: transform 980ms ease-out, opacity 880ms ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-overlay {
+  transform: translateX(60px);
+  transition: transform 980ms ease-out;
+  will-change: transform;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-overlay > * {
+  opacity: 0;
+  transition: transform 900ms ease-out, opacity 900ms ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-title {
+  transform: translateY(30px);
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-caption {
+  transform: translateY(40px);
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide-button {
+  transform: translateY(20px);
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg {
+  transform: scale(1) translateX(0);
+  opacity: 1;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-overlay {
+  transform: translateX(0);
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 120ms;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-caption {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 210ms;
+}
+
+.cs-animation-animation_7 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-animation-animation_6 .cs-wbk-hero-slide,
+  .cs-animation-animation_6 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_6 .cs-wbk-hero-slide-overlay::before,
+  .cs-animation-animation_6 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_7 .cs-wbk-hero-slide,
+  .cs-animation-animation_7 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay,
+  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > * {
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    animation: none !important;
+  }
+
+  .cs-animation-animation_6 .cs-wbk-hero-slide-overlay::before,
+  .cs-animation-animation_6 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_7 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > * {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
 @keyframes cs-bounce-in {
   0% {
     opacity: 0;

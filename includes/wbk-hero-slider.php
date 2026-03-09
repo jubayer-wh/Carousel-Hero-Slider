@@ -156,6 +156,14 @@ function cs_get_wbk_hero_slider_animation_styles() {
             'label'       => __( 'Animation 5 (Cross Motion)', 'carousel-hero-slider' ),
             'description' => __( 'Text moves up into view while the image glides down for a crossed entry effect.', 'carousel-hero-slider' ),
         ],
+        'animation_6' => [
+            'label'       => __( 'Animation 6 (Reveal Mask)', 'carousel-hero-slider' ),
+            'description' => __( 'Content is smoothly revealed as a sliding mask uncovers the text while the image fades and scales into place.', 'carousel-hero-slider' ),
+        ],
+        'animation_7' => [
+            'label'       => __( 'Animation 7 (Cinematic Parallax)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide elements move at different speeds to create a subtle layered parallax entrance.', 'carousel-hero-slider' ),
+        ],
     ];
 
     /**
