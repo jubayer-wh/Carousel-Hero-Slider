@@ -76,7 +76,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     $show_button   = ! empty( $defaults['show_button'] );
     $enable_arrows = ! empty( $defaults['enable_arrows'] );
     $animation     = isset( $animation_styles[ $defaults['animation_style'] ] ) ? $defaults['animation_style'] : 'default';
-    $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'side';
+    $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'bottom_rounded';
     $slides        = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {
@@ -152,6 +152,10 @@ function cs_get_wbk_hero_slider_animation_styles() {
             'label'       => __( 'Animation 4 (Split Enter)', 'carousel-hero-slider' ),
             'description' => __( 'Text slides in from the left while the image moves in from the right.', 'carousel-hero-slider' ),
         ],
+        'animation_5' => [
+            'label'       => __( 'Animation 5 (Cross Motion)', 'carousel-hero-slider' ),
+            'description' => __( 'Text moves up into view while the image glides down for a crossed entry effect.', 'carousel-hero-slider' ),
+        ],
     ];
 
     /**
@@ -222,7 +226,7 @@ function cs_get_wbk_hero_slider_settings() {
         'show_caption'    => 1,
         'show_button'     => 1,
         'enable_arrows'   => 1,
-        'arrow_style'     => 'side',
+        'arrow_style'     => 'bottom_rounded',
     ];
 
     $settings = get_option( 'cs_wbk_hero_slider_settings', [] );

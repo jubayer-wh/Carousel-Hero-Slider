@@ -393,7 +393,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
     $arrow_style = isset( $input['arrow_style'] ) ? sanitize_key( $input['arrow_style'] ) : $defaults['arrow_style'];
 
     if ( ! in_array( $arrow_style, [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ) {
-        $arrow_style = 'side';
+        $arrow_style = 'bottom_rounded';
     }
 
     return [
@@ -469,7 +469,7 @@ function cs_render_animation_style_field() {
  */
 function cs_render_arrow_style_field() {
     $settings      = cs_get_wbk_hero_slider_settings();
-    $current_style = isset( $settings['arrow_style'] ) ? $settings['arrow_style'] : 'side';
+    $current_style = isset( $settings['arrow_style'] ) ? $settings['arrow_style'] : 'bottom_rounded';
     $options       = [
         'side'           => [
             'label'       => __( 'Side Arrows', 'carousel-hero-slider' ),

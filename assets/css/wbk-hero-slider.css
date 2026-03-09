@@ -102,6 +102,39 @@
   opacity: 1;
 }
 
+
+.cs-animation-animation_5 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 500ms ease;
+}
+
+.cs-animation-animation_5 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_5 .cs-wbk-hero-slide-bg,
+.cs-animation-animation_5 .cs-wbk-hero-slide-overlay {
+  transition: transform 800ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 800ms ease;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_5 .cs-wbk-hero-slide-bg {
+  transform: translateY(-12%);
+  opacity: 0;
+}
+
+.cs-animation-animation_5 .cs-wbk-hero-slide-overlay {
+  transform: translateY(12%);
+  opacity: 0;
+}
+
+.cs-animation-animation_5 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg,
+.cs-animation-animation_5 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-overlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 @keyframes cs-bounce-in {
   0% {
     opacity: 0;
