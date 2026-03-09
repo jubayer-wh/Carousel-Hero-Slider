@@ -166,9 +166,23 @@
 
 .cs-admin-wrap .cs-settings-nav {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   position: sticky;
   top: 24px;
+}
+
+.cs-admin-wrap .cs-settings-nav__tabs {
+  display: grid;
+  gap: 8px;
+}
+
+.cs-admin-wrap .cs-settings-nav__actions {
+  padding-top: 4px;
+}
+
+.cs-admin-wrap .cs-settings-nav__actions .button {
+  width: 100%;
+  justify-content: center;
 }
 
 .cs-admin-wrap .cs-settings-nav__button {
@@ -355,14 +369,8 @@
 }
 
 .cs-admin-wrap .cs-settings-form .submit {
-  position: sticky;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-  border-top: 1px solid var(--cs-border);
-  margin: 14px -12px -12px;
-  padding: 10px 12px;
-  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .post-type-cs_hero_slide #postexcerpt,
@@ -392,6 +400,9 @@
 
   .cs-admin-wrap .cs-settings-nav {
     position: static;
+  }
+
+  .cs-admin-wrap .cs-settings-nav__tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -401,7 +412,7 @@
     padding: 0;
   }
 
-  .cs-admin-wrap .cs-settings-nav {
+  .cs-admin-wrap .cs-settings-nav__tabs {
     grid-template-columns: 1fr;
   }
 

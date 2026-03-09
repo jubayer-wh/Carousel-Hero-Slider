@@ -595,22 +595,28 @@ function cs_render_settings_page() {
                     <?php settings_fields( 'cs_wbk_hero_slider_group' ); ?>
 
                     <div class="cs-settings-layout" data-cs-settings-layout>
-                        <div class="cs-settings-nav" role="tablist" aria-label="<?php esc_attr_e( 'Settings categories', 'carousel-hero-slider' ); ?>">
-                            <?php $index = 0; ?>
-                            <?php foreach ( $sections as $section_id => $section ) : ?>
-                                <button
-                                    type="button"
-                                    class="cs-settings-nav__button<?php echo 0 === $index ? ' is-active' : ''; ?>"
-                                    role="tab"
-                                    id="<?php echo esc_attr( $section_id . '-tab' ); ?>"
-                                    aria-controls="<?php echo esc_attr( $section_id . '-panel' ); ?>"
-                                    aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"
-                                    data-panel-target="<?php echo esc_attr( $section_id ); ?>"
-                                >
-                                    <?php echo esc_html( $section['title'] ); ?>
-                                </button>
-                                <?php $index++; ?>
-                            <?php endforeach; ?>
+                        <div class="cs-settings-nav">
+                            <div class="cs-settings-nav__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings categories', 'carousel-hero-slider' ); ?>">
+                                <?php $index = 0; ?>
+                                <?php foreach ( $sections as $section_id => $section ) : ?>
+                                    <button
+                                        type="button"
+                                        class="cs-settings-nav__button<?php echo 0 === $index ? ' is-active' : ''; ?>"
+                                        role="tab"
+                                        id="<?php echo esc_attr( $section_id . '-tab' ); ?>"
+                                        aria-controls="<?php echo esc_attr( $section_id . '-panel' ); ?>"
+                                        aria-selected="<?php echo 0 === $index ? 'true' : 'false'; ?>"
+                                        data-panel-target="<?php echo esc_attr( $section_id ); ?>"
+                                    >
+                                        <?php echo esc_html( $section['title'] ); ?>
+                                    </button>
+                                    <?php $index++; ?>
+                                <?php endforeach; ?>
+                            </div>
+
+                            <div class="cs-settings-nav__actions">
+                                <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button', 'submit', false ); ?>
+                            </div>
                         </div>
 
                         <div class="cs-settings-content">
@@ -637,7 +643,6 @@ function cs_render_settings_page() {
                         </div>
                     </div>
 
-                    <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button' ); ?>
                 </form>
             </div>
 
