@@ -709,7 +709,7 @@ function cs_render_settings_page() {
             <div class="cs-admin-card cs-admin-support">
                 <h3><?php esc_html_e( 'Support the Plugin', 'carousel-hero-slider' ); ?></h3>
                 <p>
-                    <a class="button" href="<?php echo esc_url( 'https://www.paypal.com/paypalme/jubayerhossin.wh@gmail.com' ); ?>" target="_blank" rel="noopener noreferrer">
+                    <a class="button" href="<?php echo esc_url( 'https://www.paypal.com/paypalme/jubayerhossain.wh@gmail.com' ); ?>" target="_blank" rel="noopener noreferrer">
                         <?php esc_html_e( 'Buy Me a Coffee', 'carousel-hero-slider' ); ?>
                     </a>
                 </p>
