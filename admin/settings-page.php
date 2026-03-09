@@ -396,7 +396,10 @@ add_action( 'admin_init', 'cs_handle_duplicate_slide_action' );
  * Admin notice for duplicated slide.
  */
 function cs_duplicate_slide_notice() {
-    if ( ! isset( $_GET['post_type'], $_GET['duplicated'] ) || 'cs_hero_slide' !== $_GET['post_type'] || '1' !== $_GET['duplicated'] ) {
+    $post_type  = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    $duplicated = filter_input( INPUT_GET, 'duplicated', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+    if ( 'cs_hero_slide' !== $post_type || '1' !== $duplicated ) {
         return;
     }
 
@@ -730,7 +733,8 @@ function cs_render_settings_page() {
 
                             <div class="cs-settings-nav__actions">
                                 <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button', 'submit', false ); ?>
-                                <p class="cs-settings-save-feedback<?php echo isset( $_GET['settings-updated'] ) && 'true' === sanitize_text_field( wp_unslash( $_GET['settings-updated'] ) ) ? ' is-visible' : ''; ?>" data-cs-save-feedback role="status" aria-live="polite">
+                                <?php $settings_updated = filter_input( INPUT_GET, 'settings-updated', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); ?>
+                                <p class="cs-settings-save-feedback<?php echo 'true' === $settings_updated ? ' is-visible' : ''; ?>" data-cs-save-feedback role="status" aria-live="polite">
                                     <?php esc_html_e( 'Settings saved.', 'carousel-hero-slider' ); ?>
                                 </p>
                             </div>

@@ -1,6 +1,6 @@
 === Carousel Hero Slider ===
 Contributors: jubayer1
-Tags: carousel, hero-slider, wordpress, responsive, shortcode
+Tags: carousel, hero-slider, responsive, shortcode
 Requires at least: 6.0
 Tested up to: 6.9
 Stable tag: 1.0.0
