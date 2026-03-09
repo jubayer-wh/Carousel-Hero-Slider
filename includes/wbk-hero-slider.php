@@ -88,7 +88,11 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
     }
     $animation     = isset( $animation_styles[ $defaults['animation_style'] ] ) ? $defaults['animation_style'] : 'animation_12';
     $arrow_style   = in_array( $defaults['arrow_style'], [ 'side', 'bottom_right', 'bottom_rounded' ], true ) ? $defaults['arrow_style'] : 'bottom_rounded';
-    $mobile_image_behavior = in_array( $defaults['mobile_image_behavior'], [ 'cover', 'contain', 'no_repeat' ], true ) ? $defaults['mobile_image_behavior'] : 'cover';
+    $mobile_image_behavior = in_array( $defaults['mobile_image_behavior'], [ 'cover', 'contain', 'no-repeat', 'no_repeat' ], true ) ? $defaults['mobile_image_behavior'] : 'cover';
+
+    if ( 'no_repeat' === $mobile_image_behavior ) {
+        $mobile_image_behavior = 'no-repeat';
+    }
     $slides        = cs_get_hero_slides();
 
     if ( empty( $slides ) ) {

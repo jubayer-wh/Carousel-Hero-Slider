@@ -429,7 +429,11 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
 
     $mobile_image_behavior = isset( $input['mobile_image_behavior'] ) ? sanitize_key( $input['mobile_image_behavior'] ) : $defaults['mobile_image_behavior'];
 
-    if ( ! in_array( $mobile_image_behavior, [ 'cover', 'contain', 'no_repeat' ], true ) ) {
+    if ( 'no_repeat' === $mobile_image_behavior ) {
+        $mobile_image_behavior = 'no-repeat';
+    }
+
+    if ( ! in_array( $mobile_image_behavior, [ 'cover', 'contain', 'no-repeat' ], true ) ) {
         $mobile_image_behavior = 'cover';
     }
 
@@ -549,9 +553,9 @@ function cs_render_mobile_image_behavior_field() {
             'label'       => __( 'Contain', 'carousel-hero-slider' ),
             'description' => __( 'Show the full image on mobile while keeping it inside the slide area.', 'carousel-hero-slider' ),
         ],
-        'no_repeat' => [
+        'no-repeat' => [
             'label'       => __( 'No Repeat', 'carousel-hero-slider' ),
-            'description' => __( 'Keep the image at its original size and prevent tiling on mobile.', 'carousel-hero-slider' ),
+            'description' => __( 'Prevent background tiling on mobile while preserving the existing cover style.', 'carousel-hero-slider' ),
         ],
     ];
 
@@ -762,11 +766,13 @@ function cs_render_settings_page() {
 
             <div class="cs-admin-card cs-admin-support">
                 <h3><?php esc_html_e( 'Support the Plugin', 'carousel-hero-slider' ); ?></h3>
-                <p>
-                    <a class="button" href="<?php echo esc_url( 'https://www.paypal.com/paypalme/jubayerhossain.wh@gmail.com' ); ?>" target="_blank" rel="noopener noreferrer">
+                <form action="https://www.paypal.com/donate" method="post" target="_blank">
+                    <input type="hidden" name="business" value="jubayerhossain.wh@gmail.com" />
+                    <input type="hidden" name="currency_code" value="USD" />
+                    <button type="submit" class="button">
                         <?php esc_html_e( 'Buy Me a Coffee', 'carousel-hero-slider' ); ?>
-                    </a>
-                </p>
+                    </button>
+                </form>
             </div>
 
         </div>
