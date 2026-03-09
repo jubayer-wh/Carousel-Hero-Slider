@@ -185,6 +185,22 @@
   justify-content: center;
 }
 
+
+.cs-admin-wrap .cs-settings-save-feedback {
+  margin: 8px 0 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #b8ddc1;
+  background: #effaf2;
+  color: #176b2b;
+  font-size: 12px;
+  display: none;
+}
+
+.cs-admin-wrap .cs-settings-save-feedback.is-visible {
+  display: block;
+}
+
 .cs-admin-wrap .cs-settings-nav__button {
   text-align: left;
   width: 100%;

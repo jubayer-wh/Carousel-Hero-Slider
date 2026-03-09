@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-cs-settings-layout]').forEach(function (layout) {
     var buttons = Array.prototype.slice.call(layout.querySelectorAll('.cs-settings-nav__button'));
     var panels = Array.prototype.slice.call(layout.querySelectorAll('.cs-settings-panel'));
+    var form = layout.closest('form');
+    var storageKey = 'cs_active_settings_tab';
 
     var activatePanel = function (target, focusPanel) {
       buttons.forEach(function (button) {
@@ -23,7 +25,25 @@ document.addEventListener('DOMContentLoaded', function () {
           panel.setAttribute('hidden', 'hidden');
         }
       });
+
+      try {
+        window.localStorage.setItem(storageKey, target);
+      } catch (error) {
+        // Ignore storage errors in restricted environments.
+      }
     };
+
+    if (buttons.length > 0) {
+      try {
+        var rememberedTab = window.localStorage.getItem(storageKey);
+
+        if (rememberedTab && buttons.some(function (button) { return button.getAttribute('data-panel-target') === rememberedTab; })) {
+          activatePanel(rememberedTab, false);
+        }
+      } catch (error) {
+        // Ignore storage errors in restricted environments.
+      }
+    }
 
     buttons.forEach(function (button) {
       button.addEventListener('click', function () {
@@ -47,8 +67,26 @@ document.addEventListener('DOMContentLoaded', function () {
         activatePanel(buttons[nextIndex].getAttribute('data-panel-target'), true);
       });
     });
-  });
 
+    if (form) {
+      form.addEventListener('submit', function () {
+        var activeButton = layout.querySelector('.cs-settings-nav__button.is-active');
+        var saveFeedback = layout.querySelector('[data-cs-save-feedback]');
+
+        if (activeButton) {
+          try {
+            window.localStorage.setItem(storageKey, activeButton.getAttribute('data-panel-target') || '');
+          } catch (error) {
+            // Ignore storage errors.
+          }
+        }
+
+        if (saveFeedback) {
+          saveFeedback.classList.remove('is-visible');
+        }
+      });
+    }
+  });
 
   document.querySelectorAll('[data-cs-shortcode-copy]').forEach(function (copyWrap) {
     var copyButton = copyWrap.querySelector('[data-cs-shortcode-button]');
@@ -101,5 +139,4 @@ document.addEventListener('DOMContentLoaded', function () {
       window.prompt('Copy shortcode:', shortcode);
     });
   });
-
 });

@@ -126,9 +126,10 @@ function cs_register_settings() {
     );
 
     $visibility_fields = [
-        'show_title'   => __( 'Show Slide Title', 'carousel-hero-slider' ),
-        'show_caption' => __( 'Show Caption Text', 'carousel-hero-slider' ),
-        'show_button'  => __( 'Show Slide Button', 'carousel-hero-slider' ),
+        'show_title'     => __( 'Show Slide Title', 'carousel-hero-slider' ),
+        'show_caption'   => __( 'Show Caption Text', 'carousel-hero-slider' ),
+        'show_button'    => __( 'Show Slide Button', 'carousel-hero-slider' ),
+        'center_content' => __( 'Center Content', 'carousel-hero-slider' ),
     ];
 
     foreach ( $visibility_fields as $key => $label ) {
@@ -403,6 +404,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
         'show_title'      => empty( $input['show_title'] ) ? 0 : 1,
         'show_caption'    => empty( $input['show_caption'] ) ? 0 : 1,
         'show_button'     => empty( $input['show_button'] ) ? 0 : 1,
+        'center_content'  => empty( $input['center_content'] ) ? 0 : 1,
         'enable_arrows'   => empty( $input['enable_arrows'] ) ? 0 : 1,
         'arrow_style'     => $arrow_style,
     ];
@@ -616,6 +618,9 @@ function cs_render_settings_page() {
 
                             <div class="cs-settings-nav__actions">
                                 <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button', 'submit', false ); ?>
+                                <p class="cs-settings-save-feedback<?php echo isset( $_GET['settings-updated'] ) && 'true' === sanitize_text_field( wp_unslash( $_GET['settings-updated'] ) ) ? ' is-visible' : ''; ?>" data-cs-save-feedback role="status" aria-live="polite">
+                                    <?php esc_html_e( 'Settings saved.', 'carousel-hero-slider' ); ?>
+                                </p>
                             </div>
                         </div>
 
