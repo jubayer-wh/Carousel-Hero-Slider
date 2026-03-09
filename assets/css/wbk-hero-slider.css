@@ -277,6 +277,168 @@
   transition-delay: 300ms;
 }
 
+
+.cs-animation-animation_8 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 420ms ease;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide-bg {
+  transform: scale(1.1);
+  opacity: 0;
+  transition: transform 860ms ease-out, opacity 760ms ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide-overlay > * {
+  opacity: 0;
+  transition: transform 760ms ease-out, opacity 760ms ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide-title {
+  transform: translateY(30px);
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide-caption {
+  transform: translateY(35px);
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide-button {
+  transform: translateY(20px);
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 90ms;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-caption {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 180ms;
+}
+
+.cs-animation-animation_8 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 270ms;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 350ms ease;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide-bg {
+  opacity: 0;
+  transform: none;
+  transition: opacity 700ms ease-out;
+  will-change: opacity;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide-overlay > * {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: transform 700ms ease-out, opacity 700ms ease-out;
+  will-change: transform, opacity;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg {
+  opacity: 1;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 130ms;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-caption {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 260ms;
+}
+
+.cs-animation-animation_9 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 390ms;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide {
+  opacity: 0;
+  transform: none;
+  transition: opacity 380ms ease;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide.is-active {
+  opacity: 1;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide-bg {
+  transform: scale(1.05);
+  filter: blur(8px);
+  opacity: 0;
+  transition: transform 860ms var(--cs-anim-advanced-ease), opacity 860ms var(--cs-anim-advanced-ease), filter 860ms var(--cs-anim-advanced-ease);
+  will-change: transform, opacity, filter;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide-overlay > * {
+  opacity: 0;
+  filter: blur(4px);
+  transform: translateY(30px);
+  transition: transform 820ms var(--cs-anim-advanced-ease), opacity 820ms var(--cs-anim-advanced-ease), filter 820ms var(--cs-anim-advanced-ease);
+  will-change: transform, opacity, filter;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide-button {
+  filter: none;
+  transform: translateY(20px);
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-bg {
+  transform: scale(1);
+  filter: blur(0);
+  opacity: 1;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-title {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  transition-delay: 100ms;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-caption {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+  transition-delay: 190ms;
+}
+
+.cs-animation-animation_10 .cs-wbk-hero-slide.is-active .cs-wbk-hero-slide-button {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 280ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cs-animation-animation_6 .cs-wbk-hero-slide,
   .cs-animation-animation_6 .cs-wbk-hero-slide-bg,
@@ -285,7 +447,16 @@
   .cs-animation-animation_7 .cs-wbk-hero-slide,
   .cs-animation-animation_7 .cs-wbk-hero-slide-bg,
   .cs-animation-animation_7 .cs-wbk-hero-slide-overlay,
-  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > * {
+  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_8 .cs-wbk-hero-slide,
+  .cs-animation-animation_8 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_8 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_9 .cs-wbk-hero-slide,
+  .cs-animation-animation_9 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_9 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_10 .cs-wbk-hero-slide,
+  .cs-animation-animation_10 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_10 .cs-wbk-hero-slide-overlay > * {
     transition-duration: 1ms !important;
     transition-delay: 0ms !important;
     animation: none !important;
@@ -294,7 +465,12 @@
   .cs-animation-animation_6 .cs-wbk-hero-slide-overlay::before,
   .cs-animation-animation_6 .cs-wbk-hero-slide-overlay > *,
   .cs-animation-animation_7 .cs-wbk-hero-slide-bg,
-  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > * {
+  .cs-animation-animation_7 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_8 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_8 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_9 .cs-wbk-hero-slide-overlay > *,
+  .cs-animation-animation_10 .cs-wbk-hero-slide-bg,
+  .cs-animation-animation_10 .cs-wbk-hero-slide-overlay > * {
     transform: none !important;
     opacity: 1 !important;
   }

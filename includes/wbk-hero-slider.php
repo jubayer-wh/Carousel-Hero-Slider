@@ -165,6 +165,18 @@ function cs_get_wbk_hero_slider_animation_styles() {
             'label'       => __( 'Animation 7 (Cinematic Parallax)', 'carousel-hero-slider' ),
             'description' => __( 'Slide elements move at different speeds to create a subtle layered parallax entrance.', 'carousel-hero-slider' ),
         ],
+        'animation_8' => [
+            'label'       => __( 'Animation 8 (Zoom Focus)', 'carousel-hero-slider' ),
+            'description' => __( 'Image gently zooms into focus while text fades and lifts into view.', 'carousel-hero-slider' ),
+        ],
+        'animation_9' => [
+            'label'       => __( 'Animation 9 (Sequential Reveal)', 'carousel-hero-slider' ),
+            'description' => __( 'Slide elements appear one by one with a smooth staggered entrance.', 'carousel-hero-slider' ),
+        ],
+        'animation_10' => [
+            'label'       => __( 'Animation 10 (Blur Focus)', 'carousel-hero-slider' ),
+            'description' => __( 'Content fades in from a soft blur and becomes sharp as it settles into position.', 'carousel-hero-slider' ),
+        ],
     ];
 
     /**
