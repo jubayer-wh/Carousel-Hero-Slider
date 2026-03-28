@@ -3,4 +3,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
     exit;
 }
 
-delete_option( 'cs_wbk_hero_slider_settings' );
+delete_option( 'cs_webkih_hero_slider_settings' );

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.cs-wbk-hero-slider').forEach(function (slider) {
-    var slides = Array.prototype.slice.call(slider.querySelectorAll('.cs-wbk-hero-slide'));
+  document.querySelectorAll('.cs-webkih-hero-slider').forEach(function (slider) {
+    var slides = Array.prototype.slice.call(slider.querySelectorAll('.cs-webkih-hero-slide'));
     if (slides.length <= 1) {
       return;
     }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
       slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
     });
 
-    slider.querySelectorAll('.cs-wbk-hero-slider-arrow').forEach(function (button) {
+    slider.querySelectorAll('.cs-webkih-hero-slider-arrow').forEach(function (button) {
       button.addEventListener('click', function () {
         if (button.getAttribute('data-direction') === 'prev') {
           goToPrevious();

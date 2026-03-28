@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Carousel Hero Slider
- * Plugin URI: https://www.webkih.com/
+ * Plugin URI: https://github.com/jubayer-wh/Carousel-Hero-Slider/
  * Description: SEO-friendly WordPress carousel and hero block slider plugin to create responsive image sliders, hero carousels, and rotating banner sections using a simple shortcode.
  * Version: 1.0.0
  * Author: Jubayer Hossain
@@ -18,5 +18,5 @@ define( 'CS_VER', '1.0.0' );
 define( 'CS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CS_URL', plugin_dir_url( __FILE__ ) );
 
-require_once CS_DIR . 'includes/wbk-hero-slider.php';
+require_once CS_DIR . 'includes/webkih-hero-slider.php';
 require_once CS_DIR . 'admin/settings-page.php';

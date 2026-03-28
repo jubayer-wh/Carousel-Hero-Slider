@@ -43,19 +43,19 @@ add_action( 'init', 'cs_register_hero_slide_post_type' );
 /**
  * Register hero slider shortcode.
  */
-function cs_register_wbk_hero_slider_shortcode() {
-    add_shortcode( 'wbk_hero_slider', 'cs_render_wbk_hero_slider_shortcode' );
+function cs_register_webkih_hero_slider_shortcode() {
+    add_shortcode( 'webkih_hero_slider', 'cs_render_webkih_hero_slider_shortcode' );
 }
-add_action( 'init', 'cs_register_wbk_hero_slider_shortcode' );
+add_action( 'init', 'cs_register_webkih_hero_slider_shortcode' );
 
 /**
  * Render hero slider output.
  *
  * @param array<string, string> $atts Shortcode attributes.
  */
-function cs_render_wbk_hero_slider_shortcode( $atts ) {
-    $defaults = cs_get_wbk_hero_slider_settings();
-    $animation_styles = cs_get_wbk_hero_slider_animation_styles();
+function cs_render_webkih_hero_slider_shortcode( $atts ) {
+    $defaults = cs_get_webkih_hero_slider_settings();
+    $animation_styles = cs_get_webkih_hero_slider_animation_styles();
 
     $atts = shortcode_atts(
         [
@@ -64,7 +64,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
             'speed'  => '',
         ],
         $atts,
-        'wbk_hero_slider'
+        'webkih_hero_slider'
     );
 
     $height      = max( 220, absint( $atts['height'] ) );
@@ -99,36 +99,36 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
         return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
     }
 
-    wp_enqueue_style( 'cs-wbk-hero-slider-css', CS_URL . 'assets/css/wbk-hero-slider.css', [], CS_VER );
-    wp_enqueue_script( 'cs-wbk-hero-slider-js', CS_URL . 'assets/js/wbk-hero-slider.js', [], CS_VER, true );
+    wp_enqueue_style( 'cs-webkih-hero-slider-css', CS_URL . 'assets/css/webkih-hero-slider.css', [], CS_VER );
+    wp_enqueue_script( 'cs-webkih-hero-slider-js', CS_URL . 'assets/js/webkih-hero-slider.js', [], CS_VER, true );
 
     ob_start();
     ?>
-    <div class="cs-wbk-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?> cs-mobile-image-<?php echo esc_attr( $mobile_image_behavior ); ?><?php echo $center_content ? ' cs-content-align-center' : ''; ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;--cs-slider-text-color:<?php echo esc_attr( $text_color ); ?>;--cs-slider-button-bg:<?php echo esc_attr( $button_bg_color ); ?>;">
+    <div class="cs-webkih-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?> cs-mobile-image-<?php echo esc_attr( $mobile_image_behavior ); ?><?php echo $center_content ? ' cs-content-align-center' : ''; ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;--cs-slider-text-color:<?php echo esc_attr( $text_color ); ?>;--cs-slider-button-bg:<?php echo esc_attr( $button_bg_color ); ?>;">
         <?php if ( $enable_arrows && count( $slides ) > 1 ) : ?>
-            <div class="cs-wbk-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'carousel-hero-slider' ); ?>">
-                <button type="button" class="cs-wbk-hero-slider-arrow cs-wbk-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'carousel-hero-slider' ); ?>">
+            <div class="cs-webkih-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'carousel-hero-slider' ); ?>">
+                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'carousel-hero-slider' ); ?>">
                     <span aria-hidden="true">&#10094;</span>
                 </button>
-                <button type="button" class="cs-wbk-hero-slider-arrow cs-wbk-hero-slider-arrow-next" data-direction="next" aria-label="<?php esc_attr_e( 'Next slide', 'carousel-hero-slider' ); ?>">
+                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-next" data-direction="next" aria-label="<?php esc_attr_e( 'Next slide', 'carousel-hero-slider' ); ?>">
                     <span aria-hidden="true">&#10095;</span>
                 </button>
             </div>
         <?php endif; ?>
         <?php foreach ( $slides as $index => $slide ) : ?>
-            <article class="cs-wbk-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
-                <div class="cs-wbk-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
-                <div class="cs-wbk-hero-slide-overlay">
+            <article class="cs-webkih-hero-slide<?php echo 0 === $index ? ' is-active' : ''; ?>" aria-hidden="<?php echo 0 === $index ? 'false' : 'true'; ?>">
+                <div class="cs-webkih-hero-slide-bg" style="background-image:url('<?php echo esc_url( $slide['image'] ); ?>');"></div>
+                <div class="cs-webkih-hero-slide-overlay">
                     <?php if ( $show_title && ! empty( $slide['title'] ) ) : ?>
-                        <h2 class="cs-wbk-hero-slide-title"><?php echo esc_html( $slide['title'] ); ?></h2>
+                        <h2 class="cs-webkih-hero-slide-title"><?php echo esc_html( $slide['title'] ); ?></h2>
                     <?php endif; ?>
 
                     <?php if ( $show_caption && ! empty( $slide['caption'] ) ) : ?>
-                        <p class="cs-wbk-hero-slide-caption"><?php echo esc_html( $slide['caption'] ); ?></p>
+                        <p class="cs-webkih-hero-slide-caption"><?php echo esc_html( $slide['caption'] ); ?></p>
                     <?php endif; ?>
 
                     <?php if ( $show_button && ! empty( $slide['button_label'] ) && ! empty( $slide['button_link'] ) ) : ?>
-                        <a class="cs-wbk-hero-slide-button" href="<?php echo esc_url( $slide['button_link'] ); ?>">
+                        <a class="cs-webkih-hero-slide-button" href="<?php echo esc_url( $slide['button_link'] ); ?>">
                             <?php echo esc_html( $slide['button_label'] ); ?>
                         </a>
                     <?php endif; ?>
@@ -146,7 +146,7 @@ function cs_render_wbk_hero_slider_shortcode( $atts ) {
  *
  * @return array<string, array<string, string>>
  */
-function cs_get_wbk_hero_slider_animation_styles() {
+function cs_get_webkih_hero_slider_animation_styles() {
     $styles = [
         'default'     => [
             'label'       => __( 'Default', 'carousel-hero-slider' ),
@@ -211,7 +211,7 @@ function cs_get_wbk_hero_slider_animation_styles() {
      *
      * @param array<string, array<string, string>> $styles Animation style definitions.
      */
-    return apply_filters( 'cs_wbk_hero_slider_animation_styles', $styles );
+    return apply_filters( 'cs_webkih_hero_slider_animation_styles', $styles );
 }
 
 /**
@@ -265,7 +265,7 @@ function cs_get_hero_slides() {
  *
  * @return array<string, mixed>
  */
-function cs_get_wbk_hero_slider_settings() {
+function cs_get_webkih_hero_slider_settings() {
     $defaults = [
         'height'          => 460,
         'timer'           => 4500,
@@ -281,7 +281,7 @@ function cs_get_wbk_hero_slider_settings() {
         'mobile_image_behavior' => 'cover',
     ];
 
-    $settings = get_option( 'cs_wbk_hero_slider_settings', [] );
+    $settings = get_option( 'cs_webkih_hero_slider_settings', [] );
 
     if ( ! is_array( $settings ) ) {
         return $defaults;

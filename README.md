@@ -1,43 +1,64 @@
 # Carousel Hero Slider
 
-Carousel Hero Slider is a lightweight WordPress plugin for adding a clean, responsive hero carousel to pages and posts using a single shortcode.
+Carousel Hero Slider is a production-ready WordPress plugin for creating responsive hero banners and carousel sections with clean, SEO-friendly markup.
 
-## Overview
-This plugin is intentionally focused on one purpose: rendering a configurable hero slider (`wbk_hero_slider`) with simple admin controls for common display options.
+- **Plugin URL:** https://github.com/jubayer-wh/Carousel-Hero-Slider/
+- **Author:** Jubayer Hossain
+- **Contributor:** jubayer1
 
-### Core capabilities
-- Single module architecture for easier maintenance
-- Shortcode support:
-  - `[wbk_hero_slider]`
-- Admin settings for:
-  - Default/fallback images
-  - Slider height
-  - Autoplay speed
-- Scoped front-end and admin assets to keep load overhead low
+## Key Highlights
 
-## Typical use cases
-- Homepage hero banner rotation
-- Landing page visual carousel
-- Responsive featured image slider block
+- Unique shortcode namespace to reduce conflicts: `[webkih_hero_slider]`
+- Lightweight frontend assets and focused plugin architecture
+- Responsive behavior for desktop, tablet, and mobile
+- Flexible animation, timing, and navigation arrow settings
+- Easy slide content management via custom post type
 
-## WordPress tag count guidance
-If you are preparing a `readme.txt` for WordPress plugin distribution, keep the **Tags** field concise.
+## Shortcode Usage
 
-- Recommended: only highly relevant tags
-- Platform limit to follow: **maximum 5 tags**
+Basic usage:
 
-Example:
-`Tags: slider, hero-slider, carousel, responsive, shortcode`
+```text
+[webkih_hero_slider]
+```
 
-## Branding and naming note
-This README intentionally uses only project-generic naming and does not include confidential business identifiers or unrelated third-party trademark branding.
+With optional per-page overrides:
 
-## Files included
+```text
+[webkih_hero_slider height="460" timer="4500"]
+```
+
+## Settings Overview
+
+The plugin includes a dedicated admin panel to control:
+
+- Slider height and autoplay interval
+- Animation style
+- Text color and button color
+- Title, caption, and button visibility
+- Arrow style and mobile image behavior
+
+## Suggested SEO-Friendly WordPress Tags
+
+Use concise, relevant tags in `readme.txt` (max 5 recommended):
+
+- `hero-slider`
+- `carousel-slider`
+- `responsive-slider`
+- `wordpress-slider`
+- `shortcode`
+
+## Included Files
+
 - `carousel-hero-slider.php`
-- `includes/wbk-hero-slider.php`
+- `includes/webkih-hero-slider.php`
 - `admin/settings-page.php`
-- `assets/css/wbk-hero-slider.css`
-- `assets/js/wbk-hero-slider.js`
+- `assets/css/webkih-hero-slider.css`
+- `assets/js/webkih-hero-slider.js`
 - `assets/css/admin.css`
 - `readme.txt`
 - `uninstall.php`
+
+## License
+
+GPLv2 or later.

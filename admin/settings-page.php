@@ -51,45 +51,45 @@ add_action( 'admin_enqueue_scripts', 'cs_enqueue_admin_assets' );
  */
 function cs_register_settings() {
     register_setting(
-        'cs_wbk_hero_slider_group',
-        'cs_wbk_hero_slider_settings',
+        'cs_webkih_hero_slider_group',
+        'cs_webkih_hero_slider_settings',
         [
             'type'              => 'array',
-            'sanitize_callback' => 'cs_sanitize_wbk_hero_slider_settings',
-            'default'           => cs_get_wbk_hero_slider_settings(),
+            'sanitize_callback' => 'cs_sanitize_webkih_hero_slider_settings',
+            'default'           => cs_get_webkih_hero_slider_settings(),
         ]
     );
 
     add_settings_section(
-        'cs_wbk_hero_slider_main',
+        'cs_webkih_hero_slider_main',
         __( 'Layout & Display', 'carousel-hero-slider' ),
         '__return_false',
         'carousel-hero-slider'
     );
 
     add_settings_section(
-        'cs_wbk_hero_slider_timing',
+        'cs_webkih_hero_slider_timing',
         __( 'Timing Controls', 'carousel-hero-slider' ),
         'cs_render_timing_section_text',
         'carousel-hero-slider'
     );
 
     add_settings_section(
-        'cs_wbk_hero_slider_animation',
+        'cs_webkih_hero_slider_animation',
         __( 'Animation Settings', 'carousel-hero-slider' ),
         'cs_render_animation_section_text',
         'carousel-hero-slider'
     );
 
     add_settings_section(
-        'cs_wbk_hero_slider_visibility',
+        'cs_webkih_hero_slider_visibility',
         __( 'Content Visibility', 'carousel-hero-slider' ),
         'cs_render_visibility_section_text',
         'carousel-hero-slider'
     );
 
     add_settings_section(
-        'cs_wbk_hero_slider_navigation',
+        'cs_webkih_hero_slider_navigation',
         __( 'Navigation Arrows', 'carousel-hero-slider' ),
         'cs_render_navigation_section_text',
         'carousel-hero-slider'
@@ -100,7 +100,7 @@ function cs_register_settings() {
         __( 'Slider Height (px)', 'carousel-hero-slider' ),
         'cs_render_number_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_main',
+        'cs_webkih_hero_slider_main',
         [
             'key' => 'height',
         ]
@@ -111,7 +111,7 @@ function cs_register_settings() {
         __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
         'cs_render_number_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_timing',
+        'cs_webkih_hero_slider_timing',
         [
             'key' => 'timer',
         ]
@@ -122,7 +122,7 @@ function cs_register_settings() {
         __( 'Mobile Image Behavior', 'carousel-hero-slider' ),
         'cs_render_mobile_image_behavior_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_main'
+        'cs_webkih_hero_slider_main'
     );
 
     add_settings_field(
@@ -130,7 +130,7 @@ function cs_register_settings() {
         __( 'Animation Style', 'carousel-hero-slider' ),
         'cs_render_animation_style_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_animation'
+        'cs_webkih_hero_slider_animation'
     );
 
     add_settings_field(
@@ -138,7 +138,7 @@ function cs_register_settings() {
         __( 'Text Color', 'carousel-hero-slider' ),
         'cs_render_color_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_main',
+        'cs_webkih_hero_slider_main',
         [
             'key' => 'text_color',
         ]
@@ -149,7 +149,7 @@ function cs_register_settings() {
         __( 'Button Background Color', 'carousel-hero-slider' ),
         'cs_render_color_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_main',
+        'cs_webkih_hero_slider_main',
         [
             'key' => 'button_bg_color',
         ]
@@ -168,7 +168,7 @@ function cs_register_settings() {
             $label,
             'cs_render_toggle_field',
             'carousel-hero-slider',
-            'cs_wbk_hero_slider_visibility',
+            'cs_webkih_hero_slider_visibility',
             [
                 'key' => $key,
             ]
@@ -180,7 +180,7 @@ function cs_register_settings() {
         __( 'Show Navigation Arrows', 'carousel-hero-slider' ),
         'cs_render_toggle_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_navigation',
+        'cs_webkih_hero_slider_navigation',
         [
             'key' => 'enable_arrows',
         ]
@@ -191,7 +191,7 @@ function cs_register_settings() {
         __( 'Arrow Style', 'carousel-hero-slider' ),
         'cs_render_arrow_style_field',
         'carousel-hero-slider',
-        'cs_wbk_hero_slider_navigation'
+        'cs_webkih_hero_slider_navigation'
     );
 }
 add_action( 'admin_init', 'cs_register_settings' );
@@ -413,12 +413,12 @@ add_action( 'admin_notices', 'cs_duplicate_slide_notice' );
  * @param array<string, mixed> $input Raw input.
  * @return array<string, mixed>
  */
-function cs_sanitize_wbk_hero_slider_settings( $input ) {
-    $defaults = cs_get_wbk_hero_slider_settings();
+function cs_sanitize_webkih_hero_slider_settings( $input ) {
+    $defaults = cs_get_webkih_hero_slider_settings();
 
     $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
 
-    $animation_styles = cs_get_wbk_hero_slider_animation_styles();
+    $animation_styles = cs_get_webkih_hero_slider_animation_styles();
 
     if ( ! isset( $animation_styles[ $animation_style ] ) ) {
         $animation_style = 'animation_12';
@@ -462,7 +462,7 @@ function cs_sanitize_wbk_hero_slider_settings( $input ) {
  * @param array<string, string> $args Field args.
  */
 function cs_render_number_field( $args ) {
-    $settings = cs_get_wbk_hero_slider_settings();
+    $settings = cs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $value    = $settings[ $key ] ?? '';
     ?>
@@ -470,7 +470,7 @@ function cs_render_number_field( $args ) {
         <input
             type="number"
             class="regular-text"
-            name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
             value="<?php echo esc_attr( (string) $value ); ?>"
             min="1"
             step="1"
@@ -503,13 +503,13 @@ function cs_sanitize_color_value( $value, $fallback ) {
  * @param array<string, string> $args Field args.
  */
 function cs_render_color_field( $args ) {
-    $settings = cs_get_wbk_hero_slider_settings();
+    $settings = cs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $value    = isset( $settings[ $key ] ) ? (string) $settings[ $key ] : '';
     ?>
     <input
         type="color"
-        name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+        name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
         value="<?php echo esc_attr( $value ); ?>"
     />
     <?php
@@ -519,16 +519,16 @@ function cs_render_color_field( $args ) {
  * Render animation style selection radios.
  */
 function cs_render_animation_style_field() {
-    $settings      = cs_get_wbk_hero_slider_settings();
+    $settings      = cs_get_webkih_hero_slider_settings();
     $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'animation_12';
-    $options       = cs_get_wbk_hero_slider_animation_styles();
+    $options       = cs_get_webkih_hero_slider_animation_styles();
 
     foreach ( $options as $value => $option ) {
         ?>
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_wbk_hero_slider_settings[animation_style]"
+                name="cs_webkih_hero_slider_settings[animation_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
@@ -545,7 +545,7 @@ function cs_render_animation_style_field() {
  * Render mobile image behavior selection radios.
  */
 function cs_render_mobile_image_behavior_field() {
-    $settings         = cs_get_wbk_hero_slider_settings();
+    $settings         = cs_get_webkih_hero_slider_settings();
     $current_behavior = isset( $settings['mobile_image_behavior'] ) ? $settings['mobile_image_behavior'] : 'cover';
     $options          = [
         'cover'     => [
@@ -567,7 +567,7 @@ function cs_render_mobile_image_behavior_field() {
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_wbk_hero_slider_settings[mobile_image_behavior]"
+                name="cs_webkih_hero_slider_settings[mobile_image_behavior]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_behavior, $value ); ?>
             />
@@ -585,7 +585,7 @@ function cs_render_mobile_image_behavior_field() {
  * Render arrow style selection radios.
  */
 function cs_render_arrow_style_field() {
-    $settings      = cs_get_wbk_hero_slider_settings();
+    $settings      = cs_get_webkih_hero_slider_settings();
     $current_style = isset( $settings['arrow_style'] ) ? $settings['arrow_style'] : 'bottom_rounded';
     $options       = [
         'side'           => [
@@ -607,7 +607,7 @@ function cs_render_arrow_style_field() {
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_wbk_hero_slider_settings[arrow_style]"
+                name="cs_webkih_hero_slider_settings[arrow_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
@@ -626,7 +626,7 @@ function cs_render_arrow_style_field() {
  * @param array<string, string> $args Field args.
  */
 function cs_render_toggle_field( $args ) {
-    $settings = cs_get_wbk_hero_slider_settings();
+    $settings = cs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $checked  = ! empty( $settings[ $key ] );
     ?>
@@ -634,7 +634,7 @@ function cs_render_toggle_field( $args ) {
         <input
             id="cs-<?php echo esc_attr( $key ); ?>"
             type="checkbox"
-            name="cs_wbk_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
             value="1"
             <?php checked( $checked ); ?>
         />
@@ -653,23 +653,23 @@ function cs_render_settings_page() {
     }
 
     $sections = [
-        'cs_wbk_hero_slider_main'       => [
+        'cs_webkih_hero_slider_main'       => [
             'title'       => __( 'Layout & Display', 'carousel-hero-slider' ),
             'description' => __( 'Set the slider height and overall display layout.', 'carousel-hero-slider' ),
         ],
-        'cs_wbk_hero_slider_timing'     => [
+        'cs_webkih_hero_slider_timing'     => [
             'title'       => __( 'Timing Controls', 'carousel-hero-slider' ),
             'description' => __( 'Set how fast the slider rotates through slides.', 'carousel-hero-slider' ),
         ],
-        'cs_wbk_hero_slider_animation'  => [
+        'cs_webkih_hero_slider_animation'  => [
             'title'       => __( 'Animation Settings', 'carousel-hero-slider' ),
             'description' => __( 'Choose one animation style and control how slide content enters.', 'carousel-hero-slider' ),
         ],
-        'cs_wbk_hero_slider_navigation' => [
+        'cs_webkih_hero_slider_navigation' => [
             'title'       => __( 'Navigation Arrows', 'carousel-hero-slider' ),
             'description' => __( 'Enable overlay arrows and choose one style for slider navigation.', 'carousel-hero-slider' ),
         ],
-        'cs_wbk_hero_slider_visibility' => [
+        'cs_webkih_hero_slider_visibility' => [
             'title'       => __( 'Content Visibility', 'carousel-hero-slider' ),
             'description' => __( 'Enable or disable title, caption, and button output on the frontend.', 'carousel-hero-slider' ),
         ],
@@ -698,18 +698,18 @@ function cs_render_settings_page() {
                 <div class="cs-admin-hero__row cs-admin-hero__row--bottom" aria-label="<?php esc_attr_e( 'Shortcode helper', 'carousel-hero-slider' ); ?>">
                     <p class="cs-admin-hero__shortcode-label"><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></p>
                     <div class="cs-admin-hero__shortcode-tools" data-cs-shortcode-copy>
-                        <code class="cs-shortcode-copy__value" data-cs-shortcode-text>[wbk_hero_slider]</code>
+                        <code class="cs-shortcode-copy__value" data-cs-shortcode-text>[webkih_hero_slider]</code>
                         <button type="button" class="button cs-shortcode-copy__button" data-cs-shortcode-button data-copy-label="<?php esc_attr_e( 'Copy', 'carousel-hero-slider' ); ?>" data-copied-label="<?php esc_attr_e( 'Copied!', 'carousel-hero-slider' ); ?>"><?php esc_html_e( 'Copy', 'carousel-hero-slider' ); ?></button>
                         <span class="cs-shortcode-copy__tooltip" data-cs-shortcode-tooltip role="status" aria-live="polite" aria-hidden="true"><?php esc_html_e( 'Copied!', 'carousel-hero-slider' ); ?></span>
                     </div>
                 </div>
 
-                <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'carousel-hero-slider' ); ?> <code>[wbk_hero_slider height="460" timer="4500"]</code></p>
+                <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'carousel-hero-slider' ); ?> <code>[webkih_hero_slider height="460" timer="4500"]</code></p>
             </div>
 
             <div class="cs-admin-card">
                 <form method="post" action="options.php" class="cs-settings-form">
-                    <?php settings_fields( 'cs_wbk_hero_slider_group' ); ?>
+                    <?php settings_fields( 'cs_webkih_hero_slider_group' ); ?>
 
                     <div class="cs-settings-layout" data-cs-settings-layout>
                         <div class="cs-settings-nav">
