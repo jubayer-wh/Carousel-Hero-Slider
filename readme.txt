@@ -1,4 +1,4 @@
-=== Carousel Hero Slider ===
+=== WebKih Hero Slider ===
 Contributors: jubayer1
 Tags: hero-slider, carousel-slider, responsive-slider, wordpress-slider, shortcode
 Requires at least: 6.0
@@ -11,11 +11,11 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Build fast, SEO-friendly hero sliders in WordPress with responsive layouts, clean animation effects, and easy shortcode output.
 
 == Description ==
-Carousel Hero Slider is a lightweight and performance-focused WordPress plugin for creating modern hero sections and carousel banners.
+WebKih Hero Slider is a lightweight and performance-focused WordPress plugin for creating modern hero sections and carousel banners.
 
 The plugin is built with clean frontend markup, accessibility-minded controls, and an admin workflow that makes it easy to manage slide content without page builder lock-in.
 
-= Why choose Carousel Hero Slider? =
+= Why choose WebKih Hero Slider? =
 * Unique shortcode namespace: `[webkih_hero_slider]` for better plugin compatibility.
 * SEO-friendly structure using semantic headings and content blocks.
 * Responsive behavior for desktop, tablet, and mobile screens.
@@ -39,8 +39,8 @@ The plugin is built with clean frontend markup, accessibility-minded controls, a
 
 == Installation ==
 1. Upload the plugin folder to `/wp-content/plugins/`, or install via the WordPress plugin upload screen.
-2. Activate **Carousel Hero Slider** from the **Plugins** menu.
-3. In the dashboard, open **Carousel Hero Slider** and configure slider defaults.
+2. Activate **WebKih Hero Slider** from the **Plugins** menu.
+3. In the dashboard, open **WebKih Hero Slider** and configure slider defaults.
 4. Create slides from the **Hero Slides** custom post type.
 5. Add the shortcode `[webkih_hero_slider]` in any post, page, or widget area.
 

@@ -1,6 +1,6 @@
-# Carousel Hero Slider
+# WebKih Hero Slider
 
-Carousel Hero Slider is a production-ready WordPress plugin for creating responsive hero banners and carousel sections with clean, SEO-friendly markup.
+WebKih Hero Slider is a production-ready WordPress plugin for creating responsive hero banners and carousel sections with clean, SEO-friendly markup.
 
 - **Plugin URL:** https://github.com/jubayer-wh/Carousel-Hero-Slider/
 - **Author:** Jubayer Hossain
@@ -50,7 +50,7 @@ Use concise, relevant tags in `readme.txt` (max 5 recommended):
 
 ## Included Files
 
-- `carousel-hero-slider.php`
+- `webkih-hero-slider.php`
 - `includes/webkih-hero-slider.php`
 - `admin/settings-page.php`
 - `assets/css/webkih-hero-slider.css`

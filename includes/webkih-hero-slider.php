@@ -6,28 +6,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Register Hero Slide custom post type.
  */
-function cs_register_hero_slide_post_type() {
+function wkhs_register_hero_slide_post_type() {
     $labels = [
-        'name'               => __( 'Hero Slides', 'carousel-hero-slider' ),
-        'singular_name'      => __( 'Hero Slide', 'carousel-hero-slider' ),
-        'add_new'            => __( 'Add New Slide', 'carousel-hero-slider' ),
-        'add_new_item'       => __( 'Add New Hero Slide', 'carousel-hero-slider' ),
-        'edit_item'          => __( 'Edit Hero Slide', 'carousel-hero-slider' ),
-        'new_item'           => __( 'New Hero Slide', 'carousel-hero-slider' ),
-        'view_item'          => __( 'View Hero Slide', 'carousel-hero-slider' ),
-        'search_items'       => __( 'Search Hero Slides', 'carousel-hero-slider' ),
-        'not_found'          => __( 'No hero slides found.', 'carousel-hero-slider' ),
-        'not_found_in_trash' => __( 'No hero slides found in Trash.', 'carousel-hero-slider' ),
-        'menu_name'          => __( 'Hero Slides', 'carousel-hero-slider' ),
+        'name'               => __( 'Hero Slides', 'webkih-hero-slider' ),
+        'singular_name'      => __( 'Hero Slide', 'webkih-hero-slider' ),
+        'add_new'            => __( 'Add New Slide', 'webkih-hero-slider' ),
+        'add_new_item'       => __( 'Add New Hero Slide', 'webkih-hero-slider' ),
+        'edit_item'          => __( 'Edit Hero Slide', 'webkih-hero-slider' ),
+        'new_item'           => __( 'New Hero Slide', 'webkih-hero-slider' ),
+        'view_item'          => __( 'View Hero Slide', 'webkih-hero-slider' ),
+        'search_items'       => __( 'Search Hero Slides', 'webkih-hero-slider' ),
+        'not_found'          => __( 'No hero slides found.', 'webkih-hero-slider' ),
+        'not_found_in_trash' => __( 'No hero slides found in Trash.', 'webkih-hero-slider' ),
+        'menu_name'          => __( 'Hero Slides', 'webkih-hero-slider' ),
     ];
 
     register_post_type(
-        'cs_hero_slide',
+        'wkhs_hero_slide',
         [
             'labels'              => $labels,
             'public'              => false,
             'show_ui'             => true,
-            'show_in_menu'        => 'carousel-hero-slider',
+            'show_in_menu'        => true,
             'menu_position'       => null,
             'supports'            => [ 'title', 'thumbnail', 'page-attributes' ],
             'capability_type'     => 'post',
@@ -38,24 +38,24 @@ function cs_register_hero_slide_post_type() {
         ]
     );
 }
-add_action( 'init', 'cs_register_hero_slide_post_type' );
+add_action( 'init', 'wkhs_register_hero_slide_post_type' );
 
 /**
  * Register hero slider shortcode.
  */
-function cs_register_webkih_hero_slider_shortcode() {
-    add_shortcode( 'webkih_hero_slider', 'cs_render_webkih_hero_slider_shortcode' );
+function wkhs_register_webkih_hero_slider_shortcode() {
+    add_shortcode( 'webkih_hero_slider', 'wkhs_render_webkih_hero_slider_shortcode' );
 }
-add_action( 'init', 'cs_register_webkih_hero_slider_shortcode' );
+add_action( 'init', 'wkhs_register_webkih_hero_slider_shortcode' );
 
 /**
  * Render hero slider output.
  *
  * @param array<string, string> $atts Shortcode attributes.
  */
-function cs_render_webkih_hero_slider_shortcode( $atts ) {
-    $defaults = cs_get_webkih_hero_slider_settings();
-    $animation_styles = cs_get_webkih_hero_slider_animation_styles();
+function wkhs_render_webkih_hero_slider_shortcode( $atts ) {
+    $defaults = wkhs_get_webkih_hero_slider_settings();
+    $animation_styles = wkhs_get_webkih_hero_slider_animation_styles();
 
     $atts = shortcode_atts(
         [
@@ -93,24 +93,24 @@ function cs_render_webkih_hero_slider_shortcode( $atts ) {
     if ( 'no_repeat' === $mobile_image_behavior ) {
         $mobile_image_behavior = 'no-repeat';
     }
-    $slides        = cs_get_hero_slides();
+    $slides        = wkhs_get_hero_slides();
 
     if ( empty( $slides ) ) {
         return '<p><strong>Carousel Slider:</strong> Create at least one Hero Slide in the admin panel.</p>';
     }
 
-    wp_enqueue_style( 'cs-webkih-hero-slider-css', CS_URL . 'assets/css/webkih-hero-slider.css', [], CS_VER );
-    wp_enqueue_script( 'cs-webkih-hero-slider-js', CS_URL . 'assets/js/webkih-hero-slider.js', [], CS_VER, true );
+    wp_enqueue_style( 'cs-webkih-hero-slider-css', WKHS_URL . 'assets/css/webkih-hero-slider.css', [], WKHS_VER );
+    wp_enqueue_script( 'cs-webkih-hero-slider-js', WKHS_URL . 'assets/js/webkih-hero-slider.js', [], WKHS_VER, true );
 
     ob_start();
     ?>
     <div class="cs-webkih-hero-slider cs-animation-<?php echo esc_attr( $animation ); ?> cs-nav-style-<?php echo esc_attr( $arrow_style ); ?> cs-mobile-image-<?php echo esc_attr( $mobile_image_behavior ); ?><?php echo $center_content ? ' cs-content-align-center' : ''; ?>" data-timer="<?php echo esc_attr( $timer ); ?>" data-animation="<?php echo esc_attr( $animation ); ?>" style="--cs-slider-height:<?php echo esc_attr( $height ); ?>px;--cs-slider-text-color:<?php echo esc_attr( $text_color ); ?>;--cs-slider-button-bg:<?php echo esc_attr( $button_bg_color ); ?>;">
         <?php if ( $enable_arrows && count( $slides ) > 1 ) : ?>
-            <div class="cs-webkih-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'carousel-hero-slider' ); ?>">
-                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'carousel-hero-slider' ); ?>">
+            <div class="cs-webkih-hero-slider-nav" aria-label="<?php esc_attr_e( 'Slide navigation', 'webkih-hero-slider' ); ?>">
+                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-prev" data-direction="prev" aria-label="<?php esc_attr_e( 'Previous slide', 'webkih-hero-slider' ); ?>">
                     <span aria-hidden="true">&#10094;</span>
                 </button>
-                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-next" data-direction="next" aria-label="<?php esc_attr_e( 'Next slide', 'carousel-hero-slider' ); ?>">
+                <button type="button" class="cs-webkih-hero-slider-arrow cs-webkih-hero-slider-arrow-next" data-direction="next" aria-label="<?php esc_attr_e( 'Next slide', 'webkih-hero-slider' ); ?>">
                     <span aria-hidden="true">&#10095;</span>
                 </button>
             </div>
@@ -146,63 +146,63 @@ function cs_render_webkih_hero_slider_shortcode( $atts ) {
  *
  * @return array<string, array<string, string>>
  */
-function cs_get_webkih_hero_slider_animation_styles() {
+function wkhs_get_webkih_hero_slider_animation_styles() {
     $styles = [
         'default'     => [
-            'label'       => __( 'Default', 'carousel-hero-slider' ),
-            'description' => __( 'Standard smooth slide transition.', 'carousel-hero-slider' ),
+            'label'       => __( 'Default', 'webkih-hero-slider' ),
+            'description' => __( 'Standard smooth slide transition.', 'webkih-hero-slider' ),
         ],
         'animation_1' => [
-            'label'       => __( 'Animation 1 (Bounce)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide content appears with a light bouncing motion.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 1 (Bounce)', 'webkih-hero-slider' ),
+            'description' => __( 'Slide content appears with a light bouncing motion.', 'webkih-hero-slider' ),
         ],
         'animation_2' => [
-            'label'       => __( 'Animation 2 (Extend)', 'carousel-hero-slider' ),
-            'description' => __( 'Elements smoothly expand or stretch into view.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 2 (Extend)', 'webkih-hero-slider' ),
+            'description' => __( 'Elements smoothly expand or stretch into view.', 'webkih-hero-slider' ),
         ],
         'animation_3' => [
-            'label'       => __( 'Animation 3 (Fade)', 'carousel-hero-slider' ),
-            'description' => __( 'Content gently fades in for a clean and elegant effect.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 3 (Fade)', 'webkih-hero-slider' ),
+            'description' => __( 'Content gently fades in for a clean and elegant effect.', 'webkih-hero-slider' ),
         ],
         'animation_4' => [
-            'label'       => __( 'Animation 4 (Split Enter)', 'carousel-hero-slider' ),
-            'description' => __( 'Text slides in from the left while the image moves in from the right.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 4 (Split Enter)', 'webkih-hero-slider' ),
+            'description' => __( 'Text slides in from the left while the image moves in from the right.', 'webkih-hero-slider' ),
         ],
         'animation_5' => [
-            'label'       => __( 'Animation 5 (Cross Motion)', 'carousel-hero-slider' ),
-            'description' => __( 'Text moves up into view while the image glides down for a crossed entry effect.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 5 (Cross Motion)', 'webkih-hero-slider' ),
+            'description' => __( 'Text moves up into view while the image glides down for a crossed entry effect.', 'webkih-hero-slider' ),
         ],
         'animation_6' => [
-            'label'       => __( 'Animation 6 (Reveal Mask)', 'carousel-hero-slider' ),
-            'description' => __( 'Content is smoothly revealed as a sliding mask uncovers the text while the image fades and scales into place.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 6 (Reveal Mask)', 'webkih-hero-slider' ),
+            'description' => __( 'Content is smoothly revealed as a sliding mask uncovers the text while the image fades and scales into place.', 'webkih-hero-slider' ),
         ],
         'animation_7' => [
-            'label'       => __( 'Animation 7 (Cinematic Parallax)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide elements move at different speeds to create a subtle layered parallax entrance.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 7 (Cinematic Parallax)', 'webkih-hero-slider' ),
+            'description' => __( 'Slide elements move at different speeds to create a subtle layered parallax entrance.', 'webkih-hero-slider' ),
         ],
         'animation_8' => [
-            'label'       => __( 'Animation 8 (Zoom Focus)', 'carousel-hero-slider' ),
-            'description' => __( 'Image gently zooms into focus while text fades and lifts into view.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 8 (Zoom Focus)', 'webkih-hero-slider' ),
+            'description' => __( 'Image gently zooms into focus while text fades and lifts into view.', 'webkih-hero-slider' ),
         ],
         'animation_9' => [
-            'label'       => __( 'Animation 9 (Sequential Reveal)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide elements appear one by one with a smooth staggered entrance.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 9 (Sequential Reveal)', 'webkih-hero-slider' ),
+            'description' => __( 'Slide elements appear one by one with a smooth staggered entrance.', 'webkih-hero-slider' ),
         ],
         'animation_10' => [
-            'label'       => __( 'Animation 10 (Blur Focus)', 'carousel-hero-slider' ),
-            'description' => __( 'Content fades in from a soft blur and becomes sharp as it settles into position.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 10 (Blur Focus)', 'webkih-hero-slider' ),
+            'description' => __( 'Content fades in from a soft blur and becomes sharp as it settles into position.', 'webkih-hero-slider' ),
         ],
         'animation_11' => [
-            'label'       => __( 'Animation 11 (Flip Enter)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide content rotates subtly in 3D before smoothly settling.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 11 (Flip Enter)', 'webkih-hero-slider' ),
+            'description' => __( 'Slide content rotates subtly in 3D before smoothly settling.', 'webkih-hero-slider' ),
         ],
         'animation_12' => [
-            'label'       => __( 'Animation 12 (Curtain Reveal)', 'carousel-hero-slider' ),
-            'description' => __( 'A smooth sliding overlay reveals the slide content underneath.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 12 (Curtain Reveal)', 'webkih-hero-slider' ),
+            'description' => __( 'A smooth sliding overlay reveals the slide content underneath.', 'webkih-hero-slider' ),
         ],
         'animation_13' => [
-            'label'       => __( 'Animation 13 (Elastic Rise)', 'carousel-hero-slider' ),
-            'description' => __( 'Slide content rises with a subtle spring motion before settling.', 'carousel-hero-slider' ),
+            'label'       => __( 'Animation 13 (Elastic Rise)', 'webkih-hero-slider' ),
+            'description' => __( 'Slide content rises with a subtle spring motion before settling.', 'webkih-hero-slider' ),
         ],
     ];
 
@@ -211,7 +211,7 @@ function cs_get_webkih_hero_slider_animation_styles() {
      *
      * @param array<string, array<string, string>> $styles Animation style definitions.
      */
-    return apply_filters( 'cs_webkih_hero_slider_animation_styles', $styles );
+    return apply_filters( 'wkhs_webkih_hero_slider_animation_styles', $styles );
 }
 
 /**
@@ -219,10 +219,10 @@ function cs_get_webkih_hero_slider_animation_styles() {
  *
  * @return array<int, array<string, string>>
  */
-function cs_get_hero_slides() {
+function wkhs_get_hero_slides() {
     $query = new WP_Query(
         [
-            'post_type'      => 'cs_hero_slide',
+            'post_type'      => 'wkhs_hero_slide',
             'posts_per_page' => -1,
             'orderby'        => [
                 'menu_order' => 'ASC',
@@ -248,9 +248,9 @@ function cs_get_hero_slides() {
 
         $slides[] = [
             'title'        => get_the_title( $post->ID ),
-            'caption'      => (string) get_post_meta( $post->ID, '_cs_slide_caption', true ),
-            'button_label' => (string) get_post_meta( $post->ID, '_cs_slide_button_label', true ),
-            'button_link'  => (string) get_post_meta( $post->ID, '_cs_slide_button_link', true ),
+            'caption'      => (string) get_post_meta( $post->ID, '_wkhs_slide_caption', true ),
+            'button_label' => (string) get_post_meta( $post->ID, '_wkhs_slide_button_label', true ),
+            'button_link'  => (string) get_post_meta( $post->ID, '_wkhs_slide_button_link', true ),
             'image'        => $image,
         ];
     }
@@ -265,7 +265,7 @@ function cs_get_hero_slides() {
  *
  * @return array<string, mixed>
  */
-function cs_get_webkih_hero_slider_settings() {
+function wkhs_get_webkih_hero_slider_settings() {
     $defaults = [
         'height'          => 460,
         'timer'           => 4500,
@@ -281,7 +281,7 @@ function cs_get_webkih_hero_slider_settings() {
         'mobile_image_behavior' => 'cover',
     ];
 
-    $settings = get_option( 'cs_webkih_hero_slider_settings', [] );
+    $settings = get_option( 'wkhs_webkih_hero_slider_settings', [] );
 
     if ( ! is_array( $settings ) ) {
         return $defaults;

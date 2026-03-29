@@ -389,13 +389,13 @@
   padding: 0;
 }
 
-.post-type-cs_hero_slide #postexcerpt,
-.post-type-cs_hero_slide #slugdiv,
-.post-type-cs_hero_slide #commentstatusdiv,
-.post-type-cs_hero_slide #commentsdiv,
-.post-type-cs_hero_slide #trackbacksdiv,
-.post-type-cs_hero_slide #authordiv,
-.post-type-cs_hero_slide #revisionsdiv {
+.post-type-wkhs_hero_slide #postexcerpt,
+.post-type-wkhs_hero_slide #slugdiv,
+.post-type-wkhs_hero_slide #commentstatusdiv,
+.post-type-wkhs_hero_slide #commentsdiv,
+.post-type-wkhs_hero_slide #trackbacksdiv,
+.post-type-wkhs_hero_slide #authordiv,
+.post-type-wkhs_hero_slide #revisionsdiv {
   display: none;
 }
 

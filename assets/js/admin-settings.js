@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var buttons = Array.prototype.slice.call(layout.querySelectorAll('.cs-settings-nav__button'));
     var panels = Array.prototype.slice.call(layout.querySelectorAll('.cs-settings-panel'));
     var form = layout.closest('form');
-    var storageKey = 'cs_active_settings_tab';
+    var storageKey = 'wkhs_active_settings_tab';
 
     var activatePanel = function (target, focusPanel) {
       buttons.forEach(function (button) {

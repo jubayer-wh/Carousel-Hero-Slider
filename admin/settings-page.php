@@ -6,169 +6,158 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Register admin menu and settings submenu.
  */
-function cs_register_admin_menu() {
-    add_menu_page(
-        __( 'Carousel Hero Slider', 'carousel-hero-slider' ),
-        __( 'Carousel Hero Slider', 'carousel-hero-slider' ),
+function wkhs_register_admin_menu() {
+    add_options_page(
+        __( 'WebKih Hero Slider', 'webkih-hero-slider' ),
+        __( 'WebKih Hero Slider', 'webkih-hero-slider' ),
         'manage_options',
-        'carousel-hero-slider',
-        'cs_render_settings_page',
-        'dashicons-images-alt2',
-        25
-    );
-
-    add_submenu_page(
-        'carousel-hero-slider',
-        __( 'Slider Settings', 'carousel-hero-slider' ),
-        __( 'Settings', 'carousel-hero-slider' ),
-        'manage_options',
-        'carousel-hero-slider',
-        'cs_render_settings_page'
+        'webkih-hero-slider',
+        'wkhs_render_settings_page'
     );
 }
-add_action( 'admin_menu', 'cs_register_admin_menu' );
+add_action( 'admin_menu', 'wkhs_register_admin_menu' );
 
 /**
  * Enqueue admin styles for plugin screens.
  *
  * @param string $hook_suffix Current admin page hook.
  */
-function cs_enqueue_admin_assets( $hook_suffix ) {
+function wkhs_enqueue_admin_assets( $hook_suffix ) {
     $screen = get_current_screen();
 
-    if ( 'toplevel_page_carousel-hero-slider' === $hook_suffix || ( $screen && 'cs_hero_slide' === $screen->post_type ) ) {
-        wp_enqueue_style( 'cs-admin-css', CS_URL . 'assets/css/admin.css', [], CS_VER );
+    if ( 'settings_page_webkih-hero-slider' === $hook_suffix || ( $screen && 'wkhs_hero_slide' === $screen->post_type ) ) {
+        wp_enqueue_style( 'cs-admin-css', WKHS_URL . 'assets/css/admin.css', [], WKHS_VER );
     }
 
-    if ( 'toplevel_page_carousel-hero-slider' === $hook_suffix ) {
-        wp_enqueue_script( 'cs-admin-settings-js', CS_URL . 'assets/js/admin-settings.js', [], CS_VER, true );
+    if ( 'settings_page_webkih-hero-slider' === $hook_suffix ) {
+        wp_enqueue_script( 'cs-admin-settings-js', WKHS_URL . 'assets/js/admin-settings.js', [], WKHS_VER, true );
     }
 }
-add_action( 'admin_enqueue_scripts', 'cs_enqueue_admin_assets' );
+add_action( 'admin_enqueue_scripts', 'wkhs_enqueue_admin_assets' );
 
 /**
  * Register plugin settings.
  */
-function cs_register_settings() {
+function wkhs_register_settings() {
     register_setting(
-        'cs_webkih_hero_slider_group',
-        'cs_webkih_hero_slider_settings',
+        'wkhs_webkih_hero_slider_group',
+        'wkhs_webkih_hero_slider_settings',
         [
             'type'              => 'array',
-            'sanitize_callback' => 'cs_sanitize_webkih_hero_slider_settings',
-            'default'           => cs_get_webkih_hero_slider_settings(),
+            'sanitize_callback' => 'wkhs_sanitize_webkih_hero_slider_settings',
+            'default'           => wkhs_get_webkih_hero_slider_settings(),
         ]
     );
 
     add_settings_section(
-        'cs_webkih_hero_slider_main',
-        __( 'Layout & Display', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_main',
+        __( 'Layout & Display', 'webkih-hero-slider' ),
         '__return_false',
-        'carousel-hero-slider'
+        'webkih-hero-slider'
     );
 
     add_settings_section(
-        'cs_webkih_hero_slider_timing',
-        __( 'Timing Controls', 'carousel-hero-slider' ),
-        'cs_render_timing_section_text',
-        'carousel-hero-slider'
+        'wkhs_webkih_hero_slider_timing',
+        __( 'Timing Controls', 'webkih-hero-slider' ),
+        'wkhs_render_timing_section_text',
+        'webkih-hero-slider'
     );
 
     add_settings_section(
-        'cs_webkih_hero_slider_animation',
-        __( 'Animation Settings', 'carousel-hero-slider' ),
-        'cs_render_animation_section_text',
-        'carousel-hero-slider'
+        'wkhs_webkih_hero_slider_animation',
+        __( 'Animation Settings', 'webkih-hero-slider' ),
+        'wkhs_render_animation_section_text',
+        'webkih-hero-slider'
     );
 
     add_settings_section(
-        'cs_webkih_hero_slider_visibility',
-        __( 'Content Visibility', 'carousel-hero-slider' ),
-        'cs_render_visibility_section_text',
-        'carousel-hero-slider'
+        'wkhs_webkih_hero_slider_visibility',
+        __( 'Content Visibility', 'webkih-hero-slider' ),
+        'wkhs_render_visibility_section_text',
+        'webkih-hero-slider'
     );
 
     add_settings_section(
-        'cs_webkih_hero_slider_navigation',
-        __( 'Navigation Arrows', 'carousel-hero-slider' ),
-        'cs_render_navigation_section_text',
-        'carousel-hero-slider'
+        'wkhs_webkih_hero_slider_navigation',
+        __( 'Navigation Arrows', 'webkih-hero-slider' ),
+        'wkhs_render_navigation_section_text',
+        'webkih-hero-slider'
     );
 
     add_settings_field(
-        'cs_height',
-        __( 'Slider Height (px)', 'carousel-hero-slider' ),
-        'cs_render_number_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_main',
+        'wkhs_height',
+        __( 'Slider Height (px)', 'webkih-hero-slider' ),
+        'wkhs_render_number_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_main',
         [
             'key' => 'height',
         ]
     );
 
     add_settings_field(
-        'cs_timer',
-        __( 'Slide Timer (ms)', 'carousel-hero-slider' ),
-        'cs_render_number_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_timing',
+        'wkhs_timer',
+        __( 'Slide Timer (ms)', 'webkih-hero-slider' ),
+        'wkhs_render_number_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_timing',
         [
             'key' => 'timer',
         ]
     );
 
     add_settings_field(
-        'cs_mobile_image_behavior',
-        __( 'Mobile Image Behavior', 'carousel-hero-slider' ),
-        'cs_render_mobile_image_behavior_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_main'
+        'wkhs_mobile_image_behavior',
+        __( 'Mobile Image Behavior', 'webkih-hero-slider' ),
+        'wkhs_render_mobile_image_behavior_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_main'
     );
 
     add_settings_field(
-        'cs_animation_style',
-        __( 'Animation Style', 'carousel-hero-slider' ),
-        'cs_render_animation_style_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_animation'
+        'wkhs_animation_style',
+        __( 'Animation Style', 'webkih-hero-slider' ),
+        'wkhs_render_animation_style_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_animation'
     );
 
     add_settings_field(
-        'cs_text_color',
-        __( 'Text Color', 'carousel-hero-slider' ),
-        'cs_render_color_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_main',
+        'wkhs_text_color',
+        __( 'Text Color', 'webkih-hero-slider' ),
+        'wkhs_render_color_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_main',
         [
             'key' => 'text_color',
         ]
     );
 
     add_settings_field(
-        'cs_button_bg_color',
-        __( 'Button Background Color', 'carousel-hero-slider' ),
-        'cs_render_color_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_main',
+        'wkhs_button_bg_color',
+        __( 'Button Background Color', 'webkih-hero-slider' ),
+        'wkhs_render_color_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_main',
         [
             'key' => 'button_bg_color',
         ]
     );
 
     $visibility_fields = [
-        'show_title'     => __( 'Show Slide Title', 'carousel-hero-slider' ),
-        'show_caption'   => __( 'Show Caption Text', 'carousel-hero-slider' ),
-        'show_button'    => __( 'Show Slide Button', 'carousel-hero-slider' ),
-        'center_content' => __( 'Center Content', 'carousel-hero-slider' ),
+        'show_title'     => __( 'Show Slide Title', 'webkih-hero-slider' ),
+        'show_caption'   => __( 'Show Caption Text', 'webkih-hero-slider' ),
+        'show_button'    => __( 'Show Slide Button', 'webkih-hero-slider' ),
+        'center_content' => __( 'Center Content', 'webkih-hero-slider' ),
     ];
 
     foreach ( $visibility_fields as $key => $label ) {
         add_settings_field(
-            'cs_' . $key,
+            'wkhs_' . $key,
             $label,
-            'cs_render_toggle_field',
-            'carousel-hero-slider',
-            'cs_webkih_hero_slider_visibility',
+            'wkhs_render_toggle_field',
+            'webkih-hero-slider',
+            'wkhs_webkih_hero_slider_visibility',
             [
                 'key' => $key,
             ]
@@ -176,98 +165,98 @@ function cs_register_settings() {
     }
 
     add_settings_field(
-        'cs_enable_arrows',
-        __( 'Show Navigation Arrows', 'carousel-hero-slider' ),
-        'cs_render_toggle_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_navigation',
+        'wkhs_enable_arrows',
+        __( 'Show Navigation Arrows', 'webkih-hero-slider' ),
+        'wkhs_render_toggle_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_navigation',
         [
             'key' => 'enable_arrows',
         ]
     );
 
     add_settings_field(
-        'cs_arrow_style',
-        __( 'Arrow Style', 'carousel-hero-slider' ),
-        'cs_render_arrow_style_field',
-        'carousel-hero-slider',
-        'cs_webkih_hero_slider_navigation'
+        'wkhs_arrow_style',
+        __( 'Arrow Style', 'webkih-hero-slider' ),
+        'wkhs_render_arrow_style_field',
+        'webkih-hero-slider',
+        'wkhs_webkih_hero_slider_navigation'
     );
 }
-add_action( 'admin_init', 'cs_register_settings' );
+add_action( 'admin_init', 'wkhs_register_settings' );
 
 /**
  * Render helper text for timing section.
  */
-function cs_render_timing_section_text() {
-    echo '<p>' . esc_html__( 'Set how fast the slider rotates through slides.', 'carousel-hero-slider' ) . '</p>';
+function wkhs_render_timing_section_text() {
+    echo '<p>' . esc_html__( 'Set how fast the slider rotates through slides.', 'webkih-hero-slider' ) . '</p>';
 }
 
 /**
  * Render helper text for animation section.
  */
-function cs_render_animation_section_text() {
-    echo '<p>' . esc_html__( 'Choose one animation style and control how slide content enters.', 'carousel-hero-slider' ) . '</p>';
+function wkhs_render_animation_section_text() {
+    echo '<p>' . esc_html__( 'Choose one animation style and control how slide content enters.', 'webkih-hero-slider' ) . '</p>';
 }
 
 /**
  * Render helper text for visibility section.
  */
-function cs_render_visibility_section_text() {
-    echo '<p>' . esc_html__( 'Enable or disable slide title, caption, and button output on the frontend.', 'carousel-hero-slider' ) . '</p>';
+function wkhs_render_visibility_section_text() {
+    echo '<p>' . esc_html__( 'Enable or disable slide title, caption, and button output on the frontend.', 'webkih-hero-slider' ) . '</p>';
 }
 
 /**
  * Render helper text for navigation section.
  */
-function cs_render_navigation_section_text() {
-    echo '<p>' . esc_html__( 'Enable overlay arrows and choose one style for slider navigation.', 'carousel-hero-slider' ) . '</p>';
+function wkhs_render_navigation_section_text() {
+    echo '<p>' . esc_html__( 'Enable overlay arrows and choose one style for slider navigation.', 'webkih-hero-slider' ) . '</p>';
 }
 
 /**
  * Add metaboxes for slide fields.
  */
-function cs_add_slide_metaboxes() {
+function wkhs_add_slide_metaboxes() {
     add_meta_box(
         'cs-slide-content-metabox',
-        __( 'Slide Content', 'carousel-hero-slider' ),
-        'cs_render_slide_content_metabox',
-        'cs_hero_slide',
+        __( 'Slide Content', 'webkih-hero-slider' ),
+        'wkhs_render_slide_content_metabox',
+        'wkhs_hero_slide',
         'normal',
         'high'
     );
 }
-add_action( 'add_meta_boxes', 'cs_add_slide_metaboxes' );
+add_action( 'add_meta_boxes', 'wkhs_add_slide_metaboxes' );
 
 /**
  * Render slide meta fields.
  *
  * @param WP_Post $post Post object.
  */
-function cs_render_slide_content_metabox( $post ) {
-    wp_nonce_field( 'cs_save_slide_meta', 'cs_slide_meta_nonce' );
+function wkhs_render_slide_content_metabox( $post ) {
+    wp_nonce_field( 'wkhs_save_slide_meta', 'wkhs_slide_meta_nonce' );
 
-    $caption      = (string) get_post_meta( $post->ID, '_cs_slide_caption', true );
-    $button_label = (string) get_post_meta( $post->ID, '_cs_slide_button_label', true );
-    $button_link  = (string) get_post_meta( $post->ID, '_cs_slide_button_link', true );
+    $caption      = (string) get_post_meta( $post->ID, '_wkhs_slide_caption', true );
+    $button_label = (string) get_post_meta( $post->ID, '_wkhs_slide_button_label', true );
+    $button_link  = (string) get_post_meta( $post->ID, '_wkhs_slide_button_link', true );
     ?>
     <p>
-        <label for="cs-slide-caption"><strong><?php esc_html_e( 'Caption', 'carousel-hero-slider' ); ?></strong></label><br />
-        <textarea id="cs-slide-caption" class="widefat" rows="3" name="cs_slide_caption"><?php echo esc_textarea( $caption ); ?></textarea>
+        <label for="cs-slide-caption"><strong><?php esc_html_e( 'Caption', 'webkih-hero-slider' ); ?></strong></label><br />
+        <textarea id="cs-slide-caption" class="widefat" rows="3" name="wkhs_slide_caption"><?php echo esc_textarea( $caption ); ?></textarea>
     </p>
 
     <p>
-        <label for="cs-slide-button-label"><strong><?php esc_html_e( 'Button Label', 'carousel-hero-slider' ); ?></strong></label><br />
-        <input id="cs-slide-button-label" class="regular-text" type="text" name="cs_slide_button_label" value="<?php echo esc_attr( $button_label ); ?>" maxlength="40" />
+        <label for="cs-slide-button-label"><strong><?php esc_html_e( 'Button Label', 'webkih-hero-slider' ); ?></strong></label><br />
+        <input id="cs-slide-button-label" class="regular-text" type="text" name="wkhs_slide_button_label" value="<?php echo esc_attr( $button_label ); ?>" maxlength="40" />
     </p>
 
     <p>
-        <label for="cs-slide-button-link"><strong><?php esc_html_e( 'Button Link', 'carousel-hero-slider' ); ?></strong></label><br />
-        <input id="cs-slide-button-link" class="widefat" type="url" name="cs_slide_button_link" value="<?php echo esc_attr( $button_link ); ?>" placeholder="https://example.com/page" />
+        <label for="cs-slide-button-link"><strong><?php esc_html_e( 'Button Link', 'webkih-hero-slider' ); ?></strong></label><br />
+        <input id="cs-slide-button-link" class="widefat" type="url" name="wkhs_slide_button_link" value="<?php echo esc_attr( $button_link ); ?>" placeholder="https://example.com/page" />
     </p>
 
     <p class="description">
-        <?php esc_html_e( 'Tip: Use the slide title field for the heading and set a Featured Image for the background image.', 'carousel-hero-slider' ); ?>
+        <?php esc_html_e( 'Tip: Use the slide title field for the heading and set a Featured Image for the background image.', 'webkih-hero-slider' ); ?>
     </p>
     <?php
 }
@@ -277,8 +266,8 @@ function cs_render_slide_content_metabox( $post ) {
  *
  * @param int $post_id Post ID.
  */
-function cs_save_slide_meta( $post_id ) {
-    if ( ! isset( $_POST['cs_slide_meta_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['cs_slide_meta_nonce'] ) ), 'cs_save_slide_meta' ) ) {
+function wkhs_save_slide_meta( $post_id ) {
+    if ( ! isset( $_POST['wkhs_slide_meta_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wkhs_slide_meta_nonce'] ) ), 'wkhs_save_slide_meta' ) ) {
         return;
     }
 
@@ -290,19 +279,19 @@ function cs_save_slide_meta( $post_id ) {
         return;
     }
 
-    if ( 'cs_hero_slide' !== get_post_type( $post_id ) ) {
+    if ( 'wkhs_hero_slide' !== get_post_type( $post_id ) ) {
         return;
     }
 
-    $caption      = isset( $_POST['cs_slide_caption'] ) ? sanitize_textarea_field( wp_unslash( $_POST['cs_slide_caption'] ) ) : '';
-    $button_label = isset( $_POST['cs_slide_button_label'] ) ? sanitize_text_field( wp_unslash( $_POST['cs_slide_button_label'] ) ) : '';
-    $button_link  = isset( $_POST['cs_slide_button_link'] ) ? esc_url_raw( wp_unslash( $_POST['cs_slide_button_link'] ) ) : '';
+    $caption      = isset( $_POST['wkhs_slide_caption'] ) ? sanitize_textarea_field( wp_unslash( $_POST['wkhs_slide_caption'] ) ) : '';
+    $button_label = isset( $_POST['wkhs_slide_button_label'] ) ? sanitize_text_field( wp_unslash( $_POST['wkhs_slide_button_label'] ) ) : '';
+    $button_link  = isset( $_POST['wkhs_slide_button_link'] ) ? esc_url_raw( wp_unslash( $_POST['wkhs_slide_button_link'] ) ) : '';
 
-    update_post_meta( $post_id, '_cs_slide_caption', $caption );
-    update_post_meta( $post_id, '_cs_slide_button_label', $button_label );
-    update_post_meta( $post_id, '_cs_slide_button_link', $button_link );
+    update_post_meta( $post_id, '_wkhs_slide_caption', $caption );
+    update_post_meta( $post_id, '_wkhs_slide_button_label', $button_label );
+    update_post_meta( $post_id, '_wkhs_slide_button_link', $button_link );
 }
-add_action( 'save_post', 'cs_save_slide_meta' );
+add_action( 'save_post', 'wkhs_save_slide_meta' );
 
 /**
  * Add duplicate row action to slide posts.
@@ -311,53 +300,53 @@ add_action( 'save_post', 'cs_save_slide_meta' );
  * @param WP_Post               $post Current post.
  * @return array<string, string>
  */
-function cs_add_duplicate_slide_action( $actions, $post ) {
-    if ( 'cs_hero_slide' !== $post->post_type || ! current_user_can( 'edit_posts' ) ) {
+function wkhs_add_duplicate_slide_action( $actions, $post ) {
+    if ( 'wkhs_hero_slide' !== $post->post_type || ! current_user_can( 'edit_posts' ) ) {
         return $actions;
     }
 
     $duplicate_url = wp_nonce_url(
         add_query_arg(
             [
-                'action' => 'cs_duplicate_slide',
+                'action' => 'wkhs_duplicate_slide',
                 'post'   => $post->ID,
             ],
             admin_url( 'admin.php' )
         ),
-        'cs_duplicate_slide_' . $post->ID
+        'wkhs_duplicate_slide_' . $post->ID
     );
 
-    $actions['cs_duplicate_slide'] = '<a href="' . esc_url( $duplicate_url ) . '">' . esc_html__( 'Duplicate', 'carousel-hero-slider' ) . '</a>';
+    $actions['wkhs_duplicate_slide'] = '<a href="' . esc_url( $duplicate_url ) . '">' . esc_html__( 'Duplicate', 'webkih-hero-slider' ) . '</a>';
 
     return $actions;
 }
-add_filter( 'post_row_actions', 'cs_add_duplicate_slide_action', 10, 2 );
+add_filter( 'post_row_actions', 'wkhs_add_duplicate_slide_action', 10, 2 );
 
 /**
  * Handle duplicate action.
  */
-function cs_handle_duplicate_slide_action() {
-    if ( ! is_admin() || ! isset( $_GET['action'] ) || 'cs_duplicate_slide' !== $_GET['action'] ) {
+function wkhs_handle_duplicate_slide_action() {
+    if ( ! is_admin() || ! isset( $_GET['action'] ) || 'wkhs_duplicate_slide' !== $_GET['action'] ) {
         return;
     }
 
     $post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
 
     if ( ! $post_id || ! current_user_can( 'edit_post', $post_id ) ) {
-        wp_die( esc_html__( 'You are not allowed to duplicate this slide.', 'carousel-hero-slider' ) );
+        wp_die( esc_html__( 'You are not allowed to duplicate this slide.', 'webkih-hero-slider' ) );
     }
 
-    check_admin_referer( 'cs_duplicate_slide_' . $post_id );
+    check_admin_referer( 'wkhs_duplicate_slide_' . $post_id );
 
     $post = get_post( $post_id );
 
-    if ( ! $post || 'cs_hero_slide' !== $post->post_type ) {
-        wp_die( esc_html__( 'Invalid slide for duplication.', 'carousel-hero-slider' ) );
+    if ( ! $post || 'wkhs_hero_slide' !== $post->post_type ) {
+        wp_die( esc_html__( 'Invalid slide for duplication.', 'webkih-hero-slider' ) );
     }
 
     $new_post_id = wp_insert_post(
         [
-            'post_type'   => 'cs_hero_slide',
+            'post_type'   => 'wkhs_hero_slide',
             'post_status' => 'draft',
             'post_title'  => $post->post_title . ' (Copy)',
             'menu_order'  => (int) $post->menu_order,
@@ -365,10 +354,10 @@ function cs_handle_duplicate_slide_action() {
     );
 
     if ( ! $new_post_id || is_wp_error( $new_post_id ) ) {
-        wp_die( esc_html__( 'Unable to duplicate slide.', 'carousel-hero-slider' ) );
+        wp_die( esc_html__( 'Unable to duplicate slide.', 'webkih-hero-slider' ) );
     }
 
-    $meta_keys = [ '_cs_slide_caption', '_cs_slide_button_label', '_cs_slide_button_link' ];
+    $meta_keys = [ '_wkhs_slide_caption', '_wkhs_slide_button_label', '_wkhs_slide_button_link' ];
 
     foreach ( $meta_keys as $meta_key ) {
         update_post_meta( $new_post_id, $meta_key, get_post_meta( $post_id, $meta_key, true ) );
@@ -382,7 +371,7 @@ function cs_handle_duplicate_slide_action() {
     wp_safe_redirect(
         add_query_arg(
             [
-                'post_type'  => 'cs_hero_slide',
+                'post_type'  => 'wkhs_hero_slide',
                 'duplicated' => 1,
             ],
             admin_url( 'edit.php' )
@@ -390,22 +379,22 @@ function cs_handle_duplicate_slide_action() {
     );
     exit;
 }
-add_action( 'admin_init', 'cs_handle_duplicate_slide_action' );
+add_action( 'admin_init', 'wkhs_handle_duplicate_slide_action' );
 
 /**
  * Admin notice for duplicated slide.
  */
-function cs_duplicate_slide_notice() {
+function wkhs_duplicate_slide_notice() {
     $post_type  = filter_input( INPUT_GET, 'post_type', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
     $duplicated = filter_input( INPUT_GET, 'duplicated', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
-    if ( 'cs_hero_slide' !== $post_type || '1' !== $duplicated ) {
+    if ( 'wkhs_hero_slide' !== $post_type || '1' !== $duplicated ) {
         return;
     }
 
-    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Slide duplicated successfully as draft.', 'carousel-hero-slider' ) . '</p></div>';
+    echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Slide duplicated successfully as draft.', 'webkih-hero-slider' ) . '</p></div>';
 }
-add_action( 'admin_notices', 'cs_duplicate_slide_notice' );
+add_action( 'admin_notices', 'wkhs_duplicate_slide_notice' );
 
 /**
  * Sanitize settings input.
@@ -413,12 +402,12 @@ add_action( 'admin_notices', 'cs_duplicate_slide_notice' );
  * @param array<string, mixed> $input Raw input.
  * @return array<string, mixed>
  */
-function cs_sanitize_webkih_hero_slider_settings( $input ) {
-    $defaults = cs_get_webkih_hero_slider_settings();
+function wkhs_sanitize_webkih_hero_slider_settings( $input ) {
+    $defaults = wkhs_get_webkih_hero_slider_settings();
 
     $animation_style = isset( $input['animation_style'] ) ? sanitize_key( $input['animation_style'] ) : $defaults['animation_style'];
 
-    $animation_styles = cs_get_webkih_hero_slider_animation_styles();
+    $animation_styles = wkhs_get_webkih_hero_slider_animation_styles();
 
     if ( ! isset( $animation_styles[ $animation_style ] ) ) {
         $animation_style = 'animation_12';
@@ -451,8 +440,8 @@ function cs_sanitize_webkih_hero_slider_settings( $input ) {
         'enable_arrows'   => empty( $input['enable_arrows'] ) ? 0 : 1,
         'arrow_style'     => $arrow_style,
         'mobile_image_behavior' => $mobile_image_behavior,
-        'text_color'      => cs_sanitize_color_value( $input['text_color'] ?? $defaults['text_color'], $defaults['text_color'] ),
-        'button_bg_color' => cs_sanitize_color_value( $input['button_bg_color'] ?? $defaults['button_bg_color'], $defaults['button_bg_color'] ),
+        'text_color'      => wkhs_sanitize_color_value( $input['text_color'] ?? $defaults['text_color'], $defaults['text_color'] ),
+        'button_bg_color' => wkhs_sanitize_color_value( $input['button_bg_color'] ?? $defaults['button_bg_color'], $defaults['button_bg_color'] ),
     ];
 }
 
@@ -461,8 +450,8 @@ function cs_sanitize_webkih_hero_slider_settings( $input ) {
  *
  * @param array<string, string> $args Field args.
  */
-function cs_render_number_field( $args ) {
-    $settings = cs_get_webkih_hero_slider_settings();
+function wkhs_render_number_field( $args ) {
+    $settings = wkhs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $value    = $settings[ $key ] ?? '';
     ?>
@@ -470,16 +459,16 @@ function cs_render_number_field( $args ) {
         <input
             type="number"
             class="regular-text"
-            name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            name="wkhs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
             value="<?php echo esc_attr( (string) $value ); ?>"
             min="1"
             step="1"
         />
         <?php if ( 'height' === $key ) : ?>
-            <span class="cs-setting-input__hint"><?php esc_html_e( 'Recommended: 380–560 px', 'carousel-hero-slider' ); ?></span>
+            <span class="cs-setting-input__hint"><?php esc_html_e( 'Recommended: 380–560 px', 'webkih-hero-slider' ); ?></span>
         <?php endif; ?>
         <?php if ( 'timer' === $key ) : ?>
-            <span class="cs-setting-input__hint"><?php esc_html_e( 'Minimum: 2000 ms', 'carousel-hero-slider' ); ?></span>
+            <span class="cs-setting-input__hint"><?php esc_html_e( 'Minimum: 2000 ms', 'webkih-hero-slider' ); ?></span>
         <?php endif; ?>
     </div>
     <?php
@@ -491,7 +480,7 @@ function cs_render_number_field( $args ) {
  * @param mixed  $value Raw color value.
  * @param string $fallback Fallback color.
  */
-function cs_sanitize_color_value( $value, $fallback ) {
+function wkhs_sanitize_color_value( $value, $fallback ) {
     $color = is_string( $value ) ? sanitize_hex_color( $value ) : null;
 
     return $color ? $color : $fallback;
@@ -502,14 +491,14 @@ function cs_sanitize_color_value( $value, $fallback ) {
  *
  * @param array<string, string> $args Field args.
  */
-function cs_render_color_field( $args ) {
-    $settings = cs_get_webkih_hero_slider_settings();
+function wkhs_render_color_field( $args ) {
+    $settings = wkhs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $value    = isset( $settings[ $key ] ) ? (string) $settings[ $key ] : '';
     ?>
     <input
         type="color"
-        name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+        name="wkhs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
         value="<?php echo esc_attr( $value ); ?>"
     />
     <?php
@@ -518,17 +507,17 @@ function cs_render_color_field( $args ) {
 /**
  * Render animation style selection radios.
  */
-function cs_render_animation_style_field() {
-    $settings      = cs_get_webkih_hero_slider_settings();
+function wkhs_render_animation_style_field() {
+    $settings      = wkhs_get_webkih_hero_slider_settings();
     $current_style = isset( $settings['animation_style'] ) ? $settings['animation_style'] : 'animation_12';
-    $options       = cs_get_webkih_hero_slider_animation_styles();
+    $options       = wkhs_get_webkih_hero_slider_animation_styles();
 
     foreach ( $options as $value => $option ) {
         ?>
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_webkih_hero_slider_settings[animation_style]"
+                name="wkhs_webkih_hero_slider_settings[animation_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
@@ -544,21 +533,21 @@ function cs_render_animation_style_field() {
 /**
  * Render mobile image behavior selection radios.
  */
-function cs_render_mobile_image_behavior_field() {
-    $settings         = cs_get_webkih_hero_slider_settings();
+function wkhs_render_mobile_image_behavior_field() {
+    $settings         = wkhs_get_webkih_hero_slider_settings();
     $current_behavior = isset( $settings['mobile_image_behavior'] ) ? $settings['mobile_image_behavior'] : 'cover';
     $options          = [
         'cover'     => [
-            'label'       => __( 'Cover', 'carousel-hero-slider' ),
-            'description' => __( 'Fill the slide area by cropping as needed (current behavior).', 'carousel-hero-slider' ),
+            'label'       => __( 'Cover', 'webkih-hero-slider' ),
+            'description' => __( 'Fill the slide area by cropping as needed (current behavior).', 'webkih-hero-slider' ),
         ],
         'contain'   => [
-            'label'       => __( 'Contain', 'carousel-hero-slider' ),
-            'description' => __( 'Show the full image on mobile while keeping it inside the slide area.', 'carousel-hero-slider' ),
+            'label'       => __( 'Contain', 'webkih-hero-slider' ),
+            'description' => __( 'Show the full image on mobile while keeping it inside the slide area.', 'webkih-hero-slider' ),
         ],
         'no-repeat' => [
-            'label'       => __( 'No Repeat', 'carousel-hero-slider' ),
-            'description' => __( 'Prevent background tiling on mobile while preserving the existing cover style.', 'carousel-hero-slider' ),
+            'label'       => __( 'No Repeat', 'webkih-hero-slider' ),
+            'description' => __( 'Prevent background tiling on mobile while preserving the existing cover style.', 'webkih-hero-slider' ),
         ],
     ];
 
@@ -567,7 +556,7 @@ function cs_render_mobile_image_behavior_field() {
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_webkih_hero_slider_settings[mobile_image_behavior]"
+                name="wkhs_webkih_hero_slider_settings[mobile_image_behavior]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_behavior, $value ); ?>
             />
@@ -584,21 +573,21 @@ function cs_render_mobile_image_behavior_field() {
 /**
  * Render arrow style selection radios.
  */
-function cs_render_arrow_style_field() {
-    $settings      = cs_get_webkih_hero_slider_settings();
+function wkhs_render_arrow_style_field() {
+    $settings      = wkhs_get_webkih_hero_slider_settings();
     $current_style = isset( $settings['arrow_style'] ) ? $settings['arrow_style'] : 'bottom_rounded';
     $options       = [
         'side'           => [
-            'label'       => __( 'Side Arrows', 'carousel-hero-slider' ),
-            'description' => __( 'Left and right arrows on both sides of the slider image.', 'carousel-hero-slider' ),
+            'label'       => __( 'Side Arrows', 'webkih-hero-slider' ),
+            'description' => __( 'Left and right arrows on both sides of the slider image.', 'webkih-hero-slider' ),
         ],
         'bottom_right'   => [
-            'label'       => __( 'Bottom Right Arrows', 'carousel-hero-slider' ),
-            'description' => __( 'A compact arrow pair pinned to the slider\'s bottom-right corner.', 'carousel-hero-slider' ),
+            'label'       => __( 'Bottom Right Arrows', 'webkih-hero-slider' ),
+            'description' => __( 'A compact arrow pair pinned to the slider\'s bottom-right corner.', 'webkih-hero-slider' ),
         ],
         'bottom_rounded' => [
-            'label'       => __( 'Bottom Rounded Arrows', 'carousel-hero-slider' ),
-            'description' => __( 'Small rounded arrows centered along the bottom of the slider.', 'carousel-hero-slider' ),
+            'label'       => __( 'Bottom Rounded Arrows', 'webkih-hero-slider' ),
+            'description' => __( 'Small rounded arrows centered along the bottom of the slider.', 'webkih-hero-slider' ),
         ],
     ];
 
@@ -607,7 +596,7 @@ function cs_render_arrow_style_field() {
         <label class="cs-animation-choice">
             <input
                 type="radio"
-                name="cs_webkih_hero_slider_settings[arrow_style]"
+                name="wkhs_webkih_hero_slider_settings[arrow_style]"
                 value="<?php echo esc_attr( $value ); ?>"
                 <?php checked( $current_style, $value ); ?>
             />
@@ -625,8 +614,8 @@ function cs_render_arrow_style_field() {
  *
  * @param array<string, string> $args Field args.
  */
-function cs_render_toggle_field( $args ) {
-    $settings = cs_get_webkih_hero_slider_settings();
+function wkhs_render_toggle_field( $args ) {
+    $settings = wkhs_get_webkih_hero_slider_settings();
     $key      = $args['key'];
     $checked  = ! empty( $settings[ $key ] );
     ?>
@@ -634,12 +623,12 @@ function cs_render_toggle_field( $args ) {
         <input
             id="cs-<?php echo esc_attr( $key ); ?>"
             type="checkbox"
-            name="cs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
+            name="wkhs_webkih_hero_slider_settings[<?php echo esc_attr( $key ); ?>]"
             value="1"
             <?php checked( $checked ); ?>
         />
         <span class="cs-switch__track" aria-hidden="true"></span>
-        <span class="cs-switch__label"><?php esc_html_e( 'Enable setting', 'carousel-hero-slider' ); ?></span>
+        <span class="cs-switch__label"><?php esc_html_e( 'Enable setting', 'webkih-hero-slider' ); ?></span>
     </label>
     <?php
 }
@@ -647,31 +636,31 @@ function cs_render_toggle_field( $args ) {
 /**
  * Render settings page.
  */
-function cs_render_settings_page() {
+function wkhs_render_settings_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
 
     $sections = [
-        'cs_webkih_hero_slider_main'       => [
-            'title'       => __( 'Layout & Display', 'carousel-hero-slider' ),
-            'description' => __( 'Set the slider height and overall display layout.', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_main'       => [
+            'title'       => __( 'Layout & Display', 'webkih-hero-slider' ),
+            'description' => __( 'Set the slider height and overall display layout.', 'webkih-hero-slider' ),
         ],
-        'cs_webkih_hero_slider_timing'     => [
-            'title'       => __( 'Timing Controls', 'carousel-hero-slider' ),
-            'description' => __( 'Set how fast the slider rotates through slides.', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_timing'     => [
+            'title'       => __( 'Timing Controls', 'webkih-hero-slider' ),
+            'description' => __( 'Set how fast the slider rotates through slides.', 'webkih-hero-slider' ),
         ],
-        'cs_webkih_hero_slider_animation'  => [
-            'title'       => __( 'Animation Settings', 'carousel-hero-slider' ),
-            'description' => __( 'Choose one animation style and control how slide content enters.', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_animation'  => [
+            'title'       => __( 'Animation Settings', 'webkih-hero-slider' ),
+            'description' => __( 'Choose one animation style and control how slide content enters.', 'webkih-hero-slider' ),
         ],
-        'cs_webkih_hero_slider_navigation' => [
-            'title'       => __( 'Navigation Arrows', 'carousel-hero-slider' ),
-            'description' => __( 'Enable overlay arrows and choose one style for slider navigation.', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_navigation' => [
+            'title'       => __( 'Navigation Arrows', 'webkih-hero-slider' ),
+            'description' => __( 'Enable overlay arrows and choose one style for slider navigation.', 'webkih-hero-slider' ),
         ],
-        'cs_webkih_hero_slider_visibility' => [
-            'title'       => __( 'Content Visibility', 'carousel-hero-slider' ),
-            'description' => __( 'Enable or disable title, caption, and button output on the frontend.', 'carousel-hero-slider' ),
+        'wkhs_webkih_hero_slider_visibility' => [
+            'title'       => __( 'Content Visibility', 'webkih-hero-slider' ),
+            'description' => __( 'Enable or disable title, caption, and button output on the frontend.', 'webkih-hero-slider' ),
         ],
     ];
 
@@ -681,39 +670,39 @@ function cs_render_settings_page() {
             <div class="cs-admin-hero">
                 <div class="cs-admin-hero__row cs-admin-hero__row--top">
                     <div class="cs-admin-hero__title-group">
-                        <h1><?php esc_html_e( 'Carousel Hero Slider Settings', 'carousel-hero-slider' ); ?></h1>
-                        <p><?php esc_html_e( 'Controls for display, timing, animation, navigation, and visibility.', 'carousel-hero-slider' ); ?></p>
+                        <h1><?php esc_html_e( 'WebKih Hero Slider Settings', 'webkih-hero-slider' ); ?></h1>
+                        <p><?php esc_html_e( 'Controls for display, timing, animation, navigation, and visibility.', 'webkih-hero-slider' ); ?></p>
                     </div>
 
                     <div class="cs-admin-actions">
-                        <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=cs_hero_slide' ) ); ?>">
-                            <?php esc_html_e( 'Add New Slide', 'carousel-hero-slider' ); ?>
+                        <a class="button button-primary" href="<?php echo esc_url( admin_url( 'post-new.php?post_type=wkhs_hero_slide' ) ); ?>">
+                            <?php esc_html_e( 'Add New Slide', 'webkih-hero-slider' ); ?>
                         </a>
-                        <a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=cs_hero_slide' ) ); ?>">
-                            <?php esc_html_e( 'Manage Slides', 'carousel-hero-slider' ); ?>
+                        <a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=wkhs_hero_slide' ) ); ?>">
+                            <?php esc_html_e( 'Manage Slides', 'webkih-hero-slider' ); ?>
                         </a>
                     </div>
                 </div>
 
-                <div class="cs-admin-hero__row cs-admin-hero__row--bottom" aria-label="<?php esc_attr_e( 'Shortcode helper', 'carousel-hero-slider' ); ?>">
-                    <p class="cs-admin-hero__shortcode-label"><?php esc_html_e( 'Shortcode', 'carousel-hero-slider' ); ?></p>
+                <div class="cs-admin-hero__row cs-admin-hero__row--bottom" aria-label="<?php esc_attr_e( 'Shortcode helper', 'webkih-hero-slider' ); ?>">
+                    <p class="cs-admin-hero__shortcode-label"><?php esc_html_e( 'Shortcode', 'webkih-hero-slider' ); ?></p>
                     <div class="cs-admin-hero__shortcode-tools" data-cs-shortcode-copy>
                         <code class="cs-shortcode-copy__value" data-cs-shortcode-text>[webkih_hero_slider]</code>
-                        <button type="button" class="button cs-shortcode-copy__button" data-cs-shortcode-button data-copy-label="<?php esc_attr_e( 'Copy', 'carousel-hero-slider' ); ?>" data-copied-label="<?php esc_attr_e( 'Copied!', 'carousel-hero-slider' ); ?>"><?php esc_html_e( 'Copy', 'carousel-hero-slider' ); ?></button>
-                        <span class="cs-shortcode-copy__tooltip" data-cs-shortcode-tooltip role="status" aria-live="polite" aria-hidden="true"><?php esc_html_e( 'Copied!', 'carousel-hero-slider' ); ?></span>
+                        <button type="button" class="button cs-shortcode-copy__button" data-cs-shortcode-button data-copy-label="<?php esc_attr_e( 'Copy', 'webkih-hero-slider' ); ?>" data-copied-label="<?php esc_attr_e( 'Copied!', 'webkih-hero-slider' ); ?>"><?php esc_html_e( 'Copy', 'webkih-hero-slider' ); ?></button>
+                        <span class="cs-shortcode-copy__tooltip" data-cs-shortcode-tooltip role="status" aria-live="polite" aria-hidden="true"><?php esc_html_e( 'Copied!', 'webkih-hero-slider' ); ?></span>
                     </div>
                 </div>
 
-                <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'carousel-hero-slider' ); ?> <code>[webkih_hero_slider height="460" timer="4500"]</code></p>
+                <p class="cs-admin-hero__shortcode-hint"><?php esc_html_e( 'Optional:', 'webkih-hero-slider' ); ?> <code>[webkih_hero_slider height="460" timer="4500"]</code></p>
             </div>
 
             <div class="cs-admin-card">
                 <form method="post" action="options.php" class="cs-settings-form">
-                    <?php settings_fields( 'cs_webkih_hero_slider_group' ); ?>
+                    <?php settings_fields( 'wkhs_webkih_hero_slider_group' ); ?>
 
                     <div class="cs-settings-layout" data-cs-settings-layout>
                         <div class="cs-settings-nav">
-                            <div class="cs-settings-nav__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings categories', 'carousel-hero-slider' ); ?>">
+                            <div class="cs-settings-nav__tabs" role="tablist" aria-label="<?php esc_attr_e( 'Settings categories', 'webkih-hero-slider' ); ?>">
                                 <?php $index = 0; ?>
                                 <?php foreach ( $sections as $section_id => $section ) : ?>
                                     <button
@@ -732,10 +721,10 @@ function cs_render_settings_page() {
                             </div>
 
                             <div class="cs-settings-nav__actions">
-                                <?php submit_button( __( 'Save Settings', 'carousel-hero-slider' ), 'primary cs-save-button', 'submit', false ); ?>
+                                <?php submit_button( __( 'Save Settings', 'webkih-hero-slider' ), 'primary cs-save-button', 'submit', false ); ?>
                                 <?php $settings_updated = filter_input( INPUT_GET, 'settings-updated', FILTER_SANITIZE_FULL_SPECIAL_CHARS ); ?>
                                 <p class="cs-settings-save-feedback<?php echo 'true' === $settings_updated ? ' is-visible' : ''; ?>" data-cs-save-feedback role="status" aria-live="polite">
-                                    <?php esc_html_e( 'Settings saved.', 'carousel-hero-slider' ); ?>
+                                    <?php esc_html_e( 'Settings saved.', 'webkih-hero-slider' ); ?>
                                 </p>
                             </div>
                         </div>
@@ -755,7 +744,7 @@ function cs_render_settings_page() {
                                     <p class="description"><?php echo esc_html( $section['description'] ); ?></p>
                                     <table class="form-table" role="presentation">
                                         <tbody>
-                                        <?php do_settings_fields( 'carousel-hero-slider', $section_id ); ?>
+                                        <?php do_settings_fields( 'webkih-hero-slider', $section_id ); ?>
                                         </tbody>
                                     </table>
                                 </section>
@@ -769,12 +758,12 @@ function cs_render_settings_page() {
 
 
             <div class="cs-admin-card cs-admin-support">
-                <h3><?php esc_html_e( 'Support the Plugin', 'carousel-hero-slider' ); ?></h3>
+                <h3><?php esc_html_e( 'Support the Plugin', 'webkih-hero-slider' ); ?></h3>
                 <form action="https://www.paypal.com/donate" method="post" target="_blank">
                     <input type="hidden" name="business" value="jubayerhossain.wh@gmail.com" />
                     <input type="hidden" name="currency_code" value="USD" />
                     <button type="submit" class="button">
-                        <?php esc_html_e( 'Buy Me a Coffee', 'carousel-hero-slider' ); ?>
+                        <?php esc_html_e( 'Buy Me a Coffee', 'webkih-hero-slider' ); ?>
                     </button>
                 </form>
             </div>
