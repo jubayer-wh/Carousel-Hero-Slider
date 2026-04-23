@@ -313,7 +313,8 @@ function wkhs_add_duplicate_slide_action( $actions, $post ) {
             ],
             admin_url( 'admin.php' )
         ),
-        'wkhs_duplicate_slide_' . $post->ID
+        'wkhs_duplicate_slide',
+        'wkhs_duplicate_slide_nonce'
     );
 
     $actions['wkhs_duplicate_slide'] = '<a href="' . esc_url( $duplicate_url ) . '">' . esc_html__( 'Duplicate', 'webkih-hero-slider' ) . '</a>';
@@ -326,17 +327,23 @@ add_filter( 'post_row_actions', 'wkhs_add_duplicate_slide_action', 10, 2 );
  * Handle duplicate action.
  */
 function wkhs_handle_duplicate_slide_action() {
-    if ( ! is_admin() || ! isset( $_GET['action'] ) || 'wkhs_duplicate_slide' !== $_GET['action'] ) {
+    $action = isset( $_GET['action'] ) ? sanitize_key( wp_unslash( $_GET['action'] ) ) : '';
+
+    if ( ! is_admin() || 'wkhs_duplicate_slide' !== $action ) {
         return;
     }
 
     $post_id = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : 0;
 
+    $nonce = isset( $_GET['wkhs_duplicate_slide_nonce'] ) ? sanitize_text_field( wp_unslash( $_GET['wkhs_duplicate_slide_nonce'] ) ) : '';
+
+    if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wkhs_duplicate_slide' ) ) {
+        wp_die( esc_html__( 'Security check failed.', 'webkih-hero-slider' ) );
+    }
+
     if ( ! $post_id || ! current_user_can( 'edit_post', $post_id ) ) {
         wp_die( esc_html__( 'You are not allowed to duplicate this slide.', 'webkih-hero-slider' ) );
     }
-
-    check_admin_referer( 'wkhs_duplicate_slide_' . $post_id );
 
     $post = get_post( $post_id );
 
